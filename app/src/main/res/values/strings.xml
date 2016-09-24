@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Be Fit</string>
+    <string-array name="gender">
+        <item>FEMALE</item>
+        <item>MALE</item>
+
+    </string-array>
+
 </resources>
