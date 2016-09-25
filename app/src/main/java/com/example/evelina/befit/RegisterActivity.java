@@ -11,6 +11,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText usernameR;
@@ -20,16 +29,21 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerR;
     Spinner genderSpinner;
     public static final int RESULT_REG_SUCCESSFUL = 10;
+    LoginButton loginButton;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_register);
         usernameR = (EditText) findViewById(R.id.editText_username);
         passR = (EditText) findViewById(R.id.editText_password);
         emailR = (EditText) findViewById(R.id.editText_email);
         registerR = (Button) findViewById(R.id.button_registerR);
         genderSpinner= (Spinner)findViewById(R.id.spinner_gender);
+        loginButton= (LoginButton) findViewById(R.id.login_button);
+        callbackManager = CallbackManager.Factory.create();
 
         ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender,android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -106,6 +120,31 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+                loginButton.setReadPermissions("user_friends");
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        //HERE I can take the whole profile and pass it around Profile is Parcelable
+                        //Login with facebook can be done as content provider
+                        Profile profile =Profile.getCurrentProfile();
+                        AccessToken accessToken = loginResult.getAccessToken();
+                        if(profile!=null){
+                            //here we can start new intent to another activity since we now have the whole profile
+                            //getId() can be used for password
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                    }
+                });
 
             }
 
@@ -115,6 +154,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+    }
 }
 
 
