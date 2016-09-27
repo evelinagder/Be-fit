@@ -3,12 +3,14 @@ package com.example.evelina.befit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -24,8 +26,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText usernameR;
     EditText passR;
-    EditText confirmPassR;
     EditText emailR;
+    EditText kilogramsET;
+    EditText santimetersET;
+    TextView heightTV;
+    TextView weightTV;
     Button registerR;
     Spinner genderSpinner;
     public static final int RESULT_REG_SUCCESSFUL = 10;
@@ -44,6 +49,11 @@ public class RegisterActivity extends AppCompatActivity {
         genderSpinner= (Spinner)findViewById(R.id.spinner_gender);
         loginButton= (LoginButton) findViewById(R.id.login_button);
         callbackManager = CallbackManager.Factory.create();
+        kilogramsET= (EditText) findViewById(R.id.weight_kilograms);
+        santimetersET= (EditText) findViewById(R.id.height_santimeters);
+        heightTV = (TextView) findViewById(R.id.height_TV);
+        weightTV = (TextView) findViewById(R.id.weight_TV);
+
 
         ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender,android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -67,10 +77,25 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String usernameU = usernameR.getText().toString().trim();
                         String passU = passR.getText().toString();
-                        String confirmU = confirmPassR.getText().toString();
                         String emailU = emailR.getText().toString();
-                        String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+                        String kilogramsU=kilogramsET.getText().toString();
+                        String santimetersU = santimetersET.getText().toString();
+                        int kilograms=0;
+                        int santimeters = 0;
 
+                        String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+                        if(kilogramsU.isEmpty()){
+                            kilogramsET.setError("Enter kilograms");
+                            kilogramsET.requestFocus();
+                            return;
+                        }
+
+                        if(santimetersU.isEmpty()){
+                            santimetersET.setError("Enter height");
+                            santimetersET.requestFocus();
+                            return;
+
+                        }
                         if (usernameU.isEmpty()) {
                             usernameR.setError("Username is compulsory");
                             usernameR.requestFocus();
@@ -93,15 +118,22 @@ public class RegisterActivity extends AppCompatActivity {
                             emailR.requestFocus();
                             return;
                         }
-
-
-                        if (!(passU.equals(confirmU))) {
-                            passR.setError("Passwords mismatch");
-                            passR.setText("");
-                            confirmPassR.setText("");
-                            passR.requestFocus();
-                            return;
+                        if(!santimetersU.isEmpty()){
+                            try{
+                                santimeters = Integer.parseInt(santimetersU);
+                            }catch (NumberFormatException e){
+                                Log.e("TAG",e.getMessage());
+                            }
                         }
+                        if(!kilogramsU.isEmpty()){
+                            try{
+                                kilograms = Integer.parseInt(kilogramsU);
+                            }catch (NumberFormatException e){
+                                Log.e("TAG",e.getMessage());
+                            }
+                        }
+
+
 
 //                if (UsersManager.getInstance(RegisterActivity.this).existsUser(usernameU)) {
 //                    usernameR.setError("User already exists");
@@ -134,6 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                     }
+
 
                     @Override
                     public void onCancel() {
