@@ -5,11 +5,12 @@ package com.example.evelina.befit.model;
  */
 
 public class Exercise {
-    String name;
-    int series;
-    int repeats;
-    String instructions;
-    String shortDescription;
+    private String name;
+    private int points;
+    private  int series;
+    private int repeats;
+    private String instructions;
+     private String shortDescription;
     // video
 
 

@@ -12,14 +12,16 @@ public class User implements Serializable{
     private String password;
     private String email;
     private int kilograms;
+    private int height;
     ArrayList<Challenge> userChallenges;
     ArrayList<Challenge> customChallenges;
 
-    public User(String password, String username, String email, int kilograms) {
+    public User(String password, String username, String email, int kilograms, int height) {
         this.password = password;
         this.username = username;
         this.email = email;
         this.kilograms = kilograms;
+
         userChallenges= new ArrayList<Challenge>();
         Challenge one= new Challenge(Challenge.Type.ABDOMEN,0,null);
         Challenge two= new Challenge(Challenge.Type.UPPERBODY,0,null);

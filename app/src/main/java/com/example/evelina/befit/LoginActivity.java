@@ -45,9 +45,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String emailString = email.getText().toString();
+                //TODO check with data base! if exists
+
                 String passwordString = password.getText().toString();
                 if (emailString.isEmpty()) {
-                    email.setError("Username is compulsory");
+                    email.setError("Email is compulsory");
                     email.requestFocus();
                     return;
                 }
