@@ -1,0 +1,88 @@
+ <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:text="@string/hello_blank_fragment">
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:id="@+id/short_description"/>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:orientation="horizontal">
+
+         <TextView
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:textSize="25sp"
+             android:layout_height="wrap_content"
+             android:id="@+id/sets_TV"
+             android:text="Sets"/>
+
+         <EditText
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:inputType="number"
+             android:ems="10"
+             android:hint="desired sets"
+             android:gravity="center"
+             android:maxEms="3"
+             android:id="@+id/sets_ET"
+             android:layout_weight="1" />
+
+     </LinearLayout>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:orientation="horizontal">
+
+         <TextView
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:textSize="25sp"
+             android:maxLines="1"
+             android:layout_height="wrap_content"
+             android:id="@+id/repeats_TV"
+             android:text="Repeats"/>
+
+         <EditText
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:inputType="number"
+             android:ems="10"
+             android:hint="repeats per set"
+             android:gravity="center"
+             android:maxEms="3"
+             android:maxLines="1"
+             android:id="@+id/repeats_ET"
+             android:layout_weight="1" />
+     </LinearLayout>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="0.5"
+         android:orientation="horizontal">
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:text="Cancel"
+             android:id="@+id/cancel_button"
+             android:textAllCaps="true"
+             android:layout_weight="1"/>
+         <Button
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:text="ok"
+             android:id="@+id/ok_button"
+             android:textAllCaps="true"
+             android:layout_weight="1"/>
+
+     </LinearLayout>
+
+ </LinearLayout>
+
