@@ -131,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(profile!=null){
                             //here we can start new intent to another activity since we now have the whole profile
                             //getId() can be used for password
+
                         }
 
                     }
