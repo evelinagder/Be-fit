@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/layout_profile"
+    android:layout_height="match_parent"
+    tools:context="com.example.evelina.befit.ProfileFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/pic_action_layout"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:id="@+id/picture_profile"
+            android:background="@mipmap/ic_launcher"
+            android:layout_height="150dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:src="@mipmap/ic_launcher"
+            app:fabSize="normal"
+            android:layout_gravity="top|right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/show_chart"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="18dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/username_profile_TV"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="username"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Points"
+            android:id="@+id/points_profile_TV"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/number_points_profile_TV"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="points in nums"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Trainings"
+            android:id="@+id/trainings_profile_TV"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/number_trainings_profile_TV"
+            android:layout_height="wrap_content"
+            android:hint="nums"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="view"
+            android:id="@+id/view_trainings_profile_Button"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/weight_profile_TV"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/kg_profile_TV"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="in kg"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/height_profile_TV"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/meters_profile_TV"
+            android:layout_height="wrap_content"
+            android:hint="in meters/sm"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

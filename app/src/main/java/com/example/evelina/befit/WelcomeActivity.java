@@ -14,13 +14,21 @@ import com.example.evelina.befit.model.User;
 public class WelcomeActivity extends AppCompatActivity {
     Button start;
     User user;
+    Button shortcut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         start = (Button) findViewById(R.id.button_start);
-
+        shortcut= (Button) findViewById(R.id.shortcut);
+        shortcut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WelcomeActivity.this,TabbedActivity.class);
+                startActivity(intent);
+            }
+        });
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
