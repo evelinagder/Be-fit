@@ -12,10 +12,10 @@ public class Challenge {
 
     Type type;
     int timesCompleted;
-    Date dateOfCompletion;
+    String dateOfCompletion;
     ArrayList<Exercise> exercises;
 
-    public Challenge(Type type, int timesCompleted, Date dateOfCompletion) {
+    public Challenge(Type type, int timesCompleted, String dateOfCompletion) {
         this.type = type;
         this.timesCompleted = timesCompleted;
         this.dateOfCompletion = dateOfCompletion;
