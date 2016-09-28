@@ -17,10 +17,10 @@ public class TrainingManager {
 
     private TrainingManager() {
         basicChalenges=new ArrayList<Challenge>();
-        Challenge abdomen= new Challenge(Challenge.Type.ABDOMEN,0, null);
-        Challenge upperBody= new Challenge(Challenge.Type.UPPERBODY,0,null);
-        Challenge lowerBody= new Challenge(Challenge.Type.LOWERBODY,0,null);
-        Challenge wholeBody= new Challenge(Challenge.Type.WHOLEBODY,0,null);
+        Challenge abdomen= new Challenge("ABDOMEN",0, null);
+        Challenge upperBody= new Challenge("UPPERBODY",0,null);
+        Challenge lowerBody= new Challenge("LOWERBODY",0,null);
+        Challenge wholeBody= new Challenge("WHOLEBODY",0,null);
         //TODO ADD REAL VIDEO ID!!!!!
         //ABS
         Exercise absOne=new Exercise("Plate cocoon",10,2,10,"Knees remain bent, fully extends arms above the chest, move the weights and feet simultaneously to the floor",12);

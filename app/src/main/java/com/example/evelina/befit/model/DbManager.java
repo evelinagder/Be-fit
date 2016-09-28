@@ -32,7 +32,7 @@ public class DbManager extends SQLiteOpenHelper{
     //CHALLENGE table column names
     private static final String CHALLENGE_UID="challenge_id";
     private static final String CHALLENGE_USER_UID="user_id";
-    private static final String CHALLENGE_TYPE="type";
+    private static final String CHALLENGE_NAME="name";
     private static final String CHALLENGE_TIMES="times_completed";
     private static final String CHALLENGE_DATE="ate_completed";
     //EXERCISE table column names
@@ -67,7 +67,7 @@ public class DbManager extends SQLiteOpenHelper{
                     +USER_PASSWORD + "text,"+USER_EMAIL+"text,"+USER_WEIGHT+"text,"+USER_HEIGHT+"text);");
             db.execSQL("CREATE TABLE "+CHALLENGES_TABLE+" ( "+CHALLENGE_UID  +"INTEGER PRIMARY KEY AUTOINCREMENT,"+CHALLENGE_USER_UID +"INTEGER ,FOREIGN KEY("+CHALLENGE_USER_UID+
             ") REFERENCES"+ USERS_TABLE+"("+USER_UID+"), "
-                    +CHALLENGE_TYPE + "text,"+CHALLENGE_TIMES+"INTEGER,"+CHALLENGE_DATE+"text );");
+                    +CHALLENGE_NAME + "text,"+CHALLENGE_TIMES+"INTEGER,"+CHALLENGE_DATE+"text );");
         db.execSQL("CREATE TABLE "+EXERCISE_TABLE+" ( "+EXERCISE_UID  +"INTEGER PRIMARY KEY AUTOINCREMENT,"+EXERCISE_CHALLENGE_UID +"INTEGER ,FOREIGN KEY("+EXERCISE_CHALLENGE_UID+
                 ") REFERENCES"+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"), "
                 +EXERCISE_NAME + "text,"+EXERCISE_POINTS+"INTEGER,"+EXERCISE_SERIES+"INTEGER,"+EXERCISE_REPEATS+"INTEGER,"+EXERCISE_INSTRUCTIONS+"text"+EXERCISE_VIDEO+"INTEGER );");
@@ -89,12 +89,12 @@ public class DbManager extends SQLiteOpenHelper{
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
                 User u= new User(username,password,email,weight,height);
-                Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_TYPE+", "+CHALLENGE_TIMES+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+", "+USERS_TABLE+" WHERE "+CHALLENGE_USER_UID+"=" +USER_UID,null);
+                Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_NAME+", "+CHALLENGE_TIMES+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+", "+USERS_TABLE+" WHERE "+CHALLENGE_USER_UID+"=" +USER_UID,null);
                 while(cursorChallenge.moveToNext()){
-                   //????? Challenge.Type type=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_TYPE)); if type equals CUSTOM
+                   String nameC=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_NAME));
                     int times=cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_TIMES));
                     String date=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_DATE));
-                    Challenge challenge= new Challenge(Challenge.Type.CUSTOM,times,date);
+                    Challenge challenge= new Challenge(nameC,times,date);
                     Cursor cursorExercise=getWritableDatabase().rawQuery("SELECT "+EXERCISE_NAME+", "+EXERCISE_POINTS+", "+EXERCISE_SERIES+", "+EXERCISE_REPEATS+", "+EXERCISE_INSTRUCTIONS+
                             ", "+EXERCISE_VIDEO+" FROM "+EXERCISE_TABLE+", "+CHALLENGES_TABLE+" WHERE "+EXERCISE_CHALLENGE_UID+"=" +CHALLENGE_UID,null);
                     while(cursorExercise.moveToNext()){
@@ -108,15 +108,29 @@ public class DbManager extends SQLiteOpenHelper{
                         challenge.addExercise(exercise);
                     }
                     u.addCustomChallenge(challenge);
-                    //if NOT: u. add.Challenge(chalenge);
                 }
                 allUsers.put(username, u);
             }
-            //TODO LOAD CHALENGES AND EXERCISES
-            Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_TYPE+", "+CHALLENGE_TIMES+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+" WHERE ",null);
         }
     }
-    public boolean existsUser( String username){
+    public boolean existsUser( String username) {
         return allUsers.containsKey(username);
     }
+    public void addUser(User user){
+        //TODO
+    }
+    public void addCustomExercise( User user, Exercise exercise){
+        //TODO
+    }
+    public void updateUserInfo(User user){
+        //TODO all fields from profile change
+    }
+    public void changeUserPoints( User user, int newPoints){
+        //TODO
+    }
+    public void changeUserChallanges(User user, Challenge completedChallenge){
+        //TODO on completing a Challenge, adds to user list- DATE?
+    }
 }
+
+

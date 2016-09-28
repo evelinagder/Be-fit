@@ -10,13 +10,13 @@ import java.util.Date;
 public class Challenge {
     enum Type {UPPERBODY,LOWERBODY,ABDOMEN,WHOLEBODY,CUSTOM};
 
-    Type type;
+    String name;
     int timesCompleted;
     String dateOfCompletion;
     ArrayList<Exercise> exercises;
 
-    public Challenge(Type type, int timesCompleted, String dateOfCompletion) {
-        this.type = type;
+    public Challenge(String name, int timesCompleted, String dateOfCompletion) {
+        this.name=name;
         this.timesCompleted = timesCompleted;
         this.dateOfCompletion = dateOfCompletion;
         exercises = new ArrayList<Exercise>();
@@ -27,7 +27,8 @@ public class Challenge {
             exercises.add(exercise);
         }
     }
-    public Type getType(){
-        return this.type;
+
+    public String getName() {
+        return name;
     }
 }

@@ -13,7 +13,7 @@ public class User implements Serializable{
     private String email;
     private int weight;
     private int height;
-    ArrayList<Challenge> userChallenges;
+    ArrayList<Challenge> achievedChallenges;
     ArrayList<Challenge> customChallenges;
 
     public User( String username,String password, String email, int weight, int height) {
@@ -23,8 +23,8 @@ public class User implements Serializable{
         this.weight = weight;
         this.height= height;
 
-        userChallenges= TrainingManager.getInstance().getBasicChalenges();
         customChallenges= new ArrayList<Challenge>();
+        achievedChallenges= new ArrayList<Challenge>();
 
     }
 
@@ -47,7 +47,7 @@ public class User implements Serializable{
     public void addCustomChallenge(Challenge c){
         customChallenges.add(c);
     }
-    public void addChallenge(Challenge c){
-        userChallenges.add(c);
+    public void addAchievedChallenge(Challenge c){
+        achievedChallenges.add(c);
     }
 }
