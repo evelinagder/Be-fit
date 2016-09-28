@@ -11,16 +11,16 @@ public class User implements Serializable{
     private String username;
     private String password;
     private String email;
-    private int kilograms;
+    private int weight;
     private int height;
     ArrayList<Challenge> userChallenges;
     ArrayList<Challenge> customChallenges;
 
-    public User(String password, String username, String email, int kilograms, int height) {
+    public User(String password, String username, String email, int weight, int height) {
         this.password = password;
         this.username = username;
         this.email = email;
-        this.kilograms = kilograms;
+        this.weight = weight;
         this.height= height;
 
         userChallenges= TrainingManager.getInstance().getBasicChalenges();
