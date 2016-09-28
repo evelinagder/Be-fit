@@ -43,4 +43,11 @@ public class User implements Serializable{
     public int hashCode() {
         return username.hashCode();
     }
+
+    public void addCustomChallenge(Challenge c){
+        customChallenges.add(c);
+    }
+    public void addChallenge(Challenge c){
+        userChallenges.add(c);
+    }
 }

@@ -88,9 +88,32 @@ public class DbManager extends SQLiteOpenHelper{
                 String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
-                allUsers.put(username, new User(username,password,email,weight,height));
+                User u= new User(username,password,email,weight,height);
+                Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_TYPE+", "+CHALLENGE_TIMES+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+", "+USERS_TABLE+" WHERE "+CHALLENGE_USER_UID+"=" +USER_UID,null);
+                while(cursorChallenge.moveToNext()){
+                   //????? Challenge.Type type=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_TYPE)); if type equals CUSTOM
+                    int times=cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_TIMES));
+                    String date=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_DATE));
+                    Challenge challenge= new Challenge(Challenge.Type.CUSTOM,times,date);
+                    Cursor cursorExercise=getWritableDatabase().rawQuery("SELECT "+EXERCISE_NAME+", "+EXERCISE_POINTS+", "+EXERCISE_SERIES+", "+EXERCISE_REPEATS+", "+EXERCISE_INSTRUCTIONS+
+                            ", "+EXERCISE_VIDEO+" FROM "+EXERCISE_TABLE+", "+CHALLENGES_TABLE+" WHERE "+EXERCISE_CHALLENGE_UID+"=" +CHALLENGE_UID,null);
+                    while(cursorExercise.moveToNext()){
+                        String name=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_NAME));
+                        int points=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_POINTS));
+                        int series=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_SERIES));
+                        int repeats=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_REPEATS));
+                        String instructions=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_INSTRUCTIONS));
+                        int video=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_VIDEO));
+                        Exercise exercise= new Exercise(name, points,series,repeats,instructions,video);
+                        challenge.addExercise(exercise);
+                    }
+                    u.addCustomChallenge(challenge);
+                    //if NOT: u. add.Challenge(chalenge);
+                }
+                allUsers.put(username, u);
             }
             //TODO LOAD CHALENGES AND EXERCISES
+            Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_TYPE+", "+CHALLENGE_TIMES+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+" WHERE ",null);
         }
     }
     public boolean existsUser( String username){
