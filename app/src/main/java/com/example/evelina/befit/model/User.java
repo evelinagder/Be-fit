@@ -21,6 +21,7 @@ public class User implements Serializable{
         this.username = username;
         this.email = email;
         this.kilograms = kilograms;
+        this.height= height;
 
         userChallenges= TrainingManager.getInstance().getBasicChalenges();
         customChallenges= new ArrayList<Challenge>();

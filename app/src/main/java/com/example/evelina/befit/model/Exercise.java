@@ -10,15 +10,18 @@ public class Exercise {
     private  int series;
     private int repeats;
     private String instructions;
-     private String shortDescription;
+    private int video;
+
     // video
 
 
-    public Exercise(String name, int series, int repeats, String instructions, String shortDescription) {
+    public Exercise(String name,int points, int series, int repeats, String instructions,int video) {
         this.name = name;
         this.series = series;
         this.repeats = repeats;
+        this.points=points;
         this.instructions = instructions;
-        this.shortDescription = shortDescription;
+        this.video= video;
+
     }
 }
