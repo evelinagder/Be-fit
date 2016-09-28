@@ -1,31 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/layout_profile"
     android:layout_height="match_parent"
     tools:context="com.example.evelina.befit.ProfileFragment">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="218dp"
         android:id="@+id/pic_action_layout"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:id="@+id/picture_profile"
-            android:background="@mipmap/ic_launcher"
-            android:layout_height="150dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginStart="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
         <android.support.design.widget.FloatingActionButton
             android:src="@mipmap/ic_launcher"
@@ -40,21 +29,33 @@
             android:layout_marginRight="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="18dp" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:id="@+id/picture_profile"
+            android:background="@mipmap/ic_launcher"
+            android:layout_height="150dp"
+            android:layout_marginLeft="54dp"
+            android:layout_marginStart="54dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/show_chart" />
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="48dp"
         android:id="@+id/username_profile_TV"
-        android:layout_weight="1"
+        android:layout_weight="15"
         android:layout_gravity="center"
         android:gravity="center"
         android:hint="username"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="48dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,8 +74,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="48dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -97,8 +97,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="48dp">
         <TextView
             android:layout_width="0dp"
             android:id="@+id/weight_profile_TV"
@@ -115,8 +114,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="48dp">
         <TextView
             android:layout_width="0dp"
             android:id="@+id/height_profile_TV"
@@ -134,3 +132,6 @@
 
 
 </LinearLayout>
+
+
+</ScrollView>
