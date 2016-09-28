@@ -1,9 +1,12 @@
 package com.example.evelina.befit.model;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 /**
  * Created by Evelina on 9/28/2016.
@@ -11,6 +14,7 @@ import android.widget.Toast;
 public class DbManager extends SQLiteOpenHelper{
     Context context;
     private static DbManager sInstance;
+    HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
     private static final int DATABASE_VERSION = 1;
@@ -54,6 +58,7 @@ public class DbManager extends SQLiteOpenHelper{
 
     private DbManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        allUsers= new HashMap<String, User>();
     }
 
     @Override
@@ -72,5 +77,23 @@ public class DbManager extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+    public void loadUsers(){
+        if( allUsers.isEmpty()){
+            Cursor cursor=getWritableDatabase().rawQuery("SELECT "+USER_USERNAME+", "+USER_PASSWORD+", "+USER_EMAIL+", "+USER_WEIGHT+
+            ", "+USER_HEIGHT+ " FROM "+USERS_TABLE,null);
+            while(cursor.moveToNext()){
+                String username=cursor.getString(cursor.getColumnIndex(USER_USERNAME));
+                String password=cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
+                String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
+                int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
+                int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
+                allUsers.put(username, new User(username,password,email,weight,height));
+            }
+            //TODO LOAD CHALENGES AND EXERCISES
+        }
+    }
+    public boolean existsUser( String username){
+        return allUsers.containsKey(username);
     }
 }

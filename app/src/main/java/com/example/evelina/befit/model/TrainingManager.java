@@ -77,7 +77,6 @@ public class TrainingManager {
         upperBody.addExercise(lowFive);
         upperBody.addExercise(absFour);
         upperBody.addExercise(upFive);
-        
 
 
         basicChalenges.add(abdomen);

@@ -16,7 +16,7 @@ public class User implements Serializable{
     ArrayList<Challenge> userChallenges;
     ArrayList<Challenge> customChallenges;
 
-    public User(String password, String username, String email, int weight, int height) {
+    public User( String username,String password, String email, int weight, int height) {
         this.password = password;
         this.username = username;
         this.email = email;
@@ -28,4 +28,19 @@ public class User implements Serializable{
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return username.equals(user.username);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
 }
