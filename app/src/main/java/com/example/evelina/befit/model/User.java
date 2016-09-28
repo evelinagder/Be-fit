@@ -22,17 +22,7 @@ public class User implements Serializable{
         this.email = email;
         this.kilograms = kilograms;
 
-        userChallenges= new ArrayList<Challenge>();
-        Challenge one= new Challenge(Challenge.Type.ABDOMEN,0,null);
-        Challenge two= new Challenge(Challenge.Type.UPPERBODY,0,null);
-        Challenge three= new Challenge(Challenge.Type.LOWERBODY,0,null);
-        Challenge four= new Challenge(Challenge.Type.WHOLEBODY,0,null);
-        //add exercise:
-        //one.addExercise(new Exercise(....)); 5 exercises!
-        userChallenges.add(one);
-        userChallenges.add(two);
-        userChallenges.add(three);
-        userChallenges.add(four);
+        userChallenges= TrainingManager.getInstance().getBasicChalenges();
         customChallenges= new ArrayList<Challenge>();
 
     }

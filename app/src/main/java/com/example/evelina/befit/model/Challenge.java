@@ -27,4 +27,7 @@ public class Challenge {
             exercises.add(exercise);
         }
     }
+    public Type getType(){
+        return this.type;
+    }
 }
