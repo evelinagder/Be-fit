@@ -104,9 +104,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
-                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
-                    startActivity(intent);
+                   if(DbManager.getInstance(LoginActivity.this).validateLogin(username,password)) {
+                       Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                       intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
+                       startActivity(intent);
+                   }
+                    else{
+                       Toast.makeText(LoginActivity.this,"Please register",Toast.LENGTH_SHORT).show();
+                   }
                 }
             }
 
