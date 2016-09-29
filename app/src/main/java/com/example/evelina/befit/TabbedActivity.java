@@ -141,7 +141,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
                 return rootView;
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-              
+
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
                 return rootView;
