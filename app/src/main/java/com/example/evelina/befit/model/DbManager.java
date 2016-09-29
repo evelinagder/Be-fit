@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class DbManager extends SQLiteOpenHelper{
     Context context;
     private static DbManager sInstance;
-    HashMap<String , User> allUsers;
+    public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
     private static final int DATABASE_VERSION = 1;
@@ -63,7 +63,7 @@ public class DbManager extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         allUsers= new HashMap<String, User>();
         this.context=context;
-        loadUsers();
+
     }
 
     @Override
@@ -141,15 +141,14 @@ public class DbManager extends SQLiteOpenHelper{
     }
 
     public void addUser(String username,String password, String email, int weight, int height){
-        getWritableDatabase().beginTransaction();
+
         ContentValues values = new ContentValues();
         values.put(USER_USERNAME, username);
         values.put(USER_PASSWORD, password);
         values.put(USER_EMAIL, email);
         values.put(USER_WEIGHT, weight);
         values.put(USER_HEIGHT, height);
-        getWritableDatabase().insert(USERS_TABLE, null, values);
-        getWritableDatabase().endTransaction();
+       long id = getWritableDatabase().insert(USERS_TABLE, null, values);
         allUsers.put(username, new User(username, password,email,weight,height));
     }
     public void addCustomChallenge( User user, String ChallengeName){
