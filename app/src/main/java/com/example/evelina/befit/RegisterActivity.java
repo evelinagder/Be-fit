@@ -46,13 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerR;
     Spinner genderSpinner;
     public static final int RESULT_REG_SUCCESSFUL = 10;
-    LoginButton loginButton;
-    CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_register);
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
@@ -67,8 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
         emailR = (EditText) findViewById(R.id.editText_email);
         registerR = (Button) findViewById(R.id.button_registerR);
         genderSpinner= (Spinner)findViewById(R.id.spinner_gender);
-        loginButton= (LoginButton) findViewById(R.id.login_button);
-        callbackManager = CallbackManager.Factory.create();
         kilogramsET= (EditText) findViewById(R.id.weight_kilograms);
         santimetersET= (EditText) findViewById(R.id.height_santimeters);
         heightTV = (TextView) findViewById(R.id.height_TV);
@@ -91,140 +88,99 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                 }
-
-                registerR.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String usernameU = usernameR.getText().toString().trim();
-                        String passU = passR.getText().toString();
-                        String emailU = emailR.getText().toString();
-                        String kilogramsU=kilogramsET.getText().toString();
-                        String santimetersU = santimetersET.getText().toString();
-                        int kilograms=0;
-                        int santimeters = 0;
-
-                        String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-                        if(kilogramsU.isEmpty()){
-                            kilogramsET.setError("Enter kilograms");
-                            kilogramsET.requestFocus();
-                            return;
-                        }
-
-                        if(santimetersU.isEmpty()){
-                            santimetersET.setError("Enter height");
-                            santimetersET.requestFocus();
-                            return;
-
-                        }
-                        if (usernameU.isEmpty()) {
-                            usernameR.setError("Username is compulsory");
-                            usernameR.requestFocus();
-                            return;
-                        }
-                        if (passU.length() == 0) {
-                            passR.setError("Password is compulsory");
-                            passR.requestFocus();
-                            return;
-                        }
-
-                        if (emailU.isEmpty()) {
-                            emailR.setError("Email is compulsory");
-                            emailR.requestFocus();
-                            return;
-                        }
-
-                        if (!emailU.matches(emailPattern)) {
-                            emailR.setError("Invalid email");
-                            emailR.requestFocus();
-                            return;
-                        }
-                        if(!santimetersU.isEmpty()){
-                            try{
-                                santimeters = Integer.parseInt(santimetersU);
-                            }catch (NumberFormatException e){
-                                Log.e("TAG",e.getMessage());
-                            }
-                        }
-                        if(!kilogramsU.isEmpty()){
-                            try{
-                                kilograms = Integer.parseInt(kilogramsU);
-                            }catch (NumberFormatException e){
-                                Log.e("TAG",e.getMessage());
-                            }
-                        }
-
-
-
-               if (DbManager.getInstance(RegisterActivity.this).existsUser(usernameU)) {
-                   usernameR.setError("User already exists");
-                   usernameR.setText("");
-                   usernameR.requestFocus();
-                    return;
-
-              }
-           DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters,0);
-
-
-                        Intent intent = new Intent();
-                        intent.putExtra("username", usernameR.getText().toString());
-                        intent.putExtra("password", passR.getText().toString());
-                        setResult(RESULT_REG_SUCCESSFUL, intent);
-                        finish();
-                    }
-                });
-                loginButton.setReadPermissions("user_friends");
-                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        //HERE I can take the whole profile and pass it around Profile is Parcelable
-                        //Login with facebook can be done as content provider
-                        Profile profile =Profile.getCurrentProfile();
-                        AccessToken accessToken = loginResult.getAccessToken();
-
-                        //here we should call one dialog fragment with weight height and sex
-                        if(profile!=null){
-                            //here we can start new intent to another activity since we now have the whole profile
-                            //getId() can be used for password
-                            String password = profile.getId();
-                            String username=profile.getFirstName()+" "+profile.getLastName()+password;
-DbManager.getInstance(RegisterActivity.this).addUser(username, password, "",0,0,0);
-
-
-                                                        Intent intent = new Intent(RegisterActivity.this, TabbedActivity.class);
-                            intent.putExtra("username",username);
-
-
-
-
-                        }
-
-                    }
-
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        LoginManager.getInstance().logOut();
-                    }
-                });
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
+
+
         });
-    };
+
+            registerR.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String usernameU = usernameR.getText().toString().trim();
+                    String passU = passR.getText().toString();
+                    String emailU = emailR.getText().toString();
+                    String kilogramsU=kilogramsET.getText().toString();
+                    String santimetersU = santimetersET.getText().toString();
+                    int kilograms=0;
+                    int santimeters = 0;
+
+                    String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+                    if(kilogramsU.isEmpty()){
+                        kilogramsET.setError("Enter kilograms");
+                        kilogramsET.requestFocus();
+                        return;
+                    }
+
+                    if(santimetersU.isEmpty()){
+                        santimetersET.setError("Enter height");
+                        santimetersET.requestFocus();
+                        return;
+
+                    }
+                    if (usernameU.isEmpty()) {
+                        usernameR.setError("Username is compulsory");
+                        usernameR.requestFocus();
+                        return;
+                    }
+                    if (passU.length() == 0) {
+                        passR.setError("Password is compulsory");
+                        passR.requestFocus();
+                        return;
+                    }
+
+                    if (emailU.isEmpty()) {
+                        emailR.setError("Email is compulsory");
+                        emailR.requestFocus();
+                        return;
+                    }
+
+                    if (!emailU.matches(emailPattern)) {
+                        emailR.setError("Invalid email");
+                        emailR.requestFocus();
+                        return;
+                    }
+                    if(!santimetersU.isEmpty()){
+                        try{
+                            santimeters = Integer.parseInt(santimetersU);
+                        }catch (NumberFormatException e){
+                            Log.e("TAG",e.getMessage());
+                        }
+                    }
+                    if(!kilogramsU.isEmpty()){
+                        try{
+                            kilograms = Integer.parseInt(kilogramsU);
+                        }catch (NumberFormatException e){
+                            Log.e("TAG",e.getMessage());
+                        }
+                    }
+                    if (DbManager.getInstance(RegisterActivity.this).existsUser(usernameU)) {
+                        usernameR.setError("User already exists");
+                        usernameR.setText("");
+                        usernameR.requestFocus();
+                        return;
+                    }
+                    DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters,0);
+
+                    Intent intent = new Intent();
+                    intent.putExtra("username", usernameR.getText().toString());
+                    intent.putExtra("password", passR.getText().toString());
+                    setResult(RESULT_REG_SUCCESSFUL, intent);
+                    finish();
+                }
+            });
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+
 
     }
 }
