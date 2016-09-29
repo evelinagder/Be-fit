@@ -105,6 +105,12 @@ public class LoginActivity extends AppCompatActivity {
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
                    if(DbManager.getInstance(LoginActivity.this).validateLogin(username,password)) {
+                       SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
+                       SharedPreferences.Editor editor = prefs.edit();
+                       editor.putBoolean("logged_in", true);
+                       editor.putString("currentUser",username);
+                       editor.commit();
+                       Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
                        Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                        intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
                        startActivity(intent);
@@ -112,13 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                        Toast.makeText(LoginActivity.this,"Please register",Toast.LENGTH_SHORT).show();
                    }
-                    SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean("logged_in", true);
-                    editor.putString("currentUser",username);
-                    editor.commit();
-                    Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
-                    
                 }
             }
 

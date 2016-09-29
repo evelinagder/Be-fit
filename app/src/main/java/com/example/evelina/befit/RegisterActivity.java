@@ -187,14 +187,10 @@ public class RegisterActivity extends AppCompatActivity {
                             //getId() can be used for password
                             String password = profile.getId();
                             String username=profile.getFirstName()+" "+profile.getLastName()+password;
-DbManager.getInstance(RegisterActivity.this).addUser(username, password, "",0,0,0);
-
-
-                                                        Intent intent = new Intent(RegisterActivity.this, TabbedActivity.class);
+                            DbManager.getInstance(RegisterActivity.this).addUser(username, password, "",0,0,0);
+                            Intent intent = new Intent(RegisterActivity.this, TabbedActivity.class);
                             intent.putExtra("username",username);
-
-
-
+                            startActivity(intent);
 
                         }
 
