@@ -22,6 +22,7 @@ public class TrainingManager {
         Challenge lowerBody= new Challenge("LOWERBODY",0,null);
         Challenge wholeBody= new Challenge("WHOLEBODY",0,null);
         //TODO ADD REAL VIDEO ID!!!!!
+        //TODO in db
         //ABS
         Exercise absOne=new Exercise("Plate cocoon",10,2,10,"Knees remain bent, fully extends arms above the chest, move the weights and feet simultaneously to the floor",12);
         Exercise absTwo =new Exercise("Plate sit up",10,2,15,"Lay back on the floor, arms vertical to the floor.Keep the weight abe you and lift your shoulders off the floor",12);
