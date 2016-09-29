@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.User;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -35,9 +36,10 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null) != null) {
                     Log.e("USER", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null));
                     user = getCurrentUser(WelcomeActivity.this);
-//
+
                 }
                 maintainLogin(WelcomeActivity.this);
+                DbManager.getInstance(WelcomeActivity.this);
             }
         });
     }
@@ -63,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
     public  User getCurrentUser(Context activity){
         String username=activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null);
-       // User user=UsersManager.getInstance(WelcomeActivity.this).getUser(username); get from DB???
+        User user=DbManager.getInstance(WelcomeActivity.this).getUser(username);
         return user;
     }
 }

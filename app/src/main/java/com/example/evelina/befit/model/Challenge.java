@@ -8,11 +8,12 @@ import java.util.Date;
  */
 
 public class Challenge {
-    enum Type {UPPERBODY,LOWERBODY,ABDOMEN,WHOLEBODY,CUSTOM};
 
-    String name;
-    int timesCompleted;
-    String dateOfCompletion;
+
+    private String name;
+    private int timesCompleted;
+    private String dateOfCompletion;
+    private String achieved;
     ArrayList<Exercise> exercises;
 
     public Challenge(String name, int timesCompleted, String dateOfCompletion) {
@@ -30,5 +31,9 @@ public class Challenge {
 
     public String getName() {
         return name;
+    }
+
+    public void setAchieved(String achieved) {
+        this.achieved = achieved;
     }
 }

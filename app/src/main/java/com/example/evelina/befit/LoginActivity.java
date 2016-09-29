@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.DbManager;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Button login;
     Button register;
-    EditText email;
+    EditText username;
     EditText password;
     LoginButton loginButton;
     CallbackManager callbackManager;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
-        email = (EditText) findViewById(R.id.editText_emailL);
+        username = (EditText) findViewById(R.id.editText_emailL);
         password = (EditText) findViewById(R.id.editText_passwordL);
         loginButton= (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
@@ -44,13 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailString = email.getText().toString();
+                String usernameString = username.getText().toString();
                 //TODO check with data base! if exists
 
                 String passwordString = password.getText().toString();
-                if (emailString.isEmpty()) {
-                    email.setError("Email is compulsory");
-                    email.requestFocus();
+                if (usernameString.isEmpty()) {
+                    username.setError("Email is compulsory");
+                    username.requestFocus();
                     return;
                 }
                 if (passwordString.length() == 0) {
@@ -58,18 +59,18 @@ public class LoginActivity extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-//                if (!UsersManager.getInstance(LoginActivity.this).validalteLogin(usernameString, passwordString)) {
-//                    username.setError("Invalid credentials");
-//                    username.setText("");
-//                    password.setText("");
-//                    username.requestFocus();
-//                    return;
-//                }  BAZA DANNI?
+               if (!DbManager.getInstance(LoginActivity.this).validateLogin(usernameString, passwordString)) {
+                   username.setError("Invalid credentials");
+                   username.setText("");
+                   password.setText("");
+                   username.requestFocus();
+                   return;
+                }
 
                 SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("logged_in", true);
-                editor.putString("currentUser",emailString);
+                editor.putString("currentUser",usernameString);
                 editor.commit();
                 Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
 
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                email.setError(null);
+                username.setError(null);
                 startActivityForResult(intent, REQUEST_REG_USER);
             }
         });
@@ -116,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             if(resultCode == RegisterActivity.RESULT_REG_SUCCESSFUL){
                 String emailT = data.getStringExtra("email");
                 String pass = data.getStringExtra("password");
-                email.setText(emailT);
+                username.setText(emailT);
                 password.setText(pass);
             }
         }

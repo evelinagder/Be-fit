@@ -17,8 +17,8 @@ public class User implements Serializable{
     ArrayList<Challenge> customChallenges;
 
     public User( String username,String password, String email, int weight, int height) {
-        this.password = password;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.weight = weight;
         this.height= height;
@@ -49,5 +49,9 @@ public class User implements Serializable{
     }
     public void addAchievedChallenge(Challenge c){
         achievedChallenges.add(c);
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
