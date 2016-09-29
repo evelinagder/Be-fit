@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.DbManager;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -151,18 +152,18 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-//                if (UsersManager.getInstance(RegisterActivity.this).existsUser(usernameU)) {
-//                    usernameR.setError("User already exists");
-//                    usernameR.setText("");
-//                    usernameR.requestFocus();
-//                    return;
-//                CHECK IF USER ECXISTS IN DB!!! TODO
-//                }
-//           UsersManager.getInstance(RegisterActivity.this).registerUser(RegisterActivity.this, usernameU, passU, emailU);
+               if (DbManager.getInstance(RegisterActivity.this).existsUser(usernameU)) {
+                   usernameR.setError("User already exists");
+                   usernameR.setText("");
+                   usernameR.requestFocus();
+                    return;
+
+              }
+           DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters);
 
 
                         Intent intent = new Intent();
-                        intent.putExtra("email", emailR.getText().toString());
+                        intent.putExtra("username", usernameR.getText().toString());
                         intent.putExtra("password", passR.getText().toString());
                         setResult(RESULT_REG_SUCCESSFUL, intent);
                         finish();

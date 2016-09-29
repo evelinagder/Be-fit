@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String usernameString = username.getText().toString();
-                //TODO check with data base! if exists
 
                 String passwordString = password.getText().toString();
                 if (usernameString.isEmpty()) {
@@ -74,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.commit();
                 Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
 
-                  Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                  Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                  // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                   startActivity(intent);
@@ -124,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_REG_USER){
             if(resultCode == RegisterActivity.RESULT_REG_SUCCESSFUL){
-                String emailT = data.getStringExtra("email");
+                String emailT = data.getStringExtra("username");
                 String pass = data.getStringExtra("password");
                 username.setText(emailT);
                 password.setText(pass);

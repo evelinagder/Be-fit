@@ -139,6 +139,7 @@ public class DbManager extends SQLiteOpenHelper{
     public boolean existsUser( String username) {
         return allUsers.containsKey(username);
     }
+
     public void addUser(String username,String password, String email, int weight, int height){
         getWritableDatabase().beginTransaction();
         ContentValues values = new ContentValues();
@@ -170,6 +171,11 @@ public class DbManager extends SQLiteOpenHelper{
     }
     public boolean validateLogin(String username, String password){
         if (!existsUser(username)) {
+            StringBuilder allUsersS = new StringBuilder();
+            for (User u : allUsers.values()) {
+                allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
+            }
+            Log.e("maikaTi", allUsersS.toString());
             Log.e("F", "user does not exist in map");
             return false;
         }
