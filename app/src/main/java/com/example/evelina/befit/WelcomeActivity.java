@@ -33,13 +33,18 @@ public class WelcomeActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DbManager.getInstance(WelcomeActivity.this).loadUsers();
+                StringBuilder allUsersS = new StringBuilder();
+                for (User u : DbManager.getInstance(WelcomeActivity.this).allUsers.values()) {
+                    allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
+                }
+                Log.e("maikaTi", allUsersS.toString());
                 if (WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null) != null) {
                     Log.e("USER", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null));
                     user = getCurrentUser(WelcomeActivity.this);
-
                 }
                 maintainLogin(WelcomeActivity.this);
-                DbManager.getInstance(WelcomeActivity.this);
+
             }
         });
     }
@@ -49,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (logged_in) {
             Toast.makeText(WelcomeActivity.this,"Going to Home",Toast.LENGTH_SHORT).show();
-            Intent intent= new Intent(WelcomeActivity.this, MainActivity.class);
+            Intent intent= new Intent(WelcomeActivity.this, TabbedActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("loggedUser",user) ;
             startActivity(intent);
