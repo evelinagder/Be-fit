@@ -1,5 +1,6 @@
 package com.example.evelina.befit;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -185,6 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
                             String password = profile.getId();
                             String username=profile.getFirstName()+" "+profile.getLastName()+password;
                             //TODO DB pass and user
+
                         }
 
                     }
