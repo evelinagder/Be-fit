@@ -96,7 +96,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Profile profile =Profile.getCurrentProfile();
                 AccessToken accessToken = loginResult.getAccessToken();
-                //TODO passing intent with loggedUser
+
+                //TODO add to database
+                String password = profile.getId();
+                String username=profile.getFirstName()+" "+profile.getLastName()+password;
+                Intent intent = new Intent(LoginActivity.this,TabbedActivity.class);
+                intent.putExtra("username",profile.getFirstName()+" "+profile.getLastName());
+
+                startActivity(intent);
             }
 
             @Override
