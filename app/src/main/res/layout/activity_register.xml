@@ -125,16 +125,6 @@
             android:text="Register"
             android:id="@+id/button_registerR" />
 
-        <com.facebook.login.widget.LoginButton
-            xmlns:facebook="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/login_button"
-            facebook:com_facebook_login_text="Register via Facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp" />
-
     </LinearLayout>
 </ScrollView>
 
