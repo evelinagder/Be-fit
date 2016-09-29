@@ -110,6 +110,13 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                        Toast.makeText(LoginActivity.this,"Please register",Toast.LENGTH_SHORT).show();
                    }
+                    SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("logged_in", true);
+                    editor.putString("currentUser",username);
+                    editor.commit();
+                    Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
+                    
                 }
             }
 

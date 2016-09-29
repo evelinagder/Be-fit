@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
 
               }
-           DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters);
+           DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters,0);
 
 
                         Intent intent = new Intent();
@@ -184,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //getId() can be used for password
                             String password = profile.getId();
                             String username=profile.getFirstName()+" "+profile.getLastName()+password;
-                            DbManager.getInstance(RegisterActivity.this).addUser(username, password, "",0,0);
+                            DbManager.getInstance(RegisterActivity.this).addUser(username, password, "",0,0,0);
                             Intent intent = new Intent(RegisterActivity.this, TabbedActivity.class);
                             intent.putExtra("username",username);
 

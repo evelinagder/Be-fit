@@ -19,7 +19,7 @@ public class DbManager extends SQLiteOpenHelper{
     public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
@@ -29,6 +29,7 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String USER_USERNAME="username";
     private static final String USER_PASSWORD="password";
     private static final String USER_EMAIL="email";
+    private static final String USER_POINTS="points";
     private static final String USER_WEIGHT="weight";
     private static final String USER_HEIGHT="height";
     //CHALLENGE table column names
@@ -69,7 +70,7 @@ public class DbManager extends SQLiteOpenHelper{
     @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE "+USERS_TABLE+" ( "+USER_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_USERNAME +" text, "
-                    +USER_PASSWORD + " text, "+USER_EMAIL+" text, "+USER_WEIGHT+" text,  "+USER_HEIGHT+" text);");
+                    +USER_PASSWORD + " text, "+USER_EMAIL+" text, "+USER_WEIGHT+" INTEGER,  "+USER_HEIGHT+" INTEGER, "+USER_POINTS+" INTEGER);");
             db.execSQL("CREATE TABLE "+CHALLENGES_TABLE+" ( "+CHALLENGE_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "+CHALLENGE_USER_UID +" INTEGER , "
                     +CHALLENGE_NAME + " text, "+CHALLENGE_ACHIEVED+" text, "+CHALLENGE_TIMES+" INTEGER, "+CHALLENGE_DATE+" text, FOREIGN KEY("+CHALLENGE_USER_UID+
                     ") REFERENCES "+ USERS_TABLE+"("+USER_UID+"));");
@@ -93,7 +94,7 @@ public class DbManager extends SQLiteOpenHelper{
     public void loadUsers(){
         if( allUsers.isEmpty()){
             Cursor cursor=getWritableDatabase().rawQuery("SELECT "+USER_UID+", "+USER_USERNAME+", "+USER_PASSWORD+", "+USER_EMAIL+", "+USER_WEIGHT+
-            ", "+USER_HEIGHT+ " FROM "+USERS_TABLE,null);
+            ", "+USER_HEIGHT+", "+USER_POINTS+ " FROM "+USERS_TABLE,null);
             while(cursor.moveToNext()){
                 int userId=cursor.getInt(cursor.getColumnIndex(USER_UID));
                 String username=cursor.getString(cursor.getColumnIndex(USER_USERNAME));
@@ -101,7 +102,8 @@ public class DbManager extends SQLiteOpenHelper{
                 String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
-                User u= new User(username,password,email,weight,height);
+                int pointsU=cursor.getInt(cursor.getColumnIndex(USER_POINTS));
+                User u= new User(username,password,email,weight,height,pointsU);
                 Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_UID+", "+CHALLENGE_USER_UID+", "+CHALLENGE_NAME+", "+CHALLENGE_TIMES+", "+CHALLENGE_ACHIEVED+", "+CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+", "+USERS_TABLE+" WHERE "+CHALLENGE_USER_UID+"= ?",new String[] {String.valueOf(userId)});
                 while(cursorChallenge.moveToNext()){
                     int challengeId=cursor.getInt(cursor.getColumnIndex(CHALLENGE_UID));
@@ -140,7 +142,7 @@ public class DbManager extends SQLiteOpenHelper{
         return allUsers.containsKey(username);
     }
 
-    public void addUser(String username,String password, String email, int weight, int height){
+    public void addUser(String username,String password, String email, int weight, int height,int points){
 
         ContentValues values = new ContentValues();
         values.put(USER_USERNAME, username);
@@ -148,8 +150,9 @@ public class DbManager extends SQLiteOpenHelper{
         values.put(USER_EMAIL, email);
         values.put(USER_WEIGHT, weight);
         values.put(USER_HEIGHT, height);
+        values.put(USER_POINTS, points);
        long id = getWritableDatabase().insert(USERS_TABLE, null, values);
-        allUsers.put(username, new User(username, password,email,weight,height));
+        allUsers.put(username, new User(username, password,email,weight,height,points));
     }
     public void addCustomChallenge( User user, String ChallengeName){
         //TODO
@@ -170,11 +173,6 @@ public class DbManager extends SQLiteOpenHelper{
     }
     public boolean validateLogin(String username, String password){
         if (!existsUser(username)) {
-            StringBuilder allUsersS = new StringBuilder();
-            for (User u : allUsers.values()) {
-                allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
-            }
-            Log.e("maikaTi", allUsersS.toString());
             Log.e("F", "user does not exist in map");
             return false;
         }
