@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -185,6 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //getId() can be used for password
                             String password = profile.getId();
                             String username=profile.getFirstName()+" "+profile.getLastName()+password;
+
                             //TODO DB pass and user
 
                         }
@@ -216,6 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode,resultCode,data);
+
     }
 }
 
