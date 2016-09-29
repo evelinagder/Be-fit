@@ -30,7 +30,7 @@ public class ConfirmationFragment extends DialogFragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity= (IConfirmation) context;
+       // activity= (IConfirmation) context;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ConfirmationFragment extends DialogFragment  {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.finishSelected();
+                //activity.finishSelected();
             }
         });
         return view;

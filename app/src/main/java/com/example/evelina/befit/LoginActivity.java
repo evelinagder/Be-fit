@@ -75,8 +75,10 @@ public class LoginActivity extends AppCompatActivity {
 
                   Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                  // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
+                    intent.putExtra("username",username.getText().toString());
                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                   startActivity(intent);
+                  finish();
 
 
             }

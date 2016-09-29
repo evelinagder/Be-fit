@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+
 public class TabbedActivity extends AppCompatActivity implements ProfileFragment.IProfileCommunicator{
 
     /**
@@ -99,6 +101,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
             editor.putBoolean("logged_in",false);
             editor.putString("currentUser",null);
             editor.commit();
+            LoginManager.getInstance().logOut();
             Intent intent = new Intent(TabbedActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
