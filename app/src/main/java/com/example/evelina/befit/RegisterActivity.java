@@ -176,10 +176,14 @@ public class RegisterActivity extends AppCompatActivity {
                         //Login with facebook can be done as content provider
                         Profile profile =Profile.getCurrentProfile();
                         AccessToken accessToken = loginResult.getAccessToken();
+
+                        //here we should call one dialog fragment with weight height and sex
                         if(profile!=null){
                             //here we can start new intent to another activity since we now have the whole profile
                             //getId() can be used for password
-
+                            String password = profile.getId();
+                            String username=profile.getFirstName()+" "+profile.getLastName()+password;
+                            //TODO DB pass and user
                         }
 
                     }

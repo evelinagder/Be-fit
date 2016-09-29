@@ -1,5 +1,8 @@
 package com.example.evelina.befit;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -87,6 +90,18 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //TODO here we open profile settings
+            return true;
+        }
+        if(id==R.id.action_logout){
+           //here logout
+            SharedPreferences sharedPreferences = TabbedActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("logged_in",false);
+            editor.putString("currentUser",null);
+            editor.commit();
+            Intent intent = new Intent(TabbedActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
 
