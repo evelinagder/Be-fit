@@ -37,7 +37,7 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String CHALLENGE_NAME="name";
     private static final String CHALLENGE_ACHIEVED="achieved";
     private static final String CHALLENGE_TIMES="times_completed";
-    private static final String CHALLENGE_DATE="ate_completed";
+    private static final String CHALLENGE_DATE="date_completed";
     //EXERCISE table column names
     private static final String EXERCISE_CHALLENGE_UID="toChallenge_id";
     private static final String EXERCISE_UID="exercise_id";
@@ -68,14 +68,14 @@ public class DbManager extends SQLiteOpenHelper{
 
     @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE "+USERS_TABLE+" ( "+USER_UID  +"INTEGER PRIMARY KEY AUTOINCREMENT,"+USER_USERNAME +"text,"
-                    +USER_PASSWORD + "text,"+USER_EMAIL+"text,"+USER_WEIGHT+"text,"+USER_HEIGHT+"text);");
-            db.execSQL("CREATE TABLE "+CHALLENGES_TABLE+" ( "+CHALLENGE_UID  +"INTEGER PRIMARY KEY AUTOINCREMENT,"+CHALLENGE_USER_UID +"INTEGER ,FOREIGN KEY("+CHALLENGE_USER_UID+
-            ") REFERENCES"+ USERS_TABLE+"("+USER_UID+"), "
-                    +CHALLENGE_NAME + " text,"+CHALLENGE_ACHIEVED+" text"+CHALLENGE_TIMES+"INTEGER,"+CHALLENGE_DATE+" text );");
-        db.execSQL("CREATE TABLE "+EXERCISE_TABLE+" ( "+EXERCISE_UID  +"INTEGER PRIMARY KEY AUTOINCREMENT,"+EXERCISE_CHALLENGE_UID +"INTEGER ,FOREIGN KEY("+EXERCISE_CHALLENGE_UID+
-                ") REFERENCES"+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"), "
-                +EXERCISE_NAME + "text,"+EXERCISE_POINTS+"INTEGER,"+EXERCISE_SERIES+"INTEGER,"+EXERCISE_REPEATS+"INTEGER,"+EXERCISE_INSTRUCTIONS+"text"+EXERCISE_VIDEO+"INTEGER );");
+            db.execSQL("CREATE TABLE "+USERS_TABLE+" ( "+USER_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_USERNAME +" text, "
+                    +USER_PASSWORD + " text, "+USER_EMAIL+" text, "+USER_WEIGHT+" text,  "+USER_HEIGHT+" text);");
+            db.execSQL("CREATE TABLE "+CHALLENGES_TABLE+" ( "+CHALLENGE_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "+CHALLENGE_USER_UID +" INTEGER , "
+                    +CHALLENGE_NAME + " text, "+CHALLENGE_ACHIEVED+" text, "+CHALLENGE_TIMES+" INTEGER, "+CHALLENGE_DATE+" text, FOREIGN KEY("+CHALLENGE_USER_UID+
+                    ") REFERENCES "+ USERS_TABLE+"("+USER_UID+"));");
+        db.execSQL("CREATE TABLE "+EXERCISE_TABLE+" ( "+EXERCISE_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "+EXERCISE_CHALLENGE_UID +" INTEGER, "
+                +EXERCISE_NAME + " text, "+EXERCISE_POINTS+" INTEGER, "+EXERCISE_SERIES+" INTEGER, "+EXERCISE_REPEATS+" INTEGER, "+EXERCISE_INSTRUCTIONS+" text "+EXERCISE_VIDEO+" INTEGER, FOREIGN KEY("+EXERCISE_CHALLENGE_UID +
+       " ) REFERENCES "+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"));");
         Toast.makeText(context, "DB Created", Toast.LENGTH_SHORT).show();
         }
 
