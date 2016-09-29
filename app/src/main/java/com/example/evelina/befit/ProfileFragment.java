@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,10 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         //TODO here if we have data should fill it in the fields
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
         profilePicture = (ImageView) view.findViewById(R.id.picture_profile);
-        usernameTV = (TextView) view.findViewById(R.id.username_profile_TV);
+
+
         numberPointsTV = (TextView) view.findViewById(R.id.number_points_profile_TV);
         numberTrainingsTV = (TextView) view.findViewById(R.id.number_trainings_profile_TV);
         viewTrainingsButton = (Button) view.findViewById(R.id.view_trainings_profile_Button);

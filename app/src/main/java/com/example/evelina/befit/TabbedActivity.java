@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
      */
     private ViewPager mViewPager;
 
-
+     static  String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,11 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Be Fit");
+        if(getIntent().getStringExtra("username")!=null){
+            Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
+             username = getIntent().getStringExtra("username");
+        }
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -135,6 +141,9 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
                 return rootView;
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+              
+                TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
+                usernameF.setText(username);
                 return rootView;
             }
 
