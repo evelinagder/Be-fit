@@ -98,12 +98,14 @@ public class LoginActivity extends AppCompatActivity {
                 AccessToken accessToken = loginResult.getAccessToken();
 
                 //TODO add to database
-                String password = profile.getId();
-                String username=profile.getFirstName()+" "+profile.getLastName()+password;
-                Intent intent = new Intent(LoginActivity.this,TabbedActivity.class);
-                intent.putExtra("username",profile.getFirstName()+" "+profile.getLastName());
+                if(profile!=null) {
 
-                startActivity(intent);
+                    String password = profile.getId();
+                    String username = profile.getFirstName() + " " + profile.getLastName() + password;
+                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
+                    startActivity(intent);
+                }
             }
 
             @Override
