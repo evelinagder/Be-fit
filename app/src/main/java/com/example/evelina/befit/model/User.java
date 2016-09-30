@@ -60,4 +60,12 @@ public class User implements Serializable{
     public String getUsername() {
         return username;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }
