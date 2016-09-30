@@ -2,9 +2,11 @@ package com.example.evelina.befit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     LoginButton loginButton;
     CallbackManager callbackManager;
+    NetworkStateChangedReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editText_passwordL);
         loginButton= (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
-
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Profile profile =Profile.getCurrentProfile();
                 AccessToken accessToken = loginResult.getAccessToken();
-
                 //TODO add to database
                 if(profile!=null) {
 
@@ -127,11 +130,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-
+                Log.e("TAG","user pressed cancel");
             }
 
             @Override
             public void onError(FacebookException error) {
+                Log.e("TAG",error.getMessage());
+                Toast.makeText(LoginActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -150,5 +155,11 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode,resultCode,data);
 
 }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }
 
