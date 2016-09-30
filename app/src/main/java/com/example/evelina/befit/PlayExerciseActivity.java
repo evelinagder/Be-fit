@@ -3,6 +3,7 @@ package com.example.evelina.befit;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private FloatingActionButton fab ;
     private Button completedButton;
     private DialogFragment fragment;
+    private NetworkStateChangedReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                 Toast.makeText(PlayExerciseActivity.this, "Open dialog fragment with info here", Toast.LENGTH_SHORT).show();
             }
         });
-
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -98,6 +101,9 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }

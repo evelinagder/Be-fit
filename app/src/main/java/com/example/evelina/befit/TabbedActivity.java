@@ -2,6 +2,7 @@ package com.example.evelina.befit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
 public class TabbedActivity extends AppCompatActivity implements ProfileFragment.IProfileCommunicator{
@@ -44,13 +46,14 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    private NetworkStateChangedReceiver receiver;
      static  String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
-
+        receiver=new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Be Fit");
@@ -101,6 +104,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
             editor.putBoolean("logged_in",false);
             editor.putString("currentUser",null);
             editor.commit();
+            FacebookSdk.sdkInitialize(getApplicationContext());
             LoginManager.getInstance().logOut();
             Intent intent = new Intent(TabbedActivity.this,LoginActivity.class);
             startActivity(intent);
@@ -203,5 +207,11 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
             }
             return null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }
