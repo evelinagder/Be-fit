@@ -94,7 +94,8 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            //TODO here we open profile settings
+            Intent intent = new Intent(TabbedActivity.this,SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
         if(id==R.id.action_logout){

@@ -2,6 +2,7 @@ package com.example.evelina.befit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
     Button start;
     User user;
     Button shortcut;
+    private NetworkStateChangedReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         start = (Button) findViewById(R.id.button_start);
         shortcut= (Button) findViewById(R.id.shortcut);
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+
         shortcut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,5 +77,11 @@ public class WelcomeActivity extends AppCompatActivity {
         String username=activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null);
         User user=DbManager.getInstance(WelcomeActivity.this).getUser(username);
         return user;
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }

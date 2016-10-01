@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.evelina.befit.SettingsHeightFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:layout_height="200dp">
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:id="@+id/meters_picker"
+            android:layout_height="wrap_content"></NumberPicker>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:text="m"/>
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:id="@+id/santimeters_picker"
+            android:layout_height="wrap_content"></NumberPicker>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:gravity="center_vertical"
+            android:layout_margin="25dp"
+            android:text="sm"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:id="@+id/height_ok_button"
+        android:textColor="@color/colorPrimary"
+        android:text="OK"/>
+
+
+</LinearLayout>
