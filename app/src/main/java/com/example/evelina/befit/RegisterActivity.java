@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerR;
     Spinner genderSpinner;
     public static final int RESULT_REG_SUCCESSFUL = 10;
+    String gender;
 
 
     @Override
@@ -81,10 +82,12 @@ public class RegisterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        Toast.makeText(RegisterActivity.this, "first", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "female", Toast.LENGTH_SHORT).show();
+                        gender="female";
                         break;
                     case 1:
-                        Toast.makeText(RegisterActivity.this, "second", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "male", Toast.LENGTH_SHORT).show();
+                        gender="male";
                         break;
 
                 }
@@ -165,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
                         usernameR.requestFocus();
                         return;
                     }
-                    DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,kilograms,santimeters,0);
+                    DbManager.getInstance(RegisterActivity.this).addUser(usernameU, passU, emailU,gender,kilograms,santimeters,0);
 
                     Intent intent = new Intent();
                     intent.putExtra("username", usernameR.getText().toString());

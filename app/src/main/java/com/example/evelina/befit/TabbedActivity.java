@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.example.evelina.befit.model.Challenge;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
@@ -151,6 +152,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
                 //Bundle bundle = new Bundle();
                 //bundle.put data from DB
                 //d.setArguments(bundle);
+
 
                 View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
                 TextView textView = (TextView) rootView.findViewById(R.id.section_label);

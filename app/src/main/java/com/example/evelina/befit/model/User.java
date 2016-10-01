@@ -14,13 +14,15 @@ public class User implements Serializable{
     private int weight;
     private int height;
     private int points;
+    private String gender;
     ArrayList<Challenge> achievedChallenges;
     ArrayList<Challenge> customChallenges;
 
-    public User( String username,String password, String email, int weight, int height, int points) {
+    public User( String username,String password, String email, String gender,int weight, int height, int points) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.gender=gender;
         this.weight = weight;
         this.height= height;
         this.points=points;
@@ -67,5 +69,37 @@ public class User implements Serializable{
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

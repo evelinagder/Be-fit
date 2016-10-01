@@ -19,7 +19,7 @@ public class DbManager extends SQLiteOpenHelper{
     public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
@@ -29,6 +29,7 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String USER_USERNAME="username";
     private static final String USER_PASSWORD="password";
     private static final String USER_EMAIL="email";
+    private static final String USER_GENDER="gender";
     private static final String USER_POINTS="points";
     private static final String USER_WEIGHT="weight";
     private static final String USER_HEIGHT="height";
@@ -73,6 +74,7 @@ public class DbManager extends SQLiteOpenHelper{
                     +USER_USERNAME +" text, "
                     +USER_PASSWORD + " text, "
                     +USER_EMAIL+" text, "
+                    +USER_GENDER+" text, "
                     +USER_WEIGHT+" INTEGER,  "
                     +USER_HEIGHT+" INTEGER, "
                     +USER_POINTS+" INTEGER);");
@@ -112,6 +114,7 @@ public class DbManager extends SQLiteOpenHelper{
                     +USER_USERNAME+", "
                     +USER_PASSWORD+", "
                     +USER_EMAIL+", "
+                    +USER_GENDER+", "
                     +USER_WEIGHT+ ", "
                     +USER_HEIGHT+", "
                     +USER_POINTS+ " FROM " +USERS_TABLE,null);
@@ -120,10 +123,11 @@ public class DbManager extends SQLiteOpenHelper{
                 String username=cursor.getString(cursor.getColumnIndex(USER_USERNAME));
                 String password=cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
                 String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
+                String gender=cursor.getString(cursor.getColumnIndex(USER_GENDER));
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
                 int pointsU=cursor.getInt(cursor.getColumnIndex(USER_POINTS));
-                User u= new User(username,password,email,weight,height,pointsU);
+                User u= new User(username,password,email,gender,weight,height,pointsU);
                 Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_UID+", "
                         +CHALLENGE_USER_UID+", "
                         +CHALLENGE_NAME+", "
@@ -170,17 +174,18 @@ public class DbManager extends SQLiteOpenHelper{
         return allUsers.containsKey(username);
     }
 
-    public void addUser(String username,String password, String email, int weight, int height,int points){
+    public void addUser(String username,String password, String email,String gender, int weight, int height,int points){
 
         ContentValues values = new ContentValues();
         values.put(USER_USERNAME, username);
         values.put(USER_PASSWORD, password);
         values.put(USER_EMAIL, email);
+        values.put(USER_GENDER,gender);
         values.put(USER_WEIGHT, weight);
         values.put(USER_HEIGHT, height);
         values.put(USER_POINTS, points);
        long id = getWritableDatabase().insert(USERS_TABLE, null, values);
-        allUsers.put(username, new User(username, password,email,weight,height,points));
+        allUsers.put(username, new User(username, password,email,gender,weight,height,points));
     }
     public void addCustomChallenge( String username, String name){
         //adds new challende when user pressed ADD and gave it a name!
@@ -198,11 +203,49 @@ public class DbManager extends SQLiteOpenHelper{
     public void updateUserInfo(User user){
         //TODO methods fro everything that can change from settings
     }
+    public void changeUserEmail(String username, String newEmail){
+        //used in settings -change user email option
+        User user= allUsers.get(username);
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_EMAIL,newEmail);
+        db.update(USERS_TABLE,cv,USER_EMAIL+" =? ",new String[] {user.getEmail()});
+        user.setEmail(newEmail);
+        allUsers.put(username, user);
+    }
+    public void changeUserWeight(String username, int newWeight){
+        //used in settings -change user weight option ??
+        User user= allUsers.get(username);
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_WEIGHT,newWeight);
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
+        user.setWeight(newWeight);
+        allUsers.put(username, user);
+    }
+    public void updateUserHeight(String username, int height){
+        //used in settings -change user height option ??
+        User user= allUsers.get(username);
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_HEIGHT,height);
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
+        user.setHeight(height);
+        allUsers.put(username, user);
+    }
+    public void updateUserGender(String username, String gender){
+        //used when user changes gender from settings
+        User user= allUsers.get(username);
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_GENDER,gender);
+        db.update(USERS_TABLE,cv,USER_GENDER+" =? ",new String[] {user.getGender()});
+        user.setGender(gender);
+        allUsers.put(username, user);
+    }
     public void changeUserPoints( String username, int newPoints){
         //used when user completes an Exercise, upgrade user`s points in d and in map!
         User user= allUsers.get(username);
-        Cursor cursor=getWritableDatabase().rawQuery("SELECT "+USER_UID+" FROM " +USERS_TABLE+" WHERE "+USER_USERNAME+"= ?" ,new String[] {username});
-        int userId=cursor.getInt(0);
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_POINTS,newPoints);

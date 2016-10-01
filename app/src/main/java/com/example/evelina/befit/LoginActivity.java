@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
 
                         if (!DbManager.getInstance(LoginActivity.this).validateLogin(username, password)) {
-                            DbManager.getInstance(LoginActivity.this).addUser(username, password, "", 0, 0, 0);
+                            DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
                         }
 
                     Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
