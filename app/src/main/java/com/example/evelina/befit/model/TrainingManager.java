@@ -1,28 +1,37 @@
 package com.example.evelina.befit.model;
 
+import android.app.Activity;
+
+import com.example.evelina.befit.TabbedActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Evelina on 9/27/2016.
  */
 public class TrainingManager {
-    ArrayList<Challenge> basicChalenges;
+    private static TrainingManager ourInstance;
+    ArrayList<Challenge> basicChallenges;
     ArrayList<Exercise> allExercises;
-    private static TrainingManager ourInstance = new TrainingManager();
-
     public static TrainingManager getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new TrainingManager();
+        }
         return ourInstance;
     }
 
+
     private TrainingManager() {
-        basicChalenges=new ArrayList<Challenge>();
+        basicChallenges=new ArrayList<Challenge>();
+        allExercises= new ArrayList<Exercise>();
         Challenge abdomen= new Challenge("ABDOMEN",0, null);
         Challenge upperBody= new Challenge("UPPERBODY",0,null);
         Challenge lowerBody= new Challenge("LOWERBODY",0,null);
         Challenge wholeBody= new Challenge("WHOLEBODY",0,null);
         //TODO ADD REAL VIDEO ID!!!!!
-        //TODO in db
+
         //ABS
         Exercise absOne=new Exercise("Plate cocoon",10,2,10,"Knees remain bent, fully extends arms above the chest, move the weights and feet simultaneously to the floor",12);
         Exercise absTwo =new Exercise("Plate sit up",10,2,15,"Lay back on the floor, arms vertical to the floor.Keep the weight abe you and lift your shoulders off the floor",12);
@@ -80,23 +89,32 @@ public class TrainingManager {
         upperBody.addExercise(upFive);
 
 
-        basicChalenges.add(abdomen);
-        basicChalenges.add(upperBody);
-        basicChalenges.add(lowerBody);
-        basicChalenges.add(wholeBody);
+        basicChallenges.add(abdomen);
+        basicChallenges.add(upperBody);
+        basicChallenges.add(lowerBody);
+        basicChallenges.add(wholeBody);
 
 
     }
 
-    public ArrayList<Challenge> getBasicChalenges(){
+    public ArrayList<Challenge> getBasicChallenges(){
 
-        return basicChalenges;
+        return basicChallenges;
     }
 
     // for loading in exercise Inventory
     public ArrayList<Exercise> getAllExercises(){
 
         return allExercises;
+    }
+
+    public List<String> getBasicChallengesName(){
+        List<String> list= new ArrayList<String>();
+        for(int i = 0; i<basicChallenges.size();i++){
+            list.add(basicChallenges.get(i).getName());
+        }
+        return list;
+
     }
 
 }

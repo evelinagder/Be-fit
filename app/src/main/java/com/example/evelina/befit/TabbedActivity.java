@@ -10,6 +10,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -29,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.model.TrainingManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
@@ -157,10 +160,14 @@ public class TabbedActivity extends AppCompatActivity{
                 //d.setArguments(bundle);
 
 
-                View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-                textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-                return rootView;
+                // Inflate the layout for this fragment
+                View root =  inflater.inflate(R.layout.fragment_basic_training, container, false);
+                RecyclerView categories = (RecyclerView) root.findViewById(R.id.basicTraining_view);
+                categories.setAdapter(new TrainingRecyclerAdapter((TabbedActivity)getActivity(), TrainingManager.getInstance().getBasicChallengesName()));
+                categories.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                return root;
+
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 //here for custom
                 View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
@@ -238,5 +245,8 @@ public class TabbedActivity extends AppCompatActivity{
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+    public void trainingSelected(String choice){
+        //TODO action after selecting a training
     }
 }
