@@ -24,13 +24,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.evelina.befit.model.Challenge;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
-public class TabbedActivity extends AppCompatActivity implements ProfileFragment.IProfileCommunicator{
+public class TabbedActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -96,6 +98,7 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(TabbedActivity.this,SettingsActivity.class);
+            intent.putExtra("loggedUser",username);
             startActivity(intent);
             return true;
         }
@@ -166,9 +169,28 @@ public class TabbedActivity extends AppCompatActivity implements ProfileFragment
                 return rootView;
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
+                ImageView profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
+                TextView numberPointsTV=(TextView) rootView.findViewById(R.id.number_points_profile_TV);
+                TextView numberTrainingsTV=(TextView) rootView.findViewById(R.id.number_trainings_profile_TV);
+                Button viewTrainingsButton= (Button) rootView.findViewById(R.id.view_trainings_profile_Button);
+                TextView kilogramsTV=(TextView) rootView.findViewById(R.id.kg_profile_TV);
+                TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
+                FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
+
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //go to another activity whowing the chart ref. see snackbar?
+                    }
+                });
+                viewTrainingsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //another actitivity displaying the exercise
+                    }
+                });
                 return rootView;
             }
 

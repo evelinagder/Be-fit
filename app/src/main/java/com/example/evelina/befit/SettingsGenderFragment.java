@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.example.evelina.befit.model.DbManager;
 
 
 /**
@@ -29,6 +32,7 @@ public class SettingsGenderFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings_gender, container, false);
+        final String  username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
         mGenderRadioButton = (RadioGroup) view.findViewById(R.id.radio_group);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if(getArguments().getString("gender")!=null){
@@ -52,8 +56,9 @@ public class SettingsGenderFragment extends DialogFragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if(i==R.id.female_gender){
                     //here change the gender in DB
+                    DbManager.getInstance(getContext()).updateUserGender(username,"female");
                 }else{
-
+                    DbManager.getInstance(getContext()).updateUserGender(username,"male");
                 }
             }
         });

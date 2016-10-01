@@ -14,7 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="25dp"
             android:id="@+id/meters_picker"
-            android:layout_height="wrap_content"></NumberPicker>
+            android:layout_height="wrap_content">
+
+        </NumberPicker>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -25,7 +27,9 @@
         <NumberPicker
             android:layout_width="wrap_content"
             android:id="@+id/santimeters_picker"
-            android:layout_height="wrap_content"></NumberPicker>
+            android:layout_height="wrap_content">
+
+        </NumberPicker>
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +37,7 @@
             android:textColor="@android:color/black"
             android:gravity="center_vertical"
             android:layout_margin="25dp"
-            android:text="sm"/>
+            android:text="cm"/>
 
     </LinearLayout>
 

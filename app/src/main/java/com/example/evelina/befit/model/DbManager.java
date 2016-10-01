@@ -212,6 +212,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.update(USERS_TABLE,cv,USER_EMAIL+" =? ",new String[] {user.getEmail()});
         user.setEmail(newEmail);
         allUsers.put(username, user);
+        Toast.makeText(context, "New email "+ newEmail, Toast.LENGTH_SHORT).show();
     }
     public void changeUserWeight(String username, int newWeight){
         //used in settings -change user weight option ??
@@ -222,6 +223,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setWeight(newWeight);
         allUsers.put(username, user);
+        Toast.makeText(context, "New weight "+ newWeight, Toast.LENGTH_SHORT).show();
     }
     public void updateUserHeight(String username, int height){
         //used in settings -change user height option ??
@@ -232,6 +234,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setHeight(height);
         allUsers.put(username, user);
+        Toast.makeText(context, "New height "+ height, Toast.LENGTH_SHORT).show();
     }
     public void updateUserGender(String username, String gender){
         //used when user changes gender from settings
@@ -242,6 +245,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.update(USERS_TABLE,cv,USER_GENDER+" =? ",new String[] {user.getGender()});
         user.setGender(gender);
         allUsers.put(username, user);
+        Toast.makeText(context, "New gender "+ gender, Toast.LENGTH_SHORT).show();
     }
     public void changeUserPoints( String username, int newPoints){
         //used when user completes an Exercise, upgrade user`s points in d and in map!

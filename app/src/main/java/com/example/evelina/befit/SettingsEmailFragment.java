@@ -1,7 +1,9 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.evelina.befit.model.DbManager;
 
 
 public class SettingsEmailFragment extends DialogFragment {
@@ -54,7 +58,8 @@ public class SettingsEmailFragment extends DialogFragment {
                     return;
                 }
                 //here we update the value in DBManager with the new email for the user
-
+                String  username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
+                DbManager.getInstance(getContext()).changeUserEmail(username,newEmail);
                 dismiss();
             }
         });

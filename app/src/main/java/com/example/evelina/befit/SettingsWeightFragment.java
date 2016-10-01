@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
+
+import com.example.evelina.befit.model.DbManager;
 
 
 /**
@@ -32,7 +35,7 @@ public class SettingsWeightFragment extends DialogFragment {
         mWeightsPicker = (NumberPicker) view.findViewById(R.id.weight_picker);
         mOkButton = (Button) view.findViewById(R.id.weight_ok_button);
         getDialog().setTitle("Set weight");
-        mWeightsPicker.setMinValue(20);
+        mWeightsPicker.setMinValue(40);
         mWeightsPicker.setMaxValue(200);
         mWeightsPicker.setWrapSelectorWheel(false);
         String [] values = new String[201];
@@ -45,6 +48,9 @@ public class SettingsWeightFragment extends DialogFragment {
             public void onClick(View view) {
                 int weight = mWeightsPicker.getValue();
                 //here we have the weight and should update it in the DB
+
+                String  username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
+                DbManager.getInstance(getContext()).changeUserWeight(username,weight);
                 dismiss();
             }
         });

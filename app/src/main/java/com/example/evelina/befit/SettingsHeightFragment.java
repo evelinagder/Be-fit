@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import com.example.evelina.befit.model.DbManager;
 
 
 /**
@@ -51,6 +54,8 @@ public class SettingsHeightFragment extends DialogFragment {
                 int meters = mMetersPicker.getValue();
                 int santimeters = mSantimetersPicker.getValue();
                 //here we will use meters and santimeters to update the DB
+                String  username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
+                DbManager.getInstance(getContext()).updateUserHeight(username,((meters*100)+santimeters));
                 dismiss();
             }
         });
