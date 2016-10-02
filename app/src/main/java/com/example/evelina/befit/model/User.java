@@ -2,6 +2,7 @@ package com.example.evelina.befit.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Evelina on 9/24/2016.
@@ -101,5 +102,21 @@ public class User implements Serializable{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    public List<String> getCustomChallengesName(){
+        List<String> list= new ArrayList<String>();
+        for(int i = 0; i<customChallenges.size();i++){
+            list.add(customChallenges.get(i).getName());
+        }
+        return list;
+
+    }
+    public boolean hasCustomChallenges(){
+        if(customChallenges.size()==0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

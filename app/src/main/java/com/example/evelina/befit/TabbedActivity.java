@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -31,11 +33,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.TrainingManager;
+import com.example.evelina.befit.model.User;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TabbedActivity extends AppCompatActivity{
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -128,6 +136,8 @@ public class TabbedActivity extends AppCompatActivity{
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private static final int REQUEST_CODE_GALLERY=7;
+        ImageView profilePicture;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -154,10 +164,6 @@ public class TabbedActivity extends AppCompatActivity{
                                  Bundle savedInstanceState) {
             //TODO here we change the fragments pass data with bundles remove tabbed fragment
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1){
-                //here is for trainings tab
-                //Bundle bundle = new Bundle();
-                //bundle.put data from DB
-                //d.setArguments(bundle);
 
 
                 // Inflate the layout for this fragment
@@ -169,14 +175,25 @@ public class TabbedActivity extends AppCompatActivity{
                 return root;
 
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
-                //here for custom
-                View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-                textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-                return rootView;
+                User user=DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
+               Log.e("USER",username);
+                Log.e("USER",user.toString());
+                    View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
+                    RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);
+                   FloatingActionButton add= (FloatingActionButton) root.findViewById(R.id.fabTraining);
+                   if (!user.hasCustomChallenges()) {
+                        List<String> noNames = Arrays.asList("Please add your custom Training");
+                       custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames));
+                   } else {
+                       custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName()));
+                   }
+                  custom.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                    return root;
+
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-                ImageView profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
+                 profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
                 TextView numberPointsTV=(TextView) rootView.findViewById(R.id.number_points_profile_TV);
                 TextView numberTrainingsTV=(TextView) rootView.findViewById(R.id.number_trainings_profile_TV);
                 Button viewTrainingsButton= (Button) rootView.findViewById(R.id.view_trainings_profile_Button);
@@ -185,6 +202,13 @@ public class TabbedActivity extends AppCompatActivity{
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
+                profilePicture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
+                    }
+                });
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -201,6 +225,15 @@ public class TabbedActivity extends AppCompatActivity{
                 return rootView;
             }
 
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode==REQUEST_CODE_GALLERY && data != null){
+                Uri image= data.getData();
+                profilePicture.setImageURI(image);
+            }
         }
     }
 
