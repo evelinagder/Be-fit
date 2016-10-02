@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ public class DbManager extends SQLiteOpenHelper{
     public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
@@ -33,6 +34,7 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String USER_POINTS="points";
     private static final String USER_WEIGHT="weight";
     private static final String USER_HEIGHT="height";
+    private static final String USER_PICTURE="picture";
     //CHALLENGE table column names
     private static final String CHALLENGE_UID="challenge_id";
     private static final String CHALLENGE_USER_UID="user_id";
@@ -77,6 +79,7 @@ public class DbManager extends SQLiteOpenHelper{
                     +USER_GENDER+" text, "
                     +USER_WEIGHT+" INTEGER,  "
                     +USER_HEIGHT+" INTEGER, "
+                    +USER_PICTURE+" text, "
                     +USER_POINTS+" INTEGER);");
             db.execSQL("CREATE TABLE "+CHALLENGES_TABLE+" ( "+CHALLENGE_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     +CHALLENGE_USER_UID +" INTEGER , "
@@ -117,6 +120,7 @@ public class DbManager extends SQLiteOpenHelper{
                     +USER_GENDER+", "
                     +USER_WEIGHT+ ", "
                     +USER_HEIGHT+", "
+                    +USER_PICTURE+", "
                     +USER_POINTS+ " FROM " +USERS_TABLE,null);
             while(cursor.moveToNext()){
                 int userId=cursor.getInt(cursor.getColumnIndex(USER_UID));
@@ -124,10 +128,13 @@ public class DbManager extends SQLiteOpenHelper{
                 String password=cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
                 String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
                 String gender=cursor.getString(cursor.getColumnIndex(USER_GENDER));
+                String picture=cursor.getString(cursor.getColumnIndex(USER_PICTURE));
+                Uri userPicture = Uri.parse(picture);
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
                 int pointsU=cursor.getInt(cursor.getColumnIndex(USER_POINTS));
                 User u= new User(username,password,email,gender,weight,height,pointsU);
+                u.setProfilePic(userPicture);
                 Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_UID+", "
                         +CHALLENGE_USER_UID+", "
                         +CHALLENGE_NAME+", "
@@ -200,8 +207,17 @@ public class DbManager extends SQLiteOpenHelper{
     public void addExercisesToCustomChallenge(String username,String challengeName){
         //TODO gets info for user`s preferences and ads exercises to map and database!
     }
-    public void updateUserInfo(User user){
-        //TODO methods fro everything that can change from settings
+    public void updateProfilePicture(String username,Uri picture){
+        //adds picture to user and to db
+        User user= allUsers.get(username);
+        String pic=picture.toString();
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_PICTURE,pic);
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
+        user.setProfilePic(picture);
+        allUsers.put(username, user);
+
     }
     public void changeUserEmail(String username, String newEmail){
         //used in settings -change user email option
@@ -209,7 +225,7 @@ public class DbManager extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_EMAIL,newEmail);
-        db.update(USERS_TABLE,cv,USER_EMAIL+" =? ",new String[] {user.getEmail()});
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setEmail(newEmail);
         allUsers.put(username, user);
         Toast.makeText(context, "New email "+ newEmail, Toast.LENGTH_SHORT).show();
@@ -242,7 +258,7 @@ public class DbManager extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_GENDER,gender);
-        db.update(USERS_TABLE,cv,USER_GENDER+" =? ",new String[] {user.getGender()});
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setGender(gender);
         allUsers.put(username, user);
         Toast.makeText(context, "New gender "+ gender, Toast.LENGTH_SHORT).show();
@@ -253,7 +269,7 @@ public class DbManager extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_POINTS,newPoints);
-        db.update(USERS_TABLE,cv,USER_POINTS+" =? ",new String[] {String.valueOf(user.getPoints())});
+        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setPoints(user.getPoints()+newPoints);
         allUsers.put(username, user);
     }

@@ -1,7 +1,10 @@
 package com.example.evelina.befit.model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Evelina on 9/24/2016.
@@ -14,6 +17,7 @@ public class User implements Serializable{
     private int weight;
     private int height;
     private int points;
+    private Uri profilePic;
     private String gender;
     ArrayList<Challenge> achievedChallenges;
     ArrayList<Challenge> customChallenges;
@@ -99,7 +103,31 @@ public class User implements Serializable{
         return gender;
     }
 
+    public void setProfilePic(Uri profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public Uri getProfilePic() {
+        return profilePic;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    public List<String> getCustomChallengesName(){
+        List<String> list= new ArrayList<String>();
+        for(int i = 0; i<customChallenges.size();i++){
+            list.add(customChallenges.get(i).getName());
+        }
+        return list;
+
+    }
+    public boolean hasCustomChallenges(){
+        if(customChallenges.size()==0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

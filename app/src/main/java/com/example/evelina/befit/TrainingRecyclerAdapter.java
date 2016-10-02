@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,11 +57,11 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
     class BasicVH extends RecyclerView.ViewHolder{
 
         TextView name;
-
         public BasicVH(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.training_name);
         }
+
     }
 
 }
