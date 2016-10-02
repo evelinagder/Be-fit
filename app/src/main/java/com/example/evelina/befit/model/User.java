@@ -1,5 +1,7 @@
 package com.example.evelina.befit.model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class User implements Serializable{
     private int weight;
     private int height;
     private int points;
+    private Uri profilePic;
     private String gender;
     ArrayList<Challenge> achievedChallenges;
     ArrayList<Challenge> customChallenges;
@@ -98,6 +101,14 @@ public class User implements Serializable{
 
     public String getGender() {
         return gender;
+    }
+
+    public void setProfilePic(Uri profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public Uri getProfilePic() {
+        return profilePic;
     }
 
     public void setGender(String gender) {

@@ -136,7 +136,6 @@ public class TabbedActivity extends AppCompatActivity{
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-        private static final int REQUEST_CODE_GALLERY=7;
         ImageView profilePicture;
         /**
          * The fragment argument representing the section number for this
@@ -202,13 +201,7 @@ public class TabbedActivity extends AppCompatActivity{
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
-                profilePicture.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
-                    }
-                });
+
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -227,14 +220,6 @@ public class TabbedActivity extends AppCompatActivity{
 
         }
 
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode==REQUEST_CODE_GALLERY && data != null){
-                Uri image= data.getData();
-                profilePicture.setImageURI(image);
-            }
-        }
     }
 
     /**
