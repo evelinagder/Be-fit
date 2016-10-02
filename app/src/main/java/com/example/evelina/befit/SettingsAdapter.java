@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.evelina.befit.model.DbManager;
+import com.example.evelina.befit.model.User;
+
 import java.util.List;
 
 /**
@@ -55,20 +58,22 @@ public class SettingsAdapter  extends RecyclerView.Adapter<SettingsAdapter.Setti
                 //all should be done according to the current user data !
                 DialogFragment fragment;
                 Bundle bundle;
+                String username = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
+                User u  = DbManager.getInstance(activity).getUser(username);
                 switch (setting){
                     case "email":
                         //here we should take the current logged user email
                         //put it in bundle and set it to the dialog fragment
                         fragment = new SettingsEmailFragment();
                         bundle = new Bundle();
-                        bundle.putString("email","ivet@abv.bg");
+                        bundle.putString("email",u.getEmail());
                         fragment.setArguments(bundle);
                         fragment.show(activity.getSupportFragmentManager(),"email");
                         break;
                     case "gender":
                         fragment = new SettingsGenderFragment();
                         bundle = new Bundle();
-                        bundle.putString("gender","male");
+                        bundle.putString("gender",u.getGender());
                         fragment.setArguments(bundle);
                         fragment.show(activity.getSupportFragmentManager(),"gender");
                         break;
@@ -80,6 +85,11 @@ public class SettingsAdapter  extends RecyclerView.Adapter<SettingsAdapter.Setti
                     case "weight":
                         fragment = new SettingsWeightFragment();
                         fragment.show(activity.getSupportFragmentManager(),"weight");
+                        break;
+                    case "notifications & alarms":
+                        //another fragment here
+                        fragment = new NotificationsFragment();
+                        fragment.show(activity.getSupportFragmentManager(),"notifications");
                         break;
 
                 }

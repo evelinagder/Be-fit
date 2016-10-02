@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         settingsList.add("height");
         settingsList.add("weight");
         //probably alarm should be here
+        settingsList.add("notifications & alarms");
         mSettingsAdapter = new SettingsAdapter(this,settingsList);
         mRecyclerView.setAdapter(mSettingsAdapter);
         receiver = new NetworkStateChangedReceiver();
@@ -48,5 +49,11 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+
+    public void showFragment() {
+        TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
+       fragment.show(getSupportFragmentManager(),"time");
+
     }
 }
