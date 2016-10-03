@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_exercise_inventory"
@@ -20,6 +20,25 @@
 
 
 
-    <!--here should be some content-->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recycler_view_exercise_inventory"
+        android:layout_below="@id/toolbar_exercise_inventory"
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+    </android.support.v7.widget.RecyclerView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_exercise_inventory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="70dp"
+        android:clickable="true"
+        android:elevation="6dp"
+        app:borderWidth="0dp"
+        android:visibility="visible"
+        android:src="@drawable/ic_done_all_white_24dp"
+        app:layout_anchor="@id/recycler_view_exercise_inventory"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+
+</android.support.design.widget.CoordinatorLayout>

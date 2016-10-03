@@ -24,4 +24,12 @@ public class Exercise {
         this.video= video;
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
 }

@@ -116,6 +116,12 @@ public class TrainingManager {
         return list;
 
     }
-
+    public List<String> getAllExercisesName(){
+        List<String> list = new ArrayList<String>();
+        for(int i = 0;i<allExercises.size();i++){
+            list.add(allExercises.get(i).getName());
+        }
+        return list;
+    }
 
 }

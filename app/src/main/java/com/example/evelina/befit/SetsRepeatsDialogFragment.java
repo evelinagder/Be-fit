@@ -11,15 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SetsRepeatsDialogFragment extends DialogFragment {
-    TextView descriptionTV;
     TextView setsTV;
     TextView repeatsTV;
     EditText setsET;
     EditText repeatsET;
     Button cancelButton;
     Button okButton;
+    TextView heading;
 
 
     public SetsRepeatsDialogFragment() {
@@ -31,13 +32,17 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sets_repeats_dialog, container, false);
-        descriptionTV = (TextView) view.findViewById(R.id.short_description);
+        String exerciseName = getArguments().getString("name");
         setsTV = (TextView) view.findViewById(R.id.sets_TV);
         repeatsTV = (TextView) view.findViewById(R.id.repeats_TV);
         setsET = (EditText) view.findViewById(R.id.sets_ET);
         repeatsET = (EditText) view.findViewById(R.id.repeats_ET );
         cancelButton = (Button) view.findViewById(R.id.cancel_button);
         okButton = (Button) view.findViewById(R.id.ok_button);
+        heading = (TextView) view.findViewById(R.id.heading);
+        if(exerciseName!=null){
+            heading.setText(exerciseName);
+        }
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +76,6 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                     setsET.setError("Wrong format");
                     setsET.requestFocus();
                     return;
-
                 }
                 try{
                     repeatsH=Integer.parseInt(repeats);
@@ -82,6 +86,7 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                     repeatsET.requestFocus();
                     return;
                 }
+                Toast.makeText(getContext(), "Here exercise is added", Toast.LENGTH_SHORT).show();
                 //here we should have the numbers and add them to the challenge
 
             }

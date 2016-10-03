@@ -175,8 +175,8 @@ public class TabbedActivity extends AppCompatActivity{
 
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 User user=DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
-               Log.e("USER",username);
-                Log.e("USER",user.toString());
+//               Log.e("USER",username+"");
+//                Log.e("USER",user.getUsername()+"");
                     View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
                     RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);
                    FloatingActionButton add= (FloatingActionButton) root.findViewById(R.id.fabTraining);
@@ -201,6 +201,7 @@ public class TabbedActivity extends AppCompatActivity{
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
+
 
 
                 fab.setOnClickListener(new View.OnClickListener() {
