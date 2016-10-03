@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.Calendar;
 
 
 public class NotificationsFragment extends DialogFragment {
@@ -30,6 +31,7 @@ public class NotificationsFragment extends DialogFragment {
     private RadioButton mSunday;
     private Button mOk;
     private SettingsActivity activity;
+    Bundle data; int weekDay;
 
 
     public NotificationsFragment() {
@@ -47,17 +49,79 @@ public class NotificationsFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.fragment_notifications, container, false);
+        getDialog().setTitle("Set app notifications");
+        data = new Bundle();
 
         mRepeatCheckbox = (CheckBox) view.findViewById(R.id.repeat_checkbox);
         mTurnOffCheckbox = (CheckBox) view.findViewById(R.id.turn_off_checkbox);
         mMonday = (RadioButton) view.findViewById(R.id.monday);
+        mMonday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("monday", Calendar.MONDAY);
+
+                }
+            }
+        });
         mTuesday = (RadioButton) view.findViewById(R.id.tuesday);
+        mTuesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("tuesday",Calendar.TUESDAY);
+                }
+            }
+        });
         mWednesday = (RadioButton) view.findViewById(R.id.wednesday);
+        mWednesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("wednesday",Calendar.WEDNESDAY);
+                }
+            }
+        });
         mThursday = (RadioButton) view.findViewById(R.id.thursday);
+        mThursday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("thursday",Calendar.THURSDAY);
+                }
+            }
+        });
         mFriday = (RadioButton) view.findViewById(R.id.friday);
+        mFriday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("friday",Calendar.FRIDAY);
+                }
+            }
+        });
         mSaturday = (RadioButton) view.findViewById(R.id.saturday);
+        mSaturday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("saturday",Calendar.SATURDAY);
+                }
+            }
+        });
         mSunday = (RadioButton) view.findViewById(R.id.sunday);
+        mSunday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    data.putInt("sunday",Calendar.SUNDAY);
+                }
+            }
+        });
         mOk = (Button) view.findViewById(R.id.ok_notifications);
+
+
+
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +130,7 @@ public class NotificationsFragment extends DialogFragment {
                   //  TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
                     //activity.getFragmentManager().popBackStackImmediate();
                     dismiss();
-                 activity.showFragment();
+                 activity.showFragment(data);
                   //  activity.showTime();
                 }else{
                     dismiss();
@@ -78,9 +142,9 @@ public class NotificationsFragment extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    //set repeating for every week until the user turns it off
+                    data.putBoolean("isRepeating",true);
                 }else{
-                    //only for this week
+                    data.putBoolean("isRepeating",false);
                 }
             }
         });
@@ -89,13 +153,17 @@ public class NotificationsFragment extends DialogFragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     //turrn off the alarm
+
                 }else{
                     //triger the alarm
+
                 }
             }
         });
 
         return view;
     }
+
+
 
 }

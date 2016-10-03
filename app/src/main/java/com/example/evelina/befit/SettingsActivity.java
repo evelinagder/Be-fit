@@ -80,9 +80,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void showFragment() {
-        TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
-       fragment.show(getSupportFragmentManager(),"time");
-
+    public void showFragment(Bundle bundle) {
+        if(bundle!=null) {
+            TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
+            fragment.setArguments(bundle);
+            fragment.show(getSupportFragmentManager(), "time");
+        }
     }
 }

@@ -2,17 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-
     android:layout_height="match_parent"
     tools:context="com.example.evelina.befit.NotificationsFragment">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_margin="16dp"
-    android:layout_height="wrap_content"
-    android:text="Set app notifications"
-    android:textSize="18sp"
-    android:textColor="@android:color/black"
-    android:gravity="center"/>
 
     <RadioButton
         android:layout_width="match_parent"

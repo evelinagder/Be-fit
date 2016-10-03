@@ -49,7 +49,9 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO here we get null pointer for user ...we need Db or shared preffs to load the user
 //                Intent intent = new Intent(ExerciseInventoryActivity.this,TabbedActivity.class);
+//                intent.putExtra("username","lalalalla");
 //                startActivity(intent);
             }
         });
@@ -69,7 +71,6 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
-
 
 
     @Override
