@@ -31,6 +31,7 @@ public class User implements Serializable{
         this.height= height;
         this.points=points;
 
+
         customChallenges= new ArrayList<Challenge>();
         achievedChallenges= new ArrayList<Challenge>();
 

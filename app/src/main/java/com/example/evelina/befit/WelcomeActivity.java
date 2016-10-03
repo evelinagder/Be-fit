@@ -18,11 +18,22 @@ public class WelcomeActivity extends AppCompatActivity {
     User user;
     Button shortcut;
     private NetworkStateChangedReceiver receiver;
+    private DbManager dbmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+         dbmanager=DbManager.getInstance(WelcomeActivity.this);
+        dbmanager.getWritableDatabase();
+        StringBuilder allUsersS = new StringBuilder();
+        for (User u : DbManager.getInstance(WelcomeActivity.this).allUsers.values()) {
+            Log.e("DBUSERS", "mama ti");
+            Log.e("DBUSERS", u.getUsername());
+            Log.e("DBUSERS", u.getPassword());
+            allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
+        }
+        Log.e("DBUSERS", allUsersS.toString());
         start = (Button) findViewById(R.id.button_start);
         shortcut= (Button) findViewById(R.id.shortcut);
         receiver = new NetworkStateChangedReceiver();
@@ -38,15 +49,9 @@ public class WelcomeActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DbManager.getInstance(WelcomeActivity.this).loadUsers();
-                StringBuilder allUsersS = new StringBuilder();
-                for (User u : DbManager.getInstance(WelcomeActivity.this).allUsers.values()) {
-                    allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
-                }
-                Log.e("maikaTi", allUsersS.toString());
                 if (WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null) != null) {
-                    Log.e("USER", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null));
-                    user = getCurrentUser(WelcomeActivity.this);
+                    Log.e("USER", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users"));
+
                 }
                 maintainLogin(WelcomeActivity.this);
 
@@ -59,9 +64,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (logged_in) {
             Toast.makeText(WelcomeActivity.this,"Going to Home",Toast.LENGTH_SHORT).show();
+            String username=activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "No users");
             Intent intent= new Intent(WelcomeActivity.this, TabbedActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("loggedUser",user) ;
+            intent.putExtra("username",username) ;
             startActivity(intent);
             finish();
 
@@ -73,11 +79,7 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
     }
-    public  User getCurrentUser(Context activity){
-        String username=activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null);
-        User user=DbManager.getInstance(WelcomeActivity.this).getUser(username);
-        return user;
-    }
+
 
     @Override
     protected void onDestroy() {
