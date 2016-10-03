@@ -36,8 +36,6 @@ public class WelcomeActivity extends AppCompatActivity {
         Log.e("DBUSERS", allUsersS.toString());
         String username= WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
         user= dbmanager.getUser(username);
-        //load users notifications set new alarm if necessary!
-        dbmanager.loadNotifications(username,WelcomeActivity.this);
 
         start = (Button) findViewById(R.id.button_start);
         shortcut= (Button) findViewById(R.id.shortcut);

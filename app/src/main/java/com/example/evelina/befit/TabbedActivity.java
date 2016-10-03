@@ -74,6 +74,7 @@ public class TabbedActivity extends AppCompatActivity{
         if(getIntent().getStringExtra("username")!=null){
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
              username = getIntent().getStringExtra("username");
+           DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
         }
 
         // Create the adapter that will return a fragment for each of the three

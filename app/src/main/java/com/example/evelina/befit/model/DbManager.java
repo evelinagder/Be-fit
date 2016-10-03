@@ -134,7 +134,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE "+USERS_TABLE);
         db.execSQL("DROP TABLE "+CHALLENGES_TABLE);
         db.execSQL("DROP TABLE "+EXERCISE_TABLE);
-        db.execSQL("DROP TABLE "+ALARM_TABLE);
+       // db.execSQL("DROP TABLE "+ALARM_TABLE);
         onCreate(db);
 
 
@@ -339,23 +339,25 @@ public class DbManager extends SQLiteOpenHelper{
 
 
 
-    public void loadNotifications(String username, Context activity){
+    public void loadNotifications(String username, Context activity) {
         // set the radio buttons in Notifications framgment.
         //check if there is a running alarm , if not start one with the larm object alarmTime!
-        Cursor cursor=getWritableDatabase().rawQuery("SELECT "+ALARM_UID+ ", "
-                +ALARM_TIME+", "
-                +ALARM_REPEATING+" FROM " +ALARM_TABLE+", "+USERS_TABLE+" WHERE "+USER_USERNAME+"= ?" ,new String[] {username});
-        while(cursor.moveToNext()){
-            long alarmTime=cursor.getInt(cursor.getColumnIndex(ALARM_TIME));
-            String isRepeating =cursor.getString(cursor.getColumnIndex(ALARM_REPEATING));
-            boolean isAlarmRepeating;
-            if(isRepeating.equals("true")){
-                isAlarmRepeating=true;
-            }else{
-                isAlarmRepeating=false;
-            }
-            startAlarm(alarmTime,isAlarmRepeating,activity);
+        if (allUsers.get(username).userAlarms.size() != 0) {
+            Cursor cursor = getWritableDatabase().rawQuery("SELECT " + ALARM_UID + ", "
+                    + ALARM_TIME + ", "
+                    + ALARM_REPEATING + " FROM " + ALARM_TABLE + ", " + USERS_TABLE + " WHERE " + USER_USERNAME + "= ?", new String[]{username});
+            while (cursor.moveToNext()) {
+                long alarmTime = cursor.getInt(cursor.getColumnIndex(ALARM_TIME));
+                String isRepeating = cursor.getString(cursor.getColumnIndex(ALARM_REPEATING));
+                boolean isAlarmRepeating;
+                if (isRepeating.equals("true")) {
+                    isAlarmRepeating = true;
+                } else {
+                    isAlarmRepeating = false;
+                }
+                startAlarm(alarmTime, isAlarmRepeating, activity);
 
+            }
         }
     }
     public void startAlarm(long alarmTime, boolean isRepeating, Context activity){
