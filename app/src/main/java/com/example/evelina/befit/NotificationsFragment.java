@@ -2,7 +2,10 @@ package com.example.evelina.befit;
 
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,9 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.Calendar;
+
+import static android.content.Context.ALARM_SERVICE;
 
 
 public class NotificationsFragment extends DialogFragment {
@@ -30,6 +36,7 @@ public class NotificationsFragment extends DialogFragment {
     private RadioButton mSunday;
     private Button mOk;
     private SettingsActivity activity;
+    private boolean isWeeklyChecked;
 
 
     public NotificationsFragment() {
@@ -79,8 +86,10 @@ public class NotificationsFragment extends DialogFragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     //set repeating for every week until the user turns it off
+                    isWeeklyChecked=true;
                 }else{
                     //only for this week
+                    isWeeklyChecked=false;
                 }
             }
         });

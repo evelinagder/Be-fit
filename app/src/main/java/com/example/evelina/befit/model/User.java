@@ -21,6 +21,7 @@ public class User implements Serializable{
     private String gender;
     ArrayList<Challenge> achievedChallenges;
     ArrayList<Challenge> customChallenges;
+    ArrayList<Alarm> userAlarms;
 
     public User( String username,String password, String email, String gender,int weight, int height, int points) {
         this.username = username;
@@ -34,6 +35,7 @@ public class User implements Serializable{
 
         customChallenges= new ArrayList<Challenge>();
         achievedChallenges= new ArrayList<Challenge>();
+        userAlarms= new ArrayList<Alarm>();
 
     }
 
@@ -129,6 +131,11 @@ public class User implements Serializable{
         }
         else{
             return true;
+        }
+    }
+    public void addAlarmn(Alarm alarm){
+        if(alarm != null){
+            userAlarms.add(alarm);
         }
     }
 }
