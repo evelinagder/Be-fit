@@ -1,7 +1,11 @@
 package com.example.evelina.befit.model;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,9 +13,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.evelina.befit.NotificationsFragment;
 import com.example.evelina.befit.R;
 
+
+import java.util.Calendar;
 import java.util.HashMap;
+
+import static android.content.Context.ALARM_SERVICE;
 
 /**
  * Created by Evelina on 9/28/2016.
@@ -22,11 +31,12 @@ public class DbManager extends SQLiteOpenHelper{
     public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
     private static final String EXERCISE_TABLE = "Exercises";
+    private static final String ALARM_TABLE = "Alarm";
     //USER table column names
     private static final String USER_UID="_id";
     private static final String USER_USERNAME="username";
@@ -53,6 +63,14 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String EXERCISE_REPEATS="repeats";
     private static final String EXERCISE_INSTRUCTIONS="instructions";
     private static final String EXERCISE_VIDEO="video";
+    //ALARM table column names
+
+    private static final String ALARM_UID="alarm_id";
+    private static final String ALARM_USER_USERNAME="user_username";
+    private static final String ALARM_TIME="alarm_time";
+    private static final String ALARM_REPEATING="alarm_repeating";
+
+
 
 
 
@@ -70,6 +88,7 @@ public class DbManager extends SQLiteOpenHelper{
         allUsers= new HashMap<String, User>();
         this.context=context;
         loadUsers();
+
 
     }
 
@@ -100,6 +119,11 @@ public class DbManager extends SQLiteOpenHelper{
                 +EXERCISE_INSTRUCTIONS+" text "
                 +EXERCISE_VIDEO+" INTEGER, FOREIGN KEY("+EXERCISE_CHALLENGE_UID +
        " ) REFERENCES "+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"));");
+        db.execSQL("CREATE TABLE "+ALARM_TABLE+" ( "+ALARM_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +ALARM_USER_USERNAME +" text, "
+                +ALARM_TIME+" INTEGER,  FOREIGN KEY("+ALARM_USER_USERNAME+
+                ") REFERENCES "+ USERS_TABLE+"("+USER_UID+"));"
+        );
         Toast.makeText(context, "DB Created", Toast.LENGTH_SHORT).show();
         }
 
@@ -110,6 +134,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE "+USERS_TABLE);
         db.execSQL("DROP TABLE "+CHALLENGES_TABLE);
         db.execSQL("DROP TABLE "+EXERCISE_TABLE);
+        db.execSQL("DROP TABLE "+ALARM_TABLE);
         onCreate(db);
 
 
@@ -297,6 +322,58 @@ public class DbManager extends SQLiteOpenHelper{
         }
         return true;
     }
+    public void saveNotifications(String username, long alarmTime, boolean isAlarmRepeating, Context activity) {
+        //  save the new alarm
+        User user = allUsers.get(username);
+        Alarm alarm = new Alarm(alarmTime, isAlarmRepeating);
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ALARM_TIME, alarmTime);
+        cv.put(ALARM_REPEATING, isAlarmRepeating);
+        db.update(USERS_TABLE, cv, USER_USERNAME + " =? ", new String[]{user.getUsername()});
+        user.addAlarmn(alarm);
+        startAlarm(alarmTime,isAlarmRepeating,activity);
+    }
+
+
+
+
+
+    public void loadNotifications(String username, Context activity){
+        // set the radio buttons in Notifications framgment.
+        //check if there is a running alarm , if not start one with the larm object alarmTime!
+        Cursor cursor=getWritableDatabase().rawQuery("SELECT "+ALARM_UID+ ", "
+                +ALARM_TIME+", "
+                +ALARM_REPEATING+" FROM " +ALARM_TABLE+", "+USERS_TABLE+" WHERE "+USER_USERNAME+"= ?" ,new String[] {username});
+        while(cursor.moveToNext()){
+            long alarmTime=cursor.getInt(cursor.getColumnIndex(ALARM_TIME));
+            String isRepeating =cursor.getString(cursor.getColumnIndex(ALARM_REPEATING));
+            boolean isAlarmRepeating;
+            if(isRepeating.equals("true")){
+                isAlarmRepeating=true;
+            }else{
+                isAlarmRepeating=false;
+            }
+            startAlarm(alarmTime,isAlarmRepeating,activity);
+
+        }
+    }
+    public void startAlarm(long alarmTime, boolean isRepeating, Context activity){
+        Alarm alarm= new Alarm(alarmTime,isRepeating);
+        int requestCode = (int) System.currentTimeMillis();
+        Intent alarmIntent = new Intent("ALARM");
+        alarmIntent.putExtra("ALARM TIME",alarmTime);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, requestCode, alarmIntent, 0);
+
+        AlarmManager am = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
+        if( alarm.getIsRepeating()){
+            am.setRepeating(AlarmManager.RTC_WAKEUP,alarmTime,AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+        }
+        else{
+            am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+        }
+    }
+
 }
 
 
