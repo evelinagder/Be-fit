@@ -134,7 +134,7 @@ public class DbManager extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE "+USERS_TABLE);
         db.execSQL("DROP TABLE "+CHALLENGES_TABLE);
         db.execSQL("DROP TABLE "+EXERCISE_TABLE);
-       // db.execSQL("DROP TABLE "+ALARM_TABLE);
+        db.execSQL("DROP TABLE "+ALARM_TABLE);
         onCreate(db);
 
 
