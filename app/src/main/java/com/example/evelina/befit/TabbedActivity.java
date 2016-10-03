@@ -177,7 +177,7 @@ public class TabbedActivity extends AppCompatActivity{
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 User user=DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
 
-                Log.e("USER",username);
+                Log.e("USER",username+"");
 
                     View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
                     RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);

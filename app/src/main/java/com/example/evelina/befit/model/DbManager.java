@@ -31,7 +31,7 @@ public class DbManager extends SQLiteOpenHelper{
     public HashMap<String , User> allUsers;
 
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
@@ -121,6 +121,7 @@ public class DbManager extends SQLiteOpenHelper{
        " ) REFERENCES "+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"));");
         db.execSQL("CREATE TABLE "+ALARM_TABLE+" ( "+ALARM_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +ALARM_USER_USERNAME +" text, "
+                +ALARM_REPEATING+" text, "
                 +ALARM_TIME+" INTEGER,  FOREIGN KEY("+ALARM_USER_USERNAME+
                 ") REFERENCES "+ USERS_TABLE+"("+USER_UID+"));"
         );
@@ -325,12 +326,18 @@ public class DbManager extends SQLiteOpenHelper{
     public void saveNotifications(String username, long alarmTime, boolean isAlarmRepeating, Context activity) {
         //  save the new alarm
         User user = allUsers.get(username);
+        String repeat;
+        if(isAlarmRepeating) {
+            repeat = "true";
+        }else{
+            repeat = "false";
+        }
         Alarm alarm = new Alarm(alarmTime, isAlarmRepeating);
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(ALARM_TIME, alarmTime);
-        cv.put(ALARM_REPEATING, isAlarmRepeating);
-        db.update(USERS_TABLE, cv, USER_USERNAME + " =? ", new String[]{user.getUsername()});
+        cv.put(ALARM_REPEATING, repeat);
+        db.update(ALARM_TABLE, cv, ALARM_USER_USERNAME + " =? ", new String[]{user.getUsername()});
         user.addAlarmn(alarm);
         startAlarm(alarmTime,isAlarmRepeating,activity);
     }
