@@ -89,6 +89,7 @@ public class DbManager extends SQLiteOpenHelper{
         this.context=context;
         loadUsers();
 
+
     }
 
     @Override
@@ -321,39 +322,26 @@ public class DbManager extends SQLiteOpenHelper{
         }
         return true;
     }
-    public void saveNotifications(String username, long alarmTime, boolean isAlarmRepeating){
+    public void saveNotifications(String username, long alarmTime, boolean isAlarmRepeating, Context activity) {
         //  save the new alarm
-        User user= allUsers.get(username);
-        Alarm alarm= new Alarm(alarmTime,isAlarmRepeating);
+        User user = allUsers.get(username);
+        Alarm alarm = new Alarm(alarmTime, isAlarmRepeating);
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(ALARM_TIME,alarmTime);
-        cv.put(ALARM_REPEATING,isAlarmRepeating);
-        db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
+        cv.put(ALARM_TIME, alarmTime);
+        cv.put(ALARM_REPEATING, isAlarmRepeating);
+        db.update(USERS_TABLE, cv, USER_USERNAME + " =? ", new String[]{user.getUsername()});
         user.addAlarmn(alarm);
-        allUsers.put(username, user);
-        int requestCode = (int) System.currentTimeMillis();
-        Intent intent = new Intent("ALARM");
-        intent.putExtra("ALARM TIME",alarmTime);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
-
-
-        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        //not repeating if "repeat weekly is not checked"
-        if( isAlarmRepeating) {
-            am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-        }
-        else{
-            am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
-        }
+        startAlarm(alarmTime,isAlarmRepeating,activity);
     }
+
+
 
 
 
     public void loadNotifications(String username, Context activity){
         // set the radio buttons in Notifications framgment.
         //check if there is a running alarm , if not start one with the larm object alarmTime!
-        //TODO if(alarmIsUp())
         Cursor cursor=getWritableDatabase().rawQuery("SELECT "+ALARM_UID+ ", "
                 +ALARM_TIME+", "
                 +ALARM_REPEATING+" FROM " +ALARM_TABLE+", "+USERS_TABLE+" WHERE "+USER_USERNAME+"= ?" ,new String[] {username});
@@ -366,21 +354,26 @@ public class DbManager extends SQLiteOpenHelper{
             }else{
                 isAlarmRepeating=false;
             }
-            Alarm alarm= new Alarm(alarmTime,isAlarmRepeating);
-            int requestCode = (int) System.currentTimeMillis();
-            Intent intent = new Intent("ALARM");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, requestCode, intent, 0);
-
-            AlarmManager am = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
-            if( alarm.getIsRepeating()){
-                am.setRepeating(AlarmManager.RTC_WAKEUP,alarmTime,AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-            }
-            else{
-                am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
-            }
+            startAlarm(alarmTime,isAlarmRepeating,activity);
 
         }
     }
+    public void startAlarm(long alarmTime, boolean isRepeating, Context activity){
+        Alarm alarm= new Alarm(alarmTime,isRepeating);
+        int requestCode = (int) System.currentTimeMillis();
+        Intent alarmIntent = new Intent("ALARM");
+        alarmIntent.putExtra("ALARM TIME",alarmTime);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, requestCode, alarmIntent, 0);
+
+        AlarmManager am = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
+        if( alarm.getIsRepeating()){
+            am.setRepeating(AlarmManager.RTC_WAKEUP,alarmTime,AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+        }
+        else{
+            am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+        }
+    }
+
 }
 
 

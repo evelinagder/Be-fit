@@ -21,7 +21,7 @@ public class MyReceiver extends BroadcastReceiver {
         long alarmTime= (long) intent.getExtras().get("ALARM TIME");
 
         if(!(System.currentTimeMillis()>alarmTime)){
-            Intent resultIntent = new Intent(context, LoginActivity.class);
+            Intent resultIntent = new Intent(context, WelcomeActivity.class);
         long[] pattern = {0, 300, 0};
         PendingIntent pi = PendingIntent.getActivity(context, 01234, resultIntent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
