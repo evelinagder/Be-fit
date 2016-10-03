@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.example.evelina.befit.LoginActivity;
 import com.example.evelina.befit.R;
+import com.example.evelina.befit.TabbedActivity;
 import com.example.evelina.befit.WelcomeActivity;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -20,7 +21,7 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         long alarmTime= (long) intent.getExtras().get("ALARM TIME");
 
-        if(!(System.currentTimeMillis()>alarmTime)){
+        if(!(System.currentTimeMillis()<alarmTime)){
             Intent resultIntent = new Intent(context, WelcomeActivity.class);
         long[] pattern = {0, 300, 0};
         PendingIntent pi = PendingIntent.getActivity(context, 01234, resultIntent, 0);
@@ -38,7 +39,7 @@ public class MyReceiver extends BroadcastReceiver {
         mNotificationManager.notify(01234, mBuilder.build());
     }
         else{
-            Intent resultIntent = new Intent(context, LoginActivity.class);
+            Intent resultIntent = new Intent(context, WelcomeActivity.class);
             long[] pattern = {0, 300, 0};
             PendingIntent pi = PendingIntent.getActivity(context, 01234, resultIntent, 0);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)

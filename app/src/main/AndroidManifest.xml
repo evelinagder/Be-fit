@@ -28,6 +28,8 @@
 
         </activity>
 
+
+
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
@@ -41,8 +43,9 @@
         <activity
             android:name=".ExerciseInventoryActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
+
+
         <activity android:name=".PlayExerciseActivity" />
 
         <receiver

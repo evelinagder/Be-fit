@@ -141,7 +141,14 @@ public class NotificationsFragment extends DialogFragment {
                 if(!mTurnOffCheckbox.isChecked()){
                   //  TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
                     //activity.getFragmentManager().popBackStackImmediate();
+
+                    if(mRepeatCheckbox.isChecked()){
+                        data.putBoolean("isRepeating",true);
+                    }else {
+                        data.putBoolean("isRepeating",false);
+                    }
                     dismiss();
+
                  activity.showFragment(data);
                   //  activity.showTime();
                 }else{
@@ -150,20 +157,20 @@ public class NotificationsFragment extends DialogFragment {
             }
         });
 
-        mRepeatCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-
-                    data.putBoolean("isRepeating",true);
-                }else{
-                    data.putBoolean("isRepeating",false);
-
-                    //set repeating for every week until the user turns it off
-
-                }
-            }
-        });
+//        mRepeatCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if(b){
+//
+//                    data.putBoolean("isRepeating",true);
+//                }else{
+//
+//
+//                    //set repeating for every week until the user turns it off
+//
+//                }
+//            }
+//        });
         mTurnOffCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

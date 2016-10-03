@@ -2,6 +2,8 @@ package com.example.evelina.befit;
 
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,8 +65,9 @@ public class TimePickerNotificationFragment extends DialogFragment  {
                     c.set(Calendar.DAY_OF_WEEK, (Integer) getArguments().get("monday"));
                     long time=c.getTimeInMillis();
                      boolean isRepeating= (boolean) getArguments().get("isRepeating");
-                   // DbManager dbManager= new DbManager().getInstance(getContext())
-                    //bdManager.saveNotification(username, time, isrepeating);
+                    String username= getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
+                     DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+
 
                 }
 
