@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.evelina.befit.R;
+
 import java.util.HashMap;
 
 /**
@@ -67,6 +69,7 @@ public class DbManager extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         allUsers= new HashMap<String, User>();
         this.context=context;
+        loadUsers();
 
     }
 
@@ -112,6 +115,7 @@ public class DbManager extends SQLiteOpenHelper{
 
     }
     public void loadUsers(){
+        Log.e("DBUSERS", "load users start");
         if( allUsers.isEmpty()){
             Cursor cursor=getWritableDatabase().rawQuery("SELECT "+USER_UID+", "
                     +USER_USERNAME+", "
@@ -129,12 +133,14 @@ public class DbManager extends SQLiteOpenHelper{
                 String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
                 String gender=cursor.getString(cursor.getColumnIndex(USER_GENDER));
                 String picture=cursor.getString(cursor.getColumnIndex(USER_PICTURE));
-                Uri userPicture = Uri.parse(picture);
                 int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
                 int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
                 int pointsU=cursor.getInt(cursor.getColumnIndex(USER_POINTS));
                 User u= new User(username,password,email,gender,weight,height,pointsU);
-                u.setProfilePic(userPicture);
+                if(picture != null) {
+                    Uri userPicture = Uri.parse(picture);
+                    u.setProfilePic(userPicture);
+                }
                 Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_UID+", "
                         +CHALLENGE_USER_UID+", "
                         +CHALLENGE_NAME+", "
@@ -172,10 +178,10 @@ public class DbManager extends SQLiteOpenHelper{
                     }
                 }
                 allUsers.put(username, u);
+                Log.e("DBUSERS", "user added - " + u);
             }
-            if(!cursor.isClosed())
-                cursor.close();
         }
+        Log.e("DBUSERS", "load users end");
     }
     public boolean existsUser( String username) {
         return allUsers.containsKey(username);
