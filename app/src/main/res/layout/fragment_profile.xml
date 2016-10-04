@@ -49,6 +49,8 @@
         android:layout_height="48dp"
         android:id="@+id/username_profile_TV"
         android:layout_weight="15"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_gravity="center"
         android:gravity="center"
         android:hint="username"/>

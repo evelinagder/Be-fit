@@ -15,10 +15,10 @@
         android:layout_below="@+id/app_bar_settings">
 
         <ImageButton
-            android:layout_width="250dp"
+            android:layout_width="216dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:background="@drawable/rectangular_shape"
+            android:background="@color/light_green"
             android:id="@+id/picture_profile_change"
             android:layout_height="200dp" />
 
