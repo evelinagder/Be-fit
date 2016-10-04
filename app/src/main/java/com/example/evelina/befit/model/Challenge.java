@@ -36,4 +36,12 @@ public class Challenge {
     public void setAchieved(String achieved) {
         this.achieved = achieved;
     }
+
+    public void setTimesCompleted(int timesCompleted) {
+        this.timesCompleted = timesCompleted;
+    }
+
+    public void setDateOfCompletion(String dateOfCompletion) {
+        this.dateOfCompletion = dateOfCompletion;
+    }
 }

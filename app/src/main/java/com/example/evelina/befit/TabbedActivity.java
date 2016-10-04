@@ -36,6 +36,7 @@ import com.example.evelina.befit.model.Challenge;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
+import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
@@ -74,7 +75,7 @@ public class TabbedActivity extends AppCompatActivity{
         if(getIntent().getStringExtra("username")!=null){
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
              username = getIntent().getStringExtra("username");
-           DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
+         //  DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -122,7 +123,12 @@ public class TabbedActivity extends AppCompatActivity{
             editor.putString("currentUser",null);
             editor.commit();
             FacebookSdk.sdkInitialize(getApplicationContext());
-            LoginManager.getInstance().logOut();
+            if(AccessToken.getCurrentAccessToken()!=null) {
+                LoginManager.getInstance().logOut();
+                Intent intent = new Intent(TabbedActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
             Intent intent = new Intent(TabbedActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
@@ -201,7 +207,7 @@ public class TabbedActivity extends AppCompatActivity{
 
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-                 profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
+                profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
                 TextView numberPointsTV=(TextView) rootView.findViewById(R.id.number_points_profile_TV);
                 TextView numberTrainingsTV=(TextView) rootView.findViewById(R.id.number_trainings_profile_TV);
                 Button viewTrainingsButton= (Button) rootView.findViewById(R.id.view_trainings_profile_Button);
@@ -218,13 +224,15 @@ public class TabbedActivity extends AppCompatActivity{
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //go to another activity whowing the chart ref. see snackbar?
+                        //go to another activity showing the chart
+
                     }
                 });
                 viewTrainingsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //another actitivity displaying the exercise
+                        Intent intent = new Intent(getActivity(),CompletedTrainings.class);
+                        startActivity(intent);
                     }
                 });
                 return rootView;

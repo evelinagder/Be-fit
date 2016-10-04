@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     LoginButton loginButton;
     CallbackManager callbackManager;
+    AccessToken accessToken;
     NetworkStateChangedReceiver receiver;
 
     @Override
@@ -46,7 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton= (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
+        loginButton.setReadPermissions("email","public_profile");
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,28 +105,33 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Profile profile =Profile.getCurrentProfile();
-                AccessToken accessToken = loginResult.getAccessToken();
+                if(accessToken.getCurrentAccessToken()==null){
+                    accessToken = loginResult.getAccessToken();
+                }
+
                 //TODO add to database
                 if(profile!=null) {
 
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
+//mahni go TODO
 
-                        if (!DbManager.getInstance(LoginActivity.this).validateLogin(username, password)) {
                             DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
-                        }
 
-                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
-                    startActivity(intent);
-                    finish();
+
+
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
                     editor.putString("currentUser",username);
                     editor.commit();
                     Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
-                    
+                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+
                 }
 
             }
