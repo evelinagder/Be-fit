@@ -54,6 +54,11 @@ public class SettingsActivity extends AppCompatActivity {
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         profilePic= (ImageButton)findViewById(R.id.picture_profile_change);
+        User user= DbManager.getInstance(this).getUser(username);
+
+        if( user.getProfilePic() != null){
+            profilePic.setImageURI(user.getProfilePic());
+        }
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

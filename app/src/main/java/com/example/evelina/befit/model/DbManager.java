@@ -339,7 +339,7 @@ public class DbManager extends SQLiteOpenHelper{
         cv.put(ALARM_REPEATING, repeat);
         db.update(ALARM_TABLE, cv, ALARM_USER_USERNAME + " =? ", new String[]{user.getUsername()});
         user.addAlarmn(alarm);
-        startAlarm(alarmTime,isAlarmRepeating,activity);
+        startAlarm(username,alarmTime,isAlarmRepeating,activity);
     }
 
 
@@ -362,17 +362,17 @@ public class DbManager extends SQLiteOpenHelper{
                 } else {
                     isAlarmRepeating = false;
                 }
-                startAlarm(alarmTime, isAlarmRepeating, activity);
+                startAlarm(username,alarmTime, isAlarmRepeating, activity);
 
             }
         }
     }
-    public void startAlarm(long alarmTime, boolean isRepeating, Context activity){
+    public void startAlarm(String username,long alarmTime, boolean isRepeating, Context activity){
         Alarm alarm= new Alarm(alarmTime,isRepeating);
-        int requestCode = (int) System.currentTimeMillis();
         Intent alarmIntent = new Intent("ALARM");
         alarmIntent.putExtra("ALARM TIME",alarmTime);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, requestCode, alarmIntent, 0);
+        alarmIntent.putExtra("username",username);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0);
 
         AlarmManager am = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
         if( alarm.getIsRepeating()){
@@ -381,6 +381,14 @@ public class DbManager extends SQLiteOpenHelper{
         else{
             am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
         }
+    }
+    public void cancelAlarms(Context activity){
+        AlarmManager am = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent("ALARM");
+        alarmIntent.putExtra("ALARM TIME",0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0);
+        am.cancel(pendingIntent);
+
     }
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.evelina.befit.model.DbManager;
+import com.example.evelina.befit.model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -105,18 +107,32 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Profile profile =Profile.getCurrentProfile();
+
                 if(accessToken.getCurrentAccessToken()==null){
                     accessToken = loginResult.getAccessToken();
                 }
 
                 //TODO add to database
+
+                AccessToken accessToken = loginResult.getAccessToken();
+
                 if(profile!=null) {
 
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
-//mahni go TODO
+
+
 
                             DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
+
+                    Uri picture=profile.getProfilePictureUri(100,100);
+
+                            DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
+                            User user=DbManager.getInstance(LoginActivity.this).getUser(username);
+                            user.setProfilePic(picture);
+
+
+
 
 
 

@@ -138,4 +138,13 @@ public class User implements Serializable{
             userAlarms.add(alarm);
         }
     }
+    public Challenge getCustomChallenges(String name) {
+        Challenge c = null; //TODO!!!!!!
+        for (int i = 0; i < customChallenges.size(); i++) {
+            if (name.equals(customChallenges.get(i).getName())) {
+                c = customChallenges.get(i);
+            }
+        }
+        return c;
+    }
 }

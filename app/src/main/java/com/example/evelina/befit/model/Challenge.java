@@ -2,6 +2,7 @@ package com.example.evelina.befit.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Evelina on 9/24/2016.
@@ -37,11 +38,23 @@ public class Challenge {
         this.achieved = achieved;
     }
 
+
     public void setTimesCompleted(int timesCompleted) {
         this.timesCompleted = timesCompleted;
     }
 
     public void setDateOfCompletion(String dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
+	}
+    public ArrayList<Exercise> getExercises(){
+        return exercises;
+    }
+    public List<String> getExercisesNames(){
+        List<String> list = new ArrayList<String>();
+        for(int i = 0;i<exercises.size();i++){
+            list.add(exercises.get(i).getName());
+        }
+        return list;
+
     }
 }

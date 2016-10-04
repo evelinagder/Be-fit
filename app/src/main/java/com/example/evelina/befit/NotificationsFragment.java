@@ -17,6 +17,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.example.evelina.befit.model.DbManager;
 
 import java.util.Calendar;
 
@@ -176,9 +179,11 @@ public class NotificationsFragment extends DialogFragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     //turrn off the alarm
+                   DbManager.getInstance(getContext()).cancelAlarms(getContext());
 
                 }else{
                     //triger the alarm
+                    Toast.makeText(getContext(),"Please set new notifications!",Toast.LENGTH_SHORT).show();
 
                 }
             }

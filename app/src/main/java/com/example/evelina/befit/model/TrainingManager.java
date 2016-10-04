@@ -70,11 +70,11 @@ public class TrainingManager {
         Exercise lowTree=new Exercise("Bodyweight Lunge",10,2,10,"With rear knee touching the floor, lunge forward and hold the bottom position",12);
         Exercise lowFour=new Exercise("Plié Squat",10,3,12,"Stand tall, feet slightly wider than shoulder-width apart, toes pointed out at 45-degree angles,make deep squat and return to standing position",12);
         Exercise lowFive=new Exercise("Plank Leg Lift",10,3,15,"Get into a high plank position.Tap your left leg out to the side, then back to starting position,whitch legs.",12);
-        upperBody.addExercise(lowOne);
-        upperBody.addExercise(lowTwo);
-        upperBody.addExercise(lowTree);
-        upperBody.addExercise(lowFour);
-        upperBody.addExercise(lowFive);
+        lowerBody.addExercise(lowOne);
+        lowerBody.addExercise(lowTwo);
+        lowerBody.addExercise(lowTree);
+        lowerBody.addExercise(lowFour);
+        lowerBody.addExercise(lowFive);
         allExercises.add(lowOne);
         allExercises.add(lowTwo);
         allExercises.add(lowTree);
@@ -82,11 +82,11 @@ public class TrainingManager {
         allExercises.add(lowFive);
         //WHOLEBODY
 
-        upperBody.addExercise(absOne);
-        upperBody.addExercise(upFour);
-        upperBody.addExercise(lowFive);
-        upperBody.addExercise(absFour);
-        upperBody.addExercise(upFive);
+        wholeBody.addExercise(absOne);
+        wholeBody.addExercise(upFour);
+        wholeBody.addExercise(lowFive);
+        wholeBody.addExercise(absFour);
+        wholeBody.addExercise(upFive);
 
 
         basicChallenges.add(abdomen);
@@ -123,5 +123,16 @@ public class TrainingManager {
         }
         return list;
     }
+    public Challenge getBasicChallenges(String name) {
+        Challenge c= null; //TODO!!!!!!
+        for (int i = 0; i < basicChallenges.size(); i++) {
+            if (name.equals(basicChallenges.get(i).getName())) {
+                c = basicChallenges.get(i);
+            }
+        }
+        return c;
+    }
+
+
 
 }

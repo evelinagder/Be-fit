@@ -39,7 +39,7 @@ public void onBindViewHolder(CustomVH holder, final int position) {
         holder.name.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View v) {
-        activity.trainingSelected(customChallenges.get(position));
+    activity.ChallengeSelected(customChallenges.get(position),false);
         Toast.makeText(activity, "Training selected: " + customChallenges.get(position).toString(), Toast.LENGTH_SHORT).show();
         }
         });

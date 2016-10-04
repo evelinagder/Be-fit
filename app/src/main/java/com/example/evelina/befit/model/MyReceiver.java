@@ -20,6 +20,9 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         long alarmTime= (long) intent.getExtras().get("ALARM TIME");
+        String username= intent.getStringExtra("username");
+        String currentUser= context.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
+        if ( currentUser.equals(username)){
 
         if(!(System.currentTimeMillis()<alarmTime)){
             Intent resultIntent = new Intent(context, WelcomeActivity.class);
@@ -38,7 +41,7 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(01234, mBuilder.build());
     }
-        else{
+        else {
             Intent resultIntent = new Intent(context, WelcomeActivity.class);
             long[] pattern = {0, 300, 0};
             PendingIntent pi = PendingIntent.getActivity(context, 01234, resultIntent, 0);
@@ -54,7 +57,7 @@ public class MyReceiver extends BroadcastReceiver {
             mBuilder.setAutoCancel(true);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(01234, mBuilder.build());
-
+        }
         }
     }
 }
