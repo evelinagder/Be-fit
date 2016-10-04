@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,12 +22,22 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
     Button cancelButton;
     Button okButton;
     TextView heading;
+    ICancelAdding activity;
+
+    public interface ICancelAdding{
+        void cancelAdding(int pos);
+    }
 
 
     public SetsRepeatsDialogFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity= (ICancelAdding) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +59,7 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 setsET.setText("");
                 repeatsET.setText("");
+                activity.cancelAdding( getArguments().getInt("position"));
                 dismiss();
             }
         });
@@ -86,8 +98,17 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                     repeatsET.requestFocus();
                     return;
                 }
+
+                if(repeatsH==0){
+                    repeatsET.setError("Repeats should be greater than 0 to add exercise");
+                    repeatsET.setText("");
+                    repeatsET.requestFocus();
+                    return;
+                }
+
                 Toast.makeText(getContext(), "Here exercise is added", Toast.LENGTH_SHORT).show();
                 //here we should have the numbers and add them to the challenge
+                //use setsH and repeatsH which are int
                 dismiss();
 
             }

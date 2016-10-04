@@ -45,12 +45,19 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
         holder.addedCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("TAG","clicked " + exercises.get(position).getName());
-                SetsRepeatsDialogFragment fragment = new SetsRepeatsDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("name", exercises.get(position).getName());
-                fragment.setArguments(bundle);
-                fragment.show(activity.getSupportFragmentManager(),"sets");
+                if(holder.addedCheckbox.isChecked()){
+                    //here we should check if we
+                    Log.e("TAG","clicked " + exercises.get(position).getName());
+                    SetsRepeatsDialogFragment fragment = new SetsRepeatsDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", exercises.get(position).getName());
+                    bundle.putInt("position",position);
+                    fragment.setArguments(bundle);
+                    fragment.show(activity.getSupportFragmentManager(),"sets");
+                }else{
+                    holder.addedCheckbox.setSelected(false);
+                }
+
             }
         });
     }

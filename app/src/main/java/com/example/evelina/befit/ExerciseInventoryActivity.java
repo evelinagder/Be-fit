@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExerciseInventoryActivity extends AppCompatActivity {
+public class ExerciseInventoryActivity extends AppCompatActivity implements SetsRepeatsDialogFragment.ICancelAdding{
     Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private NetworkStateChangedReceiver receiver;
@@ -77,5 +77,10 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+
+    @Override
+    public void cancelAdding(int pos) {
+        mExercisesAdapter.notifyItemRangeChanged(pos,1);
     }
 }
