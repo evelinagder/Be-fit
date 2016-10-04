@@ -2,6 +2,7 @@ package com.example.evelina.befit;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -47,21 +48,14 @@ public class RegisterActivity extends AppCompatActivity {
     Spinner genderSpinner;
     public static final int RESULT_REG_SUCCESSFUL = 10;
     String gender;
+    NetworkStateChangedReceiver receiver;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_register);
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) { }
+
         usernameR = (EditText) findViewById(R.id.editText_username);
         passR = (EditText) findViewById(R.id.editText_password);
         emailR = (EditText) findViewById(R.id.editText_email);
@@ -101,6 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         });
+
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
             registerR.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -185,5 +182,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }

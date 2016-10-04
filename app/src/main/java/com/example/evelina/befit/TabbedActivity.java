@@ -189,6 +189,13 @@ public class TabbedActivity extends AppCompatActivity{
                        custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName()));
                    }
                   custom.setLayoutManager(new LinearLayoutManager(getActivity()));
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(),ExerciseInventoryActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
                     return root;
 

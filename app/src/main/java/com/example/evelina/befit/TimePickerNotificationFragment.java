@@ -60,16 +60,50 @@ public class TimePickerNotificationFragment extends DialogFragment  {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), " hour" + c.get(Calendar.HOUR_OF_DAY) +" minutes "+ c.get(Calendar.MINUTE), Toast.LENGTH_SHORT).show();
-                //here we have the alarm time and we set the alarm
+                String username= getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
+                long time;
+                boolean isRepeating= (boolean) getArguments().get("isRepeating");
                 if(getArguments().get("monday")!=null){
                     c.set(Calendar.DAY_OF_WEEK, (Integer) getArguments().get("monday"));
-                    long time=c.getTimeInMillis();
-                     boolean isRepeating= (boolean) getArguments().get("isRepeating");
-                    String username= getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
+                    time=c.getTimeInMillis();
                      DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
 
+                }
+                if(getArguments().get("tuesday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("tuesday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
 
                 }
+                if(getArguments().get("wednesday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("wednesday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+
+                }
+                if(getArguments().get("thursday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("thursday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+                }
+                if(getArguments().get("friday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("friday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+
+                }
+                if(getArguments().get("saturday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("saturday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+
+                }
+                if(getArguments().get("sunday")!=null){
+                    c.set(Calendar.DAY_OF_WEEK,(Integer)getArguments().get("sunday"));
+                    time=c.getTimeInMillis();
+                    DbManager.getInstance(getContext()).saveNotifications(username,time,isRepeating,getContext());
+                }
+                dismiss();
 
             }
         });

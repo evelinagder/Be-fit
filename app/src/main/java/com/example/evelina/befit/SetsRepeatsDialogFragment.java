@@ -88,6 +88,7 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                 }
                 Toast.makeText(getContext(), "Here exercise is added", Toast.LENGTH_SHORT).show();
                 //here we should have the numbers and add them to the challenge
+                dismiss();
 
             }
         });
