@@ -18,9 +18,10 @@
             android:layout_width="216dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:layout_marginTop="10dp"
             android:background="@color/light_green"
             android:id="@+id/picture_profile_change"
-            android:layout_height="200dp" />
+            android:layout_height="222dp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

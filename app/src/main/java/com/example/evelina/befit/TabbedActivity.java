@@ -62,6 +62,7 @@ public class TabbedActivity extends AppCompatActivity{
     private ViewPager mViewPager;
     private NetworkStateChangedReceiver receiver;
      static  String username;
+    boolean isBasic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +166,6 @@ public class TabbedActivity extends AppCompatActivity{
             //TODO here we change the fragments pass data with bundles remove tabbed fragment
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1){
 
-
                 // Inflate the layout for this fragment
                 View root =  inflater.inflate(R.layout.fragment_basic_training, container, false);
                 RecyclerView categories = (RecyclerView) root.findViewById(R.id.basicTraining_view);
@@ -173,6 +173,8 @@ public class TabbedActivity extends AppCompatActivity{
                 categories.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 return root;
+
+
 
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 User user=DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
@@ -276,7 +278,12 @@ public class TabbedActivity extends AppCompatActivity{
         unregisterReceiver(receiver);
         super.onDestroy();
     }
-    public void trainingSelected(String choice){
-        //TODO action after selecting a training
+
+    public void ChallengeSelected(String challenge, boolean isBasic){
+        Intent intent = new Intent(this,StartTrainingActivity.class);
+        intent.putExtra("username",username);
+        intent.putExtra("challenge",challenge);
+        intent.putExtra("isBasic",isBasic);
+        startActivity(intent);
     }
 }
