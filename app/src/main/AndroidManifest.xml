@@ -40,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-=
+
         <activity android:name=".PlayExerciseActivity" />
 
         <receiver
@@ -59,14 +59,13 @@
             </intent-filter>
         </receiver>
 
-
         <activity android:name=".CompletedTrainings">
 
         </activity>
+        <activity android:name=".StartTrainingActivity"/>
 
-        <activity android:name=".StartTrainingActivity">
 
-        </activity>
+
 
     </application>
 

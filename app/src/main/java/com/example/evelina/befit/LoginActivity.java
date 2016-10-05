@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,16 +15,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.evelina.befit.model.DbManager;
-import com.example.evelina.befit.model.User;
-import com.facebook.AccessToken;
+;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.login.LoginManager;
+
+import com.facebook.ProfileTracker;
+
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+
+import java.util.Arrays;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_REG_USER = 10;
@@ -34,23 +40,28 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     LoginButton loginButton;
     CallbackManager callbackManager;
-    AccessToken accessToken;
+    ProfileTracker mProfileTracker;
     NetworkStateChangedReceiver receiver;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_login);
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
         username = (EditText) findViewById(R.id.editText_emailL);
         password = (EditText) findViewById(R.id.editText_passwordL);
-        loginButton= (LoginButton) findViewById(R.id.login_button_has_account);
+        loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
-        loginButton.setReadPermissions("email","public_profile");
-        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        loginButton.setReadPermissions(Arrays.asList("public_profile"));
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,33 +79,33 @@ public class LoginActivity extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-               if (!DbManager.getInstance(LoginActivity.this).validateLogin(usernameString, passwordString)) {
-                   username.setError("Invalid credentials");
-                   username.setText("");
-                   password.setText("");
-                   username.requestFocus();
-                   return;
+                if (!DbManager.getInstance(LoginActivity.this).validateLogin(usernameString, passwordString)) {
+                    username.setError("Invalid credentials");
+                    username.setText("");
+                    password.setText("");
+                    username.requestFocus();
+                    return;
                 }
 
                 SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("logged_in", true);
-                editor.putString("currentUser",usernameString);
+                editor.putString("currentUser", usernameString);
                 editor.commit();
-                Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_LONG).show();
 
-                  Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                 // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
-                    intent.putExtra("username",username.getText().toString());
-                  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                  startActivity(intent);
-                  finish();
+                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
+                intent.putExtra("username", username.getText().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
 
 
             }
         });
 
-          register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -106,69 +117,59 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile =Profile.getCurrentProfile();
-
-                if(accessToken.getCurrentAccessToken()==null){
-                    accessToken = loginResult.getAccessToken();
+                Intent intent = new Intent(LoginActivity.this,TabbedActivity.class);
+                if(Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            // profile2 is the new profile
+                            Log.v("facebook - profile", profile2.getFirstName());
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    // no need to call startTracking() on mProfileTracker
+                    // because it is called by its constructor, internally.
                 }
-
-                //TODO add to database
-
-                AccessToken accessToken = loginResult.getAccessToken();
-
-                if(profile!=null) {
+                else {
+                    Profile profile = Profile.getCurrentProfile();
+                    Log.e("facebook", profile.getFirstName());
 
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
-
-
-
-                            DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
-
-                    Uri picture=profile.getProfilePictureUri(100,100);
-
-                            DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
-                            User user=DbManager.getInstance(LoginActivity.this).getUser(username);
-                            user.setProfilePic(picture);
-
-
-
-
-
-
+                    DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
                     editor.putString("currentUser",username);
                     editor.commit();
-                    Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-
+                    intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
                 }
 
+                startActivity(intent);
+                finish();
             }
 
             @Override
             public void onCancel() {
-                Log.e("TAG","user pressed cancel");
+                Log.e("TAG", "user pressed cancel");
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.e("TAG",error.getMessage());
+                Log.e("TAG", error.getMessage());
                 Toast.makeText(LoginActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
 
             }
         });
+
+
+
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_REG_USER){
-            if(resultCode == RegisterActivity.RESULT_REG_SUCCESSFUL){
+        if (requestCode == REQUEST_REG_USER) {
+            if (resultCode == RegisterActivity.RESULT_REG_SUCCESSFUL) {
                 String emailT = data.getStringExtra("username");
                 String pass = data.getStringExtra("password");
                 username.setText(emailT);
@@ -176,14 +177,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         //TODO here if user logged with fb
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
-}
+    }
 
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
+
         super.onDestroy();
     }
+
+
+
+
 }
 

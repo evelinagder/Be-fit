@@ -126,12 +126,10 @@ public class User implements Serializable{
 
     }
     public boolean hasCustomChallenges(){
-        if(customChallenges.size()==0){
+        if(customChallenges.isEmpty()){
             return false;
         }
-        else{
             return true;
-        }
     }
     public void addAlarmn(Alarm alarm){
         if(alarm != null){
