@@ -28,6 +28,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private DialogFragment fragment;
     private NetworkStateChangedReceiver receiver;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,9 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_exercise);
+
+
+
         completedButton= (Button) findViewById(R.id.button_completed);
         completedButton.setOnClickListener(new View.OnClickListener() {
             @Override
