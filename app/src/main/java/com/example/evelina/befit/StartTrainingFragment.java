@@ -49,11 +49,9 @@ public class StartTrainingFragment extends Fragment {
         Challenge challenge;
         if(isBasic){
             challenge= TrainingManager.getInstance().getBasicChallenges(challengeName);
-            Log.e("MMM",challenge.getName());
         }
         else{
             challenge=user.getCustomChallenges(challengeName);
-            Log.e("MMM",challenge.getName());
         }
         TextView heading= (TextView)root.findViewById(R.id.heading);
         heading.setText(challengeName);

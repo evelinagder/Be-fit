@@ -128,7 +128,7 @@ public class User implements Serializable{
 
     }
     public boolean hasCustomChallenges(){
-        if(customChallenges.size()==0){
+        if(customChallenges.isEmpty()){
             return false;
         }
         else{
