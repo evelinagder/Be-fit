@@ -131,9 +131,7 @@ public class User implements Serializable{
         if(customChallenges.isEmpty()){
             return false;
         }
-        else{
             return true;
-        }
     }
     public void addAlarmn(Alarm alarm){
         if(alarm != null){
