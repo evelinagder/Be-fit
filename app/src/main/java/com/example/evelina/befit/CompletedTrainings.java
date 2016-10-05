@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.example.evelina.befit.model.Exercise;
+import com.example.evelina.befit.model.TrainingManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +33,20 @@ public class CompletedTrainings extends AppCompatActivity {
         //TrainingSpecifications is a class which we will use in supplying the times of completion of challenge and it's last day of completion
         //i have filled the specifications with two objects for test view
         //we should get from DbManager/for the current User/ his completed challenges
-        TrainingSpecifications trainingOne = new TrainingSpecifications(5,"10.05.2016");
-        TrainingSpecifications trainingSpecificationsTwo = new TrainingSpecifications(7,"02.09.2012");
+        ArrayList<Exercise> exercises = TrainingManager.getInstance().getAllExercises();
+
+        TrainingSpecifications trainingOne = new TrainingSpecifications(5,"10.05.2016",exercises);
+       // TrainingSpecifications trainingSpecificationsTwo = new TrainingSpecifications(7,"02.09.2012",exercises);
         List<TrainingSpecifications> specifications = new ArrayList<>();
         specifications.add(trainingOne);
-        specifications.add(trainingSpecificationsTwo);
+       // specifications.add(trainingSpecificationsTwo);
 
         //TrainingTypes is a class which we use to supply the expandable recyclerview with parent objects - the names of the challenges
         //we should get from DbManager/for the current User / his completed challenges's names
         List<TrainingTypes> namesTrainings = new ArrayList<>();
         namesTrainings.add(new TrainingTypes(specifications,"trenirovka 2"));
         namesTrainings.add(new TrainingTypes(specifications,"trenirovka 2"));
+        namesTrainings.add(new TrainingTypes(specifications,"trenirovka 3"));
         //for the adapter we need the parent objects - TrainingTypes/as list/ and the activity in which we want the expandable recycler view
         final CompletedTrainingExpandableAdapter adapter = new CompletedTrainingExpandableAdapter(namesTrainings,CompletedTrainings.this);
 
@@ -60,5 +65,8 @@ public class CompletedTrainings extends AppCompatActivity {
 
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
     }
 }

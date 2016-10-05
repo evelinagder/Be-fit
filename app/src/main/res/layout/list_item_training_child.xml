@@ -10,6 +10,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
         android:layout_height="wrap_content"
         android:text="Last completed on :"/>
@@ -17,6 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="date"
+        android:textSize="20sp"
         android:id="@+id/date_completion_training"
         android:gravity="center"
         android:layout_weight="1"/>
@@ -30,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:textColor="@android:color/black"
+            android:textSize="20sp"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:text="Completed times"/>
@@ -37,9 +40,15 @@
             android:layout_width="0dp"
             android:hint="number"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:gravity="center"
             android:id="@+id/times_completion_training"
             android:layout_height="wrap_content" />
     </LinearLayout>
+    <!-- This is the new thing-->
+<android.support.v7.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:id="@+id/recycler_view_completed_exercises_challenge"
+    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

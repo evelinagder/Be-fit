@@ -1,6 +1,8 @@
 package com.example.evelina.befit;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
+import com.example.evelina.befit.model.TrainingManager;
 
 import java.util.List;
 
@@ -68,11 +71,19 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         TrainingSpecifications trainingSpecifications = (TrainingSpecifications) childListItem;
         childViewHolder.timesCompletionTrainingTV.setText(trainingSpecifications.getmTimesCompleted()+"");
         childViewHolder.dateCompletionTrainingTV.setText(trainingSpecifications.getmDateLastCompletion());
+        //TODO here we create adapter for the child recycler and set it to the recycler depending on the name of the challenge
+        //the newxt lines are test they should be changed
+        List<String> exercisesNames = TrainingManager.getInstance().getAllExercisesName();
+       // StartTrainingRecyclerAdapter adapter= new StartTrainingRecyclerAdapter(activity,exercisesNames);
+        ChildRecyclerAdapterCompletedTrainings childRecyclerAdapterCompletedTrainings = new ChildRecyclerAdapterCompletedTrainings(exercisesNames,activity);
+       childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);
+        childViewHolder.exercisesPerTrainingRV.setLayoutManager(new LinearLayoutManager(activity));
     }
 
     public class TrainingChildViewHolder extends ChildViewHolder{
         public TextView dateCompletionTrainingTV;
         public TextView timesCompletionTrainingTV;
+        public RecyclerView exercisesPerTrainingRV;
 
 
         /**
@@ -85,6 +96,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
             super(itemView);
             dateCompletionTrainingTV = (TextView) itemView.findViewById(R.id.date_completion_training);
             timesCompletionTrainingTV = (TextView) itemView.findViewById(R.id.times_completion_training);
+            exercisesPerTrainingRV = (RecyclerView) itemView.findViewById(R.id.recycler_view_completed_exercises_challenge);
         }
 
     }
