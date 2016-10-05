@@ -15,6 +15,7 @@ public class Challenge {
     private int timesCompleted;
     private String dateOfCompletion;
     private String achieved;
+    private int challengeID;
     ArrayList<Exercise> exercises;
 
     public Challenge(String name, int timesCompleted, String dateOfCompletion) {
@@ -56,5 +57,13 @@ public class Challenge {
         }
         return list;
 
+    }
+
+    public void setChallengeID(int challengeID) {
+        this.challengeID = challengeID;
+    }
+
+    public int getChallengeID() {
+        return challengeID;
     }
 }

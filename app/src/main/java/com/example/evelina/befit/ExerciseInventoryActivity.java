@@ -13,8 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.Exercise;
 import com.example.evelina.befit.model.TrainingManager;
+import com.example.evelina.befit.model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +30,9 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
     private NetworkStateChangedReceiver receiver;
     private ExerciseRecyclerAdapter mExercisesAdapter;
     private FloatingActionButton fab ;
+    User user;
+    String username;
+    String challengeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +41,19 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         toolbar= (Toolbar) findViewById(R.id.toolbar_exercise_inventory);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Exercise inventory");
+        username=getIntent().getStringExtra("username");
+        challengeName=getIntent().getStringExtra("challengeName");
+        user= DbManager.getInstance(this).getUser(username);
+
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         fab = (FloatingActionButton) findViewById(R.id.fab_exercise_inventory);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(ExerciseInventoryActivity.this, "Adding finished", Toast.LENGTH_SHORT).show();
-                //here we have already added the exercises in DB and the user
-                //here we go to some activity
+                Intent intent= new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
             }
         });
 
@@ -81,6 +92,13 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
 
     @Override
     public void cancelAdding(int pos) {
+        //maha izbranoto uprajnenie ot custon challenge
         mExercisesAdapter.notifyItemRangeChanged(pos,1);
+    }
+    public String getUsername(){
+        return username;
+    }
+    public String getChallengeName(){
+        return  challengeName;
     }
 }

@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public class User implements Serializable{
     private int points;
     private Uri profilePic;
     private String gender;
-    ArrayList<Challenge> achievedChallenges;
-    ArrayList<Challenge> customChallenges;
+    private int userDBId;
+    HashMap<String, Challenge> achievedChallenges;
+    HashMap<String, Challenge> customChallenges;
     ArrayList<Alarm> userAlarms;
 
     public User( String username,String password, String email, String gender,int weight, int height, int points) {
@@ -33,8 +35,8 @@ public class User implements Serializable{
         this.points=points;
 
 
-        customChallenges= new ArrayList<Challenge>();
-        achievedChallenges= new ArrayList<Challenge>();
+        customChallenges= new HashMap<String, Challenge>();
+        achievedChallenges= new HashMap<String, Challenge>();
         userAlarms= new ArrayList<Alarm>();
 
     }
@@ -56,10 +58,11 @@ public class User implements Serializable{
     }
 
     public void addCustomChallenge(Challenge c){
-        customChallenges.add(c);
+
+        customChallenges.put(c.getName(),c);
     }
     public void addAchievedChallenge(Challenge c){
-        achievedChallenges.add(c);
+        achievedChallenges.put(c.getName(),c);
     }
 
     public String getPassword() {
@@ -117,11 +120,10 @@ public class User implements Serializable{
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public List<String> getCustomChallengesName(){
-        List<String> list= new ArrayList<String>();
-        for(int i = 0; i<customChallenges.size();i++){
-            list.add(customChallenges.get(i).getName());
-        }
+        List<String> list=  new ArrayList<>() ;
+        list.addAll( customChallenges.keySet());
         return list;
 
     }
@@ -137,12 +139,15 @@ public class User implements Serializable{
         }
     }
     public Challenge getCustomChallenges(String name) {
-        Challenge c = null; //TODO!!!!!!
-        for (int i = 0; i < customChallenges.size(); i++) {
-            if (name.equals(customChallenges.get(i).getName())) {
-                c = customChallenges.get(i);
-            }
-        }
+        Challenge c = customChallenges.get(name);
         return c;
+    }
+
+    public void setUserDBId(int userDBId) {
+        this.userDBId = userDBId;
+    }
+
+    public int getUserDBId() {
+        return userDBId;
     }
 }

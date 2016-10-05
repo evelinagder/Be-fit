@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.evelina.befit.model.Challenge;
 import com.example.evelina.befit.model.Exercise;
 
 import java.util.List;
@@ -52,6 +54,8 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                     Bundle bundle = new Bundle();
                     bundle.putString("name", exercises.get(position).getName());
                     bundle.putInt("position",position);
+                    bundle.putString("username",holder.username);
+                    bundle.putString("challengeName",holder.challengeName);
                     fragment.setArguments(bundle);
                     fragment.show(activity.getSupportFragmentManager(),"sets");
                 }else{
@@ -71,12 +75,16 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
         private TextView nameExercise ;
         private TextView descriptionExercise;
         private CheckBox addedCheckbox;
+        String username;
+        String challengeName;
 
          public ExerciseViewHolder(View itemView) {
              super(itemView);
              nameExercise = (TextView) itemView.findViewById(R.id.exercise_name_TV);
              descriptionExercise = (TextView) itemView.findViewById(R.id.exercise_description_TV);
              addedCheckbox = (CheckBox) itemView.findViewById(R.id.checkbox_added_exercises);
+             username = activity.getUsername();
+             challengeName=activity.getChallengeName();
          }
      }
 

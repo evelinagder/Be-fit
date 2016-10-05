@@ -10,12 +10,12 @@ public class Exercise {
     private  int series;
     private int repeats;
     private String instructions;
-    private int video;
+    private String video;
 
     // video
 
 
-    public Exercise(String name,int points, int series, int repeats, String instructions,int video) {
+    public Exercise(String name,int points, int series, int repeats, String instructions,String video) {
         this.name = name;
         this.series = series;
         this.repeats = repeats;
@@ -32,4 +32,21 @@ public class Exercise {
     public String getInstructions() {
         return instructions;
     }
+
+    public void setRepeats(int repeats) {
+        this.repeats = repeats;
+    }
+
+    public void setSeries(int series) {
+        this.series = series;
+    }
+
+    public int getRepeats() {
+        return repeats;
+    }
+
+    public int getSeries() {
+        return series;
+    }
 }
+

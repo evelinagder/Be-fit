@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.evelina.befit.CustomChallengeNameDialogFragment">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="410dp"
+       android:orientation="vertical">
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="118dp"
+           android:text="Add name to your Training:"
+           android:textStyle="bold"
+           android:gravity="center"
+           android:textColor="@color/colorPrimaryDark"
+           android:textSize="40dp"
+           android:layout_weight="0.50" />
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_margin="16dp"
+           android:layout_height="0dp"
+           android:id="@+id/ET_challenge_name"
+           android:layout_weight="1"
+           android:hint="Training name"
+           />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+           <Button
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:textColor="@color/colorAccent"
+               android:layout_height="58dp"
+               android:text="ok"
+               android:id="@+id/ok_button_Ch_name"
+               android:background="@null"
+               android:textAllCaps="true" />
+
+           <Button
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_height="match_parent"
+               android:text="Cancel"
+               android:textColor="@color/colorAccent"
+               android:background="@null"
+               android:id="@+id/cancel_buttonCh_name"
+               android:textAllCaps="true"
+               />
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+</FrameLayout>

@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.model.DbManager;
+import com.example.evelina.befit.model.Exercise;
+import com.example.evelina.befit.model.TrainingManager;
+import com.example.evelina.befit.model.User;
+
 public class SetsRepeatsDialogFragment extends DialogFragment {
     TextView setsTV;
     TextView repeatsTV;
@@ -23,6 +29,10 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
     Button okButton;
     TextView heading;
     ICancelAdding activity;
+    String username;
+    String challengeName;
+    String exerciseName;
+    User user;
 
     public interface ICancelAdding{
         void cancelAdding(int pos);
@@ -43,7 +53,10 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sets_repeats_dialog, container, false);
-        String exerciseName = getArguments().getString("name");
+         exerciseName = getArguments().getString("name");
+        username= getArguments().getString("username");
+        challengeName=getArguments().getString("challengeName");
+        user= DbManager.getInstance(getActivity()).getUser(username);
         setsTV = (TextView) view.findViewById(R.id.sets_TV);
         repeatsTV = (TextView) view.findViewById(R.id.repeats_TV);
         setsET = (EditText) view.findViewById(R.id.sets_ET);
@@ -69,12 +82,12 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                 String sets=setsET.getText().toString();
                 String repeats = repeatsET.getText().toString();
                 if(sets.isEmpty()){
-                    setsET.setError("Please fill in");
+                    setsET.setError("Please fill in!");
                     setsET.requestFocus();
                     return;
                 }
                 if(repeats.isEmpty()){
-                    repeatsET.setError("Please fill in");
+                    repeatsET.setError("Please fill in!");
                     repeatsET.requestFocus();
                     return;
                 }
@@ -107,8 +120,15 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                 }
 
                 Toast.makeText(getContext(), "Here exercise is added", Toast.LENGTH_SHORT).show();
+
                 //here we should have the numbers and add them to the challenge
                 //use setsH and repeatsH which are int
+                Exercise exercise= TrainingManager.getInstance().getExercise(exerciseName);
+                exercise.setRepeats(repeatsH);
+                exercise.setSeries(setsH);
+                Challenge challenge=user.getCustomChallenges(challengeName);
+                DbManager.getInstance(getActivity()).addExercisesToCustomChallenge(username,challenge.getName(),TrainingManager.getInstance().getExercise(exerciseName));
+                DbManager.getInstance(getActivity()).addCustomChallenge(username,challenge);
                 dismiss();
 
             }

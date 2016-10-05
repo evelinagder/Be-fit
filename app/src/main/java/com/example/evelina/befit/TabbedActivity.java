@@ -76,7 +76,7 @@ public class TabbedActivity extends AppCompatActivity{
         if(getIntent().getStringExtra("username")!=null){
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
              username = getIntent().getStringExtra("username");
-         //  DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
+           DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -200,8 +200,11 @@ public class TabbedActivity extends AppCompatActivity{
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(),ExerciseInventoryActivity.class);
-                        startActivity(intent);
+                        Bundle b=new Bundle();
+                        b.putString("username",username);
+                       ((TabbedActivity) getActivity()).showFragment(b);
+
+
                     }
                 });
 
@@ -239,6 +242,7 @@ public class TabbedActivity extends AppCompatActivity{
                 });
                 return rootView;
             }
+
 
         }
 
@@ -293,5 +297,12 @@ public class TabbedActivity extends AppCompatActivity{
         intent.putExtra("challenge",challenge);
         intent.putExtra("isBasic",isBasic);
         startActivity(intent);
+    }
+    public void showFragment(Bundle bundle) {
+        if (bundle != null) {
+            CustomChallengeNameDialogFragment fragment = new CustomChallengeNameDialogFragment();
+            fragment.setArguments(bundle);
+            fragment.show(getSupportFragmentManager(), "ChallengeName");
+        }
     }
 }
