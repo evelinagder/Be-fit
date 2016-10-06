@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -38,8 +42,24 @@ import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
+import com.facebook.login.widget.ProfilePictureView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,10 +83,12 @@ public class TabbedActivity extends AppCompatActivity{
     private ViewPager mViewPager;
     private NetworkStateChangedReceiver receiver;
      static  String username;
+    private static String id;
     boolean isBasic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_tabbed);
         receiver=new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
@@ -77,6 +99,9 @@ public class TabbedActivity extends AppCompatActivity{
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
              username = getIntent().getStringExtra("username");
            DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
+        }
+        if(getIntent().getStringExtra("id")!=null){
+            id=getIntent().getStringExtra("id");
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -222,17 +247,38 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
                 User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
-                profilePicture.setImageURI(user.getProfilePic());
+                numberPointsTV.setText(user.getPoints()+"");
+                //TODO number of trainings as a whole is missing
+                kilogramsTV.setText(user.getWeight()+"");
+                metersTV.setText(user.getHeight()+"");
 
+                Bundle params = new Bundle();
+                params.putBoolean("redirect", false);
+                new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture",params,HttpMethod.GET,new  GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        if(response!=null){
+                            String picUrlString = null;
+                            try {
+                                picUrlString = (String) response.getJSONObject().getJSONObject("data").get("url");
+                                MyAsyncTask showPic = new MyAsyncTask();
+                                showPic.execute(picUrlString);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
+                                }else{
+                            //TODO here we put the default or the updated for the user picture
+                        }
+                    }
+                }).executeAsync();
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //go to another activity showing the chart
-
+                        //TODO go to another activity showing the chart
                     }
                 });
+
                 viewTrainingsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -240,13 +286,50 @@ public class TabbedActivity extends AppCompatActivity{
                         startActivity(intent);
                     }
                 });
+
                 return rootView;
             }
-
-
         }
 
+
+        class MyAsyncTask extends AsyncTask<String,Void,Bitmap>{
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                InputStream is = null;
+                Bitmap img=null;
+                URL url = null;
+                try {
+                    url = new URL(strings[0]);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                HttpURLConnection connection = null;
+                try {
+                    connection = (HttpURLConnection) url.openConnection();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    is = connection.getInputStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                img = BitmapFactory.decodeStream(is);
+                //TODO scale down the bitmap
+                return img;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                profilePicture.setImageBitmap(bitmap);
+            }
+        };
+
+
     }
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -306,3 +389,5 @@ public class TabbedActivity extends AppCompatActivity{
         }
     }
 }
+
+

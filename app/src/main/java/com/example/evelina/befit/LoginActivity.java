@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +17,16 @@ import android.widget.Toast;
 
 import com.example.evelina.befit.model.DbManager;
 ;
+import com.example.evelina.befit.model.User;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 
 import com.facebook.ProfileTracker;
@@ -28,6 +35,14 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 
@@ -59,7 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
-        loginButton.setReadPermissions(Arrays.asList("public_profile"));
+        //TODO see if we can get the person's email
+        loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
@@ -67,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String usernameString = username.getText().toString();
-
                 String passwordString = password.getText().toString();
+
                 if (usernameString.isEmpty()) {
                     username.setError("Email is compulsory");
                     username.requestFocus();
@@ -122,27 +138,47 @@ public class LoginActivity extends AppCompatActivity {
                     mProfileTracker = new ProfileTracker() {
                         @Override
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                            // profile2 is the new profile
                             Log.v("facebook - profile", profile2.getFirstName());
                             mProfileTracker.stopTracking();
                         }
                     };
-                    // no need to call startTracking() on mProfileTracker
-                    // because it is called by its constructor, internally.
                 }
                 else {
                     Profile profile = Profile.getCurrentProfile();
+
                     Log.e("facebook", profile.getFirstName());
 
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
-                    DbManager.getInstance(LoginActivity.this).addUser(username, password, "none","", 0, 0, 0);
+                    Bundle params = new Bundle();
+                    params.putString("fields","email,gender");
+                    final User user = new User(username,password,"none","",0,0,0);
+                    new GraphRequest(AccessToken.getCurrentAccessToken(), "me",params,HttpMethod.GET, new GraphRequest.Callback() {
+                        @Override
+                        public void onCompleted(GraphResponse response) {
+                            if(response!=null){
+                                try {
+                                    String email = response.getJSONObject().getString("email");
+                                    Log.e("TAG",email);
+                                    String gender = response.getJSONObject().getString("gender");
+                                    Log.e("TAG",gender);
+                                    user.setEmail(email);
+                                    user.setGender(gender);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }).executeAsync();
+
+                    DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),0,0,0);
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
                     editor.putString("currentUser",username);
                     editor.commit();
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
+                    intent.putExtra("id",profile.getId());
                 }
 
                 startActivity(intent);
@@ -187,8 +223,6 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onDestroy();
     }
-
-
 
 
 }
