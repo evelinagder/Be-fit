@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-         dbmanager=DbManager.getInstance(WelcomeActivity.this);
+        dbmanager=DbManager.getInstance(WelcomeActivity.this);
         dbmanager.getWritableDatabase();
         StringBuilder allUsersS = new StringBuilder();
         for (User u : DbManager.getInstance(WelcomeActivity.this).allUsers.values()) {
