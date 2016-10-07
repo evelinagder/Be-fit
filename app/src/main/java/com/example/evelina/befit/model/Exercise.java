@@ -48,5 +48,9 @@ public class Exercise {
     public int getSeries() {
         return series;
     }
+
+    public String getVideo() {
+        return video;
+    }
 }
 
