@@ -75,9 +75,10 @@ public class TabbedActivity extends AppCompatActivity{
      */
     private ViewPager mViewPager;
     private NetworkStateChangedReceiver receiver;
-     static  String username;
+    static  String username;
     private static String id;
     boolean isBasic;
+    private static String loginState;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +91,11 @@ public class TabbedActivity extends AppCompatActivity{
         getSupportActionBar().setTitle("Be Fit");
         if(getIntent().getStringExtra("username")!=null){
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
-             username = getIntent().getStringExtra("username");
-           DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
+            username = getIntent().getStringExtra("username");
+            DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
+        }
+        if(getIntent().getStringExtra("loggedWith")!=null){
+            loginState=getIntent().getStringExtra("loggedWith");
         }
         if(getIntent().getStringExtra("id")!=null){
             id=getIntent().getStringExtra("id");
@@ -135,7 +139,7 @@ public class TabbedActivity extends AppCompatActivity{
             return true;
         }
         if(id==R.id.action_logout){
-           //here logout
+            //here logout
             SharedPreferences sharedPreferences = TabbedActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("logged_in",false);
@@ -205,28 +209,28 @@ public class TabbedActivity extends AppCompatActivity{
 
                 Log.e("USER",username+"");
 
-                    View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
-                    RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);
-                   FloatingActionButton add= (FloatingActionButton) root.findViewById(R.id.fabTraining);
-                   if (!user.hasCustomChallenges()) {
-                        List<String> noNames = Arrays.asList("Please add your custom Training");
-                       custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames));
-                   } else {
-                       custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName()));
-                   }
-                  custom.setLayoutManager(new LinearLayoutManager(getActivity()));
+                View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
+                RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);
+                FloatingActionButton add= (FloatingActionButton) root.findViewById(R.id.fabTraining);
+                if (!user.hasCustomChallenges()) {
+                    List<String> noNames = Arrays.asList("Please add your custom Training");
+                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames));
+                } else {
+                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName()));
+                }
+                custom.setLayoutManager(new LinearLayoutManager(getActivity()));
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Bundle b=new Bundle();
                         b.putString("username",username);
-                       ((TabbedActivity) getActivity()).showFragment(b);
+                        ((TabbedActivity) getActivity()).showFragment(b);
 
 
                     }
                 });
 
-                    return root;
+                return root;
 
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -244,26 +248,28 @@ public class TabbedActivity extends AppCompatActivity{
                 //TODO number of trainings as a whole is missing
                 kilogramsTV.setText(user.getWeight()+"");
                 metersTV.setText(user.getHeight()+"");
+                if(loginState.equals("facebook")){
+                    Bundle params = new Bundle();
+                    params.putBoolean("redirect", false);
+                    new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture",params,HttpMethod.GET,new  GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            if(response!=null){
+                                String picUrlString = null;
+                                try {
+                                    picUrlString = (String) response.getJSONObject().getJSONObject("data").get("url");
+                                    MyAsyncTask showPic = new MyAsyncTask();
+                                    showPic.execute(picUrlString);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
-                Bundle params = new Bundle();
-                params.putBoolean("redirect", false);
-                new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture",params,HttpMethod.GET,new  GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        if(response!=null){
-                            String picUrlString = null;
-                            try {
-                                picUrlString = (String) response.getJSONObject().getJSONObject("data").get("url");
-                                MyAsyncTask showPic = new MyAsyncTask();
-                                showPic.execute(picUrlString);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-
-                                }else{
-                            //TODO here we put the default or the updated for the user picture
                         }
-                    }
-                }).executeAsync();
+                    }).executeAsync();
+                }else{
+                    //TODO here we load the user's phooto
+                }
+
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -319,7 +325,7 @@ public class TabbedActivity extends AppCompatActivity{
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
-               // BITMAP_RESIZER(bitmap,100,100);
+                // BITMAP_RESIZER(bitmap,100,100);
 
                 profilePicture.setImageBitmap(  BITMAP_RESIZER(bitmap,2000,2000));
             }
@@ -405,5 +411,3 @@ public class TabbedActivity extends AppCompatActivity{
         }
     }
 }
-
-

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/homescreen"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:fadeScrollbars="true"
     android:orientation="vertical"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -13,6 +15,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -21,68 +25,105 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create an account"
-            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:text="Create account"
+            android:id="@+id/create_account_heading"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="45dp"
+            android:textStyle="bold"
+            android:textSize="35sp"
             android:gravity="center"/>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:maxLines="1"
+            android:inputType="textPersonName"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:gravity="center"
             android:hint="Username"
             android:id="@+id/editText_username" />
 
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:gravity="center"
             android:inputType="textPassword"
             android:hint="Password"
             android:ems="10"
             android:id="@+id/editText_password" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
             android:inputType="textEmailAddress"
             android:hint="E-mail"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxLines="1"
             android:ems="10"
             android:id="@+id/editText_email" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:text="Gender:"
+                android:text="Gender"
+                android:textColor="@android:color/white"
+                android:gravity="center"
                 android:textSize="18sp"
-
                 />
+
             <Spinner
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="@android:color/white"
                 android:id="@+id/spinner_gender"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:layout_marginTop="6dp"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/height_TV"
+                android:textColor="@android:color/white"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:textSize="18sp"
+
                 android:text="Height"/>
 
             <EditText
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:inputType="number"
+                android:textColorHint="@android:color/white"
                 android:ems="3"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/white"
                 android:maxLength="3"
                 android:maxLines="1"
                 android:hint="sm"
@@ -95,20 +136,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:layout_marginTop="6dp"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="0dp"
                 android:id="@+id/weight_TV"
-                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
                 android:text="Weight"/>
 
             <EditText
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:backgroundTint="@android:color/white"
                 android:inputType="number"
                 android:ems="3"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:gravity="center"
                 android:maxLength="3"
                 android:maxLines="1"
                 android:hint="kg"
@@ -120,9 +168,13 @@
         </LinearLayout>
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:layout_height="45dp"
             android:text="Register"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rectangle_green"
+            android:textColor="@android:color/white"
             android:id="@+id/button_registerR" />
 
     </LinearLayout>

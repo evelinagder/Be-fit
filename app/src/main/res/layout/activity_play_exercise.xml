@@ -8,144 +8,144 @@
     tools:context="com.example.evelina.befit.PlayExerciseActivity">
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/youtube_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-        <EditText
-            android:layout_margin="16dp"
-            android:text="Sets"
-            android:textColor="@color/colorAccent"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:textSize="28sp"
-            android:layout_weight="2"
-            android:clickable="false"
-            android:focusable="false"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtube_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" />
-        <EditText
-            android:layout_width="0dp"
-            android:layout_margin="16dp"
-            android:hint="num"
-            android:textColor="@color/colorAccent"
-            android:textSize="28sp"
+            android:layout_margin="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="0dp">
+            <EditText
+                android:layout_margin="16dp"
+                android:text="Sets"
+                android:textColor="@color/colorAccent"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView" />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_margin="16dp"
+                android:hint="num"
+                android:textColor="@color/colorAccent"
+                android:textSize="28sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-        <EditText
-            android:layout_margin="16dp"
-            android:text="Repeats"
-            android:textColor="@color/colorAccent"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:textSize="28sp"
-            android:layout_weight="2"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_height="wrap_content"
-            />
-        <EditText
-            android:layout_width="0dp"
-            android:layout_margin="16dp"
-            android:hint="num"
-            android:textColor="@color/colorAccent"
-            android:textSize="28sp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="0dp">
+            <EditText
+                android:layout_margin="16dp"
+                android:text="Repeats"
+                android:textColor="@color/colorAccent"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_margin="16dp"
+                android:hint="num"
+                android:textColor="@color/colorAccent"
+                android:textSize="28sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-        <EditText
-            android:layout_margin="16dp"
-            android:text="Points"
-            android:textColor="@color/colorAccent"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:textSize="28sp"
-            android:layout_weight="2"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_height="wrap_content"
-            />
-        <EditText
-            android:layout_width="0dp"
-            android:layout_margin="16dp"
-            android:hint="num"
-            android:textColor="@color/colorAccent"
-            android:textSize="28sp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp">
+            <EditText
+                android:layout_margin="16dp"
+                android:text="Points"
+                android:textColor="@color/colorAccent"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_margin="16dp"
+                android:hint="num"
+                android:textColor="@color/colorAccent"
+                android:textSize="28sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_info"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_gravity="bottom|right"
+                android:layout_weight="0.51"
+                android:src="@drawable/info"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:id="@+id/button_completed"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/fab_info"
+                android:layout_toEndOf="@+id/fab_info"
+                android:layout_marginLeft="102dp"
+                android:layout_marginStart="102dp" />
+
+        </RelativeLayout>
+
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_info"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom|right"
-            android:layout_weight="0.51"
-            android:src="@drawable/info"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Completed"
-            android:id="@+id/button_completed"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/fab_info"
-            android:layout_toEndOf="@+id/fab_info"
-            android:layout_marginLeft="102dp"
-            android:layout_marginStart="102dp" />
-
-    </RelativeLayout>
-
-</LinearLayout>
 
 
 </ScrollView>

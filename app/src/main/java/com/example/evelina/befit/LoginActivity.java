@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.evelina.befit.model.DbManager;
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     Button register;
     EditText username;
+    TextView heading;
     EditText password;
     LoginButton loginButton;
     CallbackManager callbackManager;
@@ -71,8 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.editText_emailL);
         password = (EditText) findViewById(R.id.editText_passwordL);
         loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
+        heading = (TextView) findViewById(R.id.heading);
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
+        heading.setTypeface(typeface);
+
 
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -112,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                 // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
                 intent.putExtra("username", username.getText().toString());
+                intent.putExtra("loggedWith","registration");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -178,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
                     intent.putExtra("id",profile.getId());
+                    intent.putExtra("loggedWith","facebook");
                 }
 
                 startActivity(intent);
@@ -225,4 +235,5 @@ public class LoginActivity extends AppCompatActivity {
 
 
 }
+
 

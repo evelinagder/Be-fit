@@ -23,8 +23,19 @@
 <ImageView
     android:layout_width="wrap_content"
     android:background="@drawable/logobig"
+    android:clickable="false"
     android:layout_height="wrap_content"
     android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
+            android:gravity="center_horizontal"
+            android:id="@+id/heading"
+            android:textStyle="bold"
+            android:text="Be fit"
+            android:textSize="55sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp" />
         <EditText
             android:layout_width="300dp"
             android:layout_gravity="center"
@@ -36,7 +47,7 @@
             android:gravity="center"
             android:ems="10"
             android:textColor="@android:color/white"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="55dp"
             android:id="@+id/editText_emailL"
             android:textColorHint="@android:color/white"
             android:hint="Username" />
@@ -53,11 +64,20 @@
             android:ems="10"
             android:id="@+id/editText_passwordL"
             android:hint="password" />
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button_has_account"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="0.15" />
         <LinearLayout
             android:layout_width="match_parent"
             android:id="@+id/layout_buttons"
             android:layout_marginTop="15dp"
             android:layout_height="45dp">
+
             <Button
                 android:text="LOGIN"
                 android:background="@drawable/rectangle_green"
@@ -82,14 +102,8 @@
                  />
 
         </LinearLayout>
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button_has_account"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="26dp"
-            android:gravity="center_horizontal"
-            android:layout_weight="0.15" />
+
+
 
     </LinearLayout>
 

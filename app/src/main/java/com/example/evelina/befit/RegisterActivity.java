@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    TextView heading;
     EditText usernameR;
     EditText passR;
     EditText emailR;
@@ -55,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        heading = (TextView) findViewById(R.id.create_account_heading);
         usernameR = (EditText) findViewById(R.id.editText_username);
         passR = (EditText) findViewById(R.id.editText_password);
         emailR = (EditText) findViewById(R.id.editText_email);
@@ -65,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         santimetersET= (EditText) findViewById(R.id.height_santimeters);
         heightTV = (TextView) findViewById(R.id.height_TV);
         weightTV = (TextView) findViewById(R.id.weight_TV);
+
 
 
         ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender,android.R.layout.simple_spinner_item);
