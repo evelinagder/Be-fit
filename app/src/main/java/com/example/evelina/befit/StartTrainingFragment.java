@@ -1,6 +1,8 @@
 package com.example.evelina.befit;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,27 +12,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.evelina.befit.adapters.StartTrainingRecyclerAdapter;
 import com.example.evelina.befit.model.Challenge;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
-
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class StartTrainingFragment extends Fragment {
+    IStartTraining activity;
 
+
+    public interface IStartTraining{
+    void beginWorkout();
+    }
 
     public StartTrainingFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (IStartTraining) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +72,13 @@ public class StartTrainingFragment extends Fragment {
         challengeView.setAdapter(new StartTrainingRecyclerAdapter((StartTrainingActivity) getActivity(),  challenge.getExercisesNames()));
         challengeView.setLayoutManager(new LinearLayoutManager(getActivity()));
     //TODO startONclicklistner??
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.beginWorkout();
+            }
+        });
         return root;
     }
 

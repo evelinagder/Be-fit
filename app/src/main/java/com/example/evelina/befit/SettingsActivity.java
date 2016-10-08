@@ -2,10 +2,8 @@ package com.example.evelina.befit;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.evelina.befit.adapters.SettingsAdapter;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.User;
 

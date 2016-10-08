@@ -5,136 +5,184 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.example.evelina.befit.TabbedActivity$PlaceholderFragment">
-
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-    <RelativeLayout
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:id="@+id/pic_action_layout"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="218dp"
+            android:id="@+id/pic_action_layout"
+            android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
-            android:src="@mipmap/ic_launcher"
-            app:fabSize="normal"
-            android:layout_gravity="top|right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/show_chart"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="18dp" />
+            <android.support.design.widget.FloatingActionButton
+                android:src="@drawable/ic_show_chart_white_24dp"
+                app:fabSize="normal"
+                android:layout_gravity="top|right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/show_chart"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                app:layout_anchor="@id/recycler_view_exercise_inventory"
+                app:layout_anchorGravity="top|right|end"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="18dp" />
 
-<!-- Here a default profile picture-->
+            <!-- Here a default profile picture-->
 
-        <ImageView
-            android:layout_width="150dp"
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/picture_profile"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="63dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                     />
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/username_profile_TV"
+            android:layout_weight="15"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:id="@+id/picture_profile"
-            android:layout_height="2000dp"
-            android:layout_marginLeft="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/show_chart" />
-    </RelativeLayout>
+            android:gravity="center"
+            android:hint="username"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="48dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/username_profile_TV"
-        android:layout_weight="15"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:hint="username"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="48dp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Points"
-            android:id="@+id/points_profile_TV"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/number_points_profile_TV"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="points in nums"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Points"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="35dp"
+                android:layout_gravity="center"
+                android:id="@+id/points_profile_TV"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:gravity="center_horizontal"
+                android:id="@+id/number_points_profile_TV"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:clickable="false"
+                android:layout_height="wrap_content"
+                android:hint="points in nums"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Trainings"
+                android:layout_marginLeft="9dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/trainings_profile_TV"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:clickable="false"
+                android:gravity="center"
+                android:id="@+id/number_trainings_profile_TV"
+                android:layout_height="wrap_content"
+                android:hint="nums"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="view"
+                android:layout_margin="6dp"
+                android:background="@drawable/rectangle_green"
+                android:textColor="@android:color/white"
+                android:id="@+id/view_trainings_profile_Button"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_height="48dp">
+            <TextView
+                android:layout_width="0dp"
+                android:textSize="18sp"
+                android:id="@+id/weight_profile_TV"
+                android:layout_marginLeft="35dp"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:text="Weight"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="0dp"
+                android:id="@+id/kg_profile_TV"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:hint="in kg"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="35dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:id="@+id/height_profile_TV"
+                android:layout_height="match_parent"
+                android:text="Height"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_weight="1"
+                android:id="@+id/meters_profile_TV"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:hint="in meters/sm"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="48dp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Trainings"
-            android:id="@+id/trainings_profile_TV"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/number_trainings_profile_TV"
-            android:layout_height="wrap_content"
-            android:hint="nums"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="view"
-            android:id="@+id/view_trainings_profile_Button"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="48dp">
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/weight_profile_TV"
-            android:layout_height="wrap_content"
-            android:text="Weight"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/kg_profile_TV"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="in kg"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="48dp">
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/height_profile_TV"
-            android:layout_height="wrap_content"
-            android:text="Height"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/meters_profile_TV"
-            android:layout_height="wrap_content"
-            android:hint="in meters/sm"/>
+</android.support.design.widget.CoordinatorLayout>
 
-    </LinearLayout>
-
-
-</LinearLayout>
 
 
 </ScrollView>

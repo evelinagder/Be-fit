@@ -6,15 +6,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +33,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.adapters.TrainingRecyclerAdapter;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
@@ -46,15 +43,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
-import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -64,6 +55,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TabbedActivity extends AppCompatActivity{
+
+
 
 
     /**
@@ -316,19 +309,42 @@ public class TabbedActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
                 img = BitmapFactory.decodeStream(is);
-                //TODO scale down the bitmap
+                //TODO here we should resize the picture
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inScaled = false;
+//                Rect rectangle = new Rect(2,10,66,0);
+//                img = BitmapFactory.decodeStream(is,rectangle,options);
                 return img;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
-                profilePicture.setImageBitmap(bitmap);
+               // BITMAP_RESIZER(bitmap,100,100);
+
+                profilePicture.setImageBitmap(  BITMAP_RESIZER(bitmap,2000,2000));
+            }
+            public Bitmap BITMAP_RESIZER(Bitmap bitmap,int newWidth,int newHeight) {
+                Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+                float ratioX = newWidth / (float) bitmap.getWidth();
+                float ratioY = newHeight / (float) bitmap.getHeight();
+                float middleX = newWidth / 2.0f;
+                float middleY = newHeight / 2.0f;
+
+                Matrix scaleMatrix = new Matrix();
+                scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+                Canvas canvas = new Canvas(scaledBitmap);
+                canvas.setMatrix(scaleMatrix);
+                canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+                return scaledBitmap;
+
             }
         };
 
 
     }
-
 
 
     /**

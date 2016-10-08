@@ -1,10 +1,8 @@
-package com.example.evelina.befit;
+package com.example.evelina.befit.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.evelina.befit.NotificationsFragment;
+import com.example.evelina.befit.R;
+import com.example.evelina.befit.SettingsActivity;
+import com.example.evelina.befit.SettingsEmailFragment;
+import com.example.evelina.befit.SettingsGenderFragment;
+import com.example.evelina.befit.SettingsHeightFragment;
+import com.example.evelina.befit.SettingsWeightFragment;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.User;
 

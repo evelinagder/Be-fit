@@ -1,4 +1,4 @@
-package com.example.evelina.befit;
+package com.example.evelina.befit.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +12,10 @@ import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
+import com.example.evelina.befit.CompletedTrainings;
+import com.example.evelina.befit.R;
+import com.example.evelina.befit.TrainingSpecifications;
+import com.example.evelina.befit.TrainingTypes;
 import com.example.evelina.befit.model.TrainingManager;
 
 import java.util.List;

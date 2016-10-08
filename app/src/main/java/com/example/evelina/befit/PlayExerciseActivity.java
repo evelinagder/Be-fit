@@ -15,10 +15,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.model.DbManager;
+import com.example.evelina.befit.model.Exercise;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+
+import java.util.List;
 
 public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     private static final int RECOVERY_DIALOG_REQUEST = 1;
@@ -27,6 +32,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private Button completedButton;
     private DialogFragment fragment;
     private NetworkStateChangedReceiver receiver;
+    private Challenge currentChallenge;
 
 
     @Override
@@ -37,6 +43,12 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_exercise);
 
+
+        String nameChallenge = getIntent().getStringExtra("challenge");
+        String usern = getIntent().getStringExtra("username");
+        currentChallenge = DbManager.getInstance(this).getUser(usern).getCustomChallenges(nameChallenge);
+
+        List<Exercise> listExercises = currentChallenge.getExercises();
 
 
         completedButton= (Button) findViewById(R.id.button_completed);

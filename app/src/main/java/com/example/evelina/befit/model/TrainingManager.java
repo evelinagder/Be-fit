@@ -15,7 +15,7 @@ public class TrainingManager {
     private static TrainingManager ourInstance;
     ArrayList<Challenge> basicChallenges;
     ArrayList<Exercise> allExercises;
-    public static TrainingManager getInstance() {
+    public  static  synchronized TrainingManager getInstance() {
         if (ourInstance == null) {
             ourInstance = new TrainingManager();
         }

@@ -1,5 +1,6 @@
 package com.example.evelina.befit;
 
+import android.content.Intent;
 import android.support.annotation.BoolRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,15 +14,18 @@ import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
 
-public class StartTrainingActivity extends AppCompatActivity {
+public class StartTrainingActivity extends AppCompatActivity implements StartTrainingFragment.IStartTraining{
+    private String username;
+    private String challengeName;
+    private boolean isBasic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_training);
-        String username = getIntent().getStringExtra("username");
-        String challengeName = getIntent().getStringExtra("challenge");
-        boolean isBasic = getIntent().getExtras().getBoolean("isBasic");
+        username = getIntent().getStringExtra("username");
+        challengeName = getIntent().getStringExtra("challenge");
+        isBasic = getIntent().getExtras().getBoolean("isBasic");
 
         Bundle bundle = new Bundle();
         bundle.putString("username", username);
@@ -38,5 +42,14 @@ public class StartTrainingActivity extends AppCompatActivity {
             Log.e("HHHH", "transaction fragment");
 
         }
+    }
+
+    @Override
+    public void beginWorkout() {
+        Intent intent = new Intent(StartTrainingActivity.this,PlayExerciseActivity.class);
+        intent.putExtra("challenge",challengeName);
+        intent.putExtra("username",username);
+        intent.putExtra("isBasic",isBasic);
+        startActivity(intent);
     }
 }

@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.example.evelina.befit.adapters.CompletedTrainingExpandableAdapter;
 import com.example.evelina.befit.model.Exercise;
 import com.example.evelina.befit.model.TrainingManager;
 

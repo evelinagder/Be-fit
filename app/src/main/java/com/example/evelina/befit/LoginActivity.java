@@ -48,7 +48,7 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_REG_USER = 10;
-
+    private DbManager dbManager;
     Button login;
     Button register;
     EditText username;
@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         setContentView(R.layout.activity_login);
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
@@ -74,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
-        //TODO see if we can get the person's email
+
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 

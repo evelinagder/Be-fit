@@ -1,12 +1,14 @@
-package com.example.evelina.befit;
+package com.example.evelina.befit.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.evelina.befit.R;
+import com.example.evelina.befit.StartTrainingActivity;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class StartTrainingRecyclerAdapter extends RecyclerView.Adapter<StartTrai
     private List<String> exercises;
 
 
-    StartTrainingRecyclerAdapter(StartTrainingActivity activity, List<String> exercisesList) {
+    public StartTrainingRecyclerAdapter(StartTrainingActivity activity, List<String> exercisesList) {
         exercises = exercisesList;
         this.activity = activity;
     }

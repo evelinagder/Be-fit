@@ -8,12 +8,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.evelina.befit.model.Challenge;
+import com.example.evelina.befit.adapters.ExerciseRecyclerAdapter;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.Exercise;
 import com.example.evelina.befit.model.TrainingManager;

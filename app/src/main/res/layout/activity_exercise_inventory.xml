@@ -20,31 +20,32 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
 
-<android.support.design.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:id="@+id/recycler_view_exercise_inventory"
-        android:layout_below="@id/toolbar_exercise_inventory"
         android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/recycler_view_exercise_inventory"
+            android:layout_below="@id/toolbar_exercise_inventory"
+            android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_exercise_inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="70dp"
-        android:clickable="true"
-        android:elevation="6dp"
-        app:borderWidth="0dp"
-        android:visibility="visible"
-        android:src="@drawable/ic_done_all_white_24dp"
-        app:layout_anchor="@id/recycler_view_exercise_inventory"
-        app:layout_anchorGravity="bottom|right|end"/>
+        </android.support.v7.widget.RecyclerView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_exercise_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="70dp"
+            android:clickable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:elevation="6dp"
+            app:borderWidth="0dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_done_all_white_24dp"
+            app:layout_anchor="@id/recycler_view_exercise_inventory"
+            app:layout_anchorGravity="bottom|right|end"/>
 
-</android.support.design.widget.CoordinatorLayout>
-
+    </android.support.design.widget.CoordinatorLayout>
 
 
 </LinearLayout>
