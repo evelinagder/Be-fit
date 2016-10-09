@@ -271,6 +271,8 @@ public class TabbedActivity extends AppCompatActivity{
                     }).executeAsync();
                 }else{
                     //TODO here we load the user's phooto
+                    profilePicture.setImageURI(user.getProfilePic());
+
                 }
 
 
