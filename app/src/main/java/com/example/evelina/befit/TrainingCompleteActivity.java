@@ -29,4 +29,8 @@ public class TrainingCompleteActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

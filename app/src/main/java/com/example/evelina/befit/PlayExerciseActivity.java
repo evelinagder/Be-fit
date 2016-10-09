@@ -5,9 +5,6 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,7 +23,6 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +64,6 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
 
-<<<<<<< HEAD
         nameChallenge = getIntent().getStringExtra("challenge");
         final String usern = getIntent().getStringExtra("username");
         user=DbManager.getInstance(this).getUser(usern);
@@ -84,14 +79,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
         pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
 
-=======
-        String nameChallenge = getIntent().getStringExtra("challenge");
-        userName = getIntent().getStringExtra("username");
-        mCurrentChallenge = DbManager.getInstance(this).getUser(userName).getCustomChallenges(nameChallenge);
-        listExercises = TrainingManager.getInstance().getAllExercises();
-        mCurrentExercise = 0;
-        fm = getFragmentManager();
->>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a
+
 
 
 
@@ -169,18 +157,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         return (YouTubePlayerView) findViewById(R.id.youtube_view);
     }
 
-<<<<<<< HEAD
-=======
-//    @Override
-//    public void onBackPressed() {
-//        Toast.makeText(this, "Here should be a dialog fragment", Toast.LENGTH_SHORT).show();
-//        fragment = new ConfirmationFragment();
-//      // fragment.show(getFragmentManager(),"confirm");
-//
-//    }
 
-
->>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a
 
 
     @Override
@@ -188,7 +165,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         unregisterReceiver(receiver);
         super.onDestroy();
     }
-<<<<<<< HEAD
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -209,8 +186,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
             }
         }, 2000);
     }
-}
-=======
+
+
 
     @Override
     public void finishSelected() {
@@ -222,4 +199,4 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
     }
 
->>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a
+
