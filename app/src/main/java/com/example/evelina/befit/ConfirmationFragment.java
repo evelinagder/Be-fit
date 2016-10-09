@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -19,6 +20,9 @@ public class ConfirmationFragment extends DialogFragment  {
     private Button finishButton;
     private IConfirmation activity;
 
+
+
+
     //here interface to communicate with the activity
     public interface IConfirmation{
         void finishSelected();
@@ -30,7 +34,7 @@ public class ConfirmationFragment extends DialogFragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-       // activity= (IConfirmation) context;
+        activity= (IConfirmation) context;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class ConfirmationFragment extends DialogFragment  {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //activity.finishSelected();
+                activity.finishSelected();
             }
         });
         return view;
