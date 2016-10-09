@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +49,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 
@@ -69,7 +75,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) { }
         maintainLogin(this);
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
@@ -157,9 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     Profile profile = Profile.getCurrentProfile();
-
                     Log.e("facebook", profile.getFirstName());
-
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
                     Bundle params = new Bundle();
@@ -182,7 +193,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     }).executeAsync();
-
                     DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),0,0,0);
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
@@ -191,14 +201,12 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("loggedWith","facebook");
                     editor.commit();
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
-                    intent.putExtra("id",profile.getId());
+                    intent.putExtra("name",profile.getFirstName()+" "+profile.getLastName());
                     intent.putExtra("loggedWith","facebook");
                 }
-
                 startActivity(intent);
                 finish();
             }
-
             @Override
             public void onCancel() {
                 Log.e("TAG", "user pressed cancel");

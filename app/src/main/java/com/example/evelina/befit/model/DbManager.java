@@ -317,14 +317,17 @@ public class DbManager extends SQLiteOpenHelper{
         allUsers.put(username, user);
     }
     public void updateUserCompletedChallenges(User user, Challenge completedChallenge, String  date){
-        //TODO CONVERT DATE TO STRING
+
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         int id= user.getUserDBId();
+        int times=completedChallenge.getTimesCompleted()+1;
         completedChallenge.setAchieved("yes");
         completedChallenge.setDateOfCompletion(date);
+        completedChallenge.setTimesCompleted(completedChallenge.getTimesCompleted()+1);
         cv.put(CHALLENGE_ACHIEVED,"yes");
         cv.put(CHALLENGE_DATE,date);
+        cv.put(CHALLENGE_TIMES,times);
         db.update(CHALLENGES_TABLE,cv,CHALLENGE_USER_UID+" =? ",new String[] {String.valueOf(id)});
         user.addAchievedChallenge(completedChallenge);
 

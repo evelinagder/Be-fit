@@ -150,4 +150,20 @@ public class User implements Serializable{
     public int getUserDBId() {
         return userDBId;
     }
+    public int getCompletedTrainingsNum(){
+        return achievedChallenges.size();
+    }
+   public List getCompletedTrainingsNames(){
+       List<String> list=  new ArrayList<>() ;
+       list.addAll( achievedChallenges.keySet());
+       return list;
+    }
+    public boolean noCompletedChallenges(){
+        return achievedChallenges.isEmpty();
+    }
+   public ArrayList<Challenge> getCompletedTrainings(){
+       ArrayList<Challenge>list=new ArrayList<>();
+               list.addAll(achievedChallenges.values());
+       return list;
+    }
 }

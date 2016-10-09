@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.evelina.befit.adapters.TrainingRecyclerAdapter;
 import com.example.evelina.befit.model.DbManager;
@@ -246,9 +247,9 @@ public class TabbedActivity extends AppCompatActivity{
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 usernameF.setText(username);
-                User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
+               final User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
+                numberTrainingsTV.setText(user.getCompletedTrainingsNum()+"");
                 numberPointsTV.setText(user.getPoints()+"");
-                //TODO number of trainings as a whole is missing
                 kilogramsTV.setText(user.getWeight()+"");
                 metersTV.setText(user.getHeight()+"");
                 if(loginState.equals("facebook")){
@@ -286,8 +287,14 @@ public class TabbedActivity extends AppCompatActivity{
                 viewTrainingsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(),CompletedTrainings.class);
-                        startActivity(intent);
+                        if(user.getCompletedTrainingsNum()!= 0) {
+                            Intent intent = new Intent(getActivity(), CompletedTrainings.class);
+                            intent.putExtra("username", username);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(getActivity(),"You haven`t completed any Trainings yet!",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

@@ -67,7 +67,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         nameChallenge = getIntent().getStringExtra("challenge");
         final String usern = getIntent().getStringExtra("username");
         user=DbManager.getInstance(this).getUser(usern);
-        boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
+        final boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
         if(isBasic){
             mCurrentChallenge= TrainingManager.getInstance().getBasicChallenges(nameChallenge);
         }else {
@@ -103,12 +103,11 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     mCurrentExercise++;
                 }else{
 
-                    Date today= new Date();
-                    String date= today+"";
-                    DbManager.getInstance(PlayExerciseActivity.this).updateUserCompletedChallenges(user,mCurrentChallenge,date);
+
                     Intent intent= new Intent(PlayExerciseActivity.this, TrainingCompleteActivity.class);
                     intent.putExtra("challengeName",nameChallenge);
                     intent.putExtra("username",usern);
+                    intent.putExtra("isBasic",isBasic);
                     startActivity(intent);
 
                 }
