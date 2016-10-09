@@ -44,6 +44,10 @@ public class Challenge {
         this.timesCompleted = timesCompleted;
     }
 
+    public int getTimesCompleted() {
+        return timesCompleted;
+    }
+
     public void setDateOfCompletion(String dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
 	}
@@ -65,5 +69,8 @@ public class Challenge {
 
     public int getChallengeID() {
         return challengeID;
+    }
+    public String getDateOfCompletion(){
+            return dateOfCompletion;
     }
 }

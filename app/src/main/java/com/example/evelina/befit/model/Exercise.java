@@ -52,5 +52,9 @@ public class Exercise {
     public String getVideo() {
         return video;
     }
+
+    public int getPoints() {
+        return points;
+    }
 }
 

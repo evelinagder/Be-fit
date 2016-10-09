@@ -16,6 +16,7 @@ import com.example.evelina.befit.CompletedTrainings;
 import com.example.evelina.befit.R;
 import com.example.evelina.befit.TrainingSpecifications;
 import com.example.evelina.befit.TrainingTypes;
+import com.example.evelina.befit.model.Exercise;
 import com.example.evelina.befit.model.TrainingManager;
 
 import java.util.List;
@@ -77,7 +78,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         childViewHolder.dateCompletionTrainingTV.setText(trainingSpecifications.getmDateLastCompletion());
         //TODO here we create adapter for the child recycler and set it to the recycler depending on the name of the challenge
         //the newxt lines are test they should be changed
-        List<String> exercisesNames = TrainingManager.getInstance().getAllExercisesName();
+        List<String> exercisesNames = trainingSpecifications.getExercisesName();
        // StartTrainingRecyclerAdapter adapter= new StartTrainingRecyclerAdapter(activity,exercisesNames);
         ChildRecyclerAdapterCompletedTrainings childRecyclerAdapterCompletedTrainings = new ChildRecyclerAdapterCompletedTrainings(exercisesNames,activity);
        childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);

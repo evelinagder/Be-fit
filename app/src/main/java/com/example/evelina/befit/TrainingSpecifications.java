@@ -7,6 +7,7 @@ package com.example.evelina.befit;
 
 import com.example.evelina.befit.model.Exercise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +33,14 @@ public class TrainingSpecifications  {
 
     public List<Exercise> getExercises() {
         return exercises;
+    }
+
+    public List<String> getExercisesName(){
+        List<String> list=new ArrayList<>();
+        for(int i =0; i<exercises.size();i++){
+            list.add(exercises.get(i).getName());
+        }
+        return list;
     }
 
     public String getmDateLastCompletion() {
