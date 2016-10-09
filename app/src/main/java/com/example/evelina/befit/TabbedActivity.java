@@ -201,7 +201,7 @@ public class TabbedActivity extends AppCompatActivity{
                 // Inflate the layout for this fragment
                 View root =  inflater.inflate(R.layout.fragment_basic_training, container, false);
                 RecyclerView categories = (RecyclerView) root.findViewById(R.id.basicTraining_view);
-                categories.setAdapter(new TrainingRecyclerAdapter((TabbedActivity)getActivity(), TrainingManager.getInstance().getBasicChallengesName()));
+                categories.setAdapter(new TrainingRecyclerAdapter((TabbedActivity)getActivity(), TrainingManager.getInstance().getBasicChallengesName(),true));
                 categories.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 return root;
@@ -218,9 +218,9 @@ public class TabbedActivity extends AppCompatActivity{
                 FloatingActionButton add= (FloatingActionButton) root.findViewById(R.id.fabTraining);
                 if (!user.hasCustomChallenges()) {
                     List<String> noNames = Arrays.asList("Please add your custom Training");
-                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames));
+                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames,false));
                 } else {
-                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName()));
+                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName(),false));
                 }
                 custom.setLayoutManager(new LinearLayoutManager(getActivity()));
                 add.setOnClickListener(new View.OnClickListener() {

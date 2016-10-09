@@ -20,11 +20,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
 
     private TabbedActivity activity;
     private List<String> challenges;
+    boolean isBasic;
 
 
-    public TrainingRecyclerAdapter(TabbedActivity activity, List<String> categoryList) {
+    public TrainingRecyclerAdapter(TabbedActivity activity, List<String> categoryList,boolean isBasic) {
         challenges = categoryList;
         this.activity = activity;
+        this.isBasic=isBasic;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
             @Override
             public void onClick(View v) {
                 Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
-                activity.ChallengeSelected(challenges.get(position),true);
+                activity.ChallengeSelected(challenges.get(position),isBasic);
 
             }
         });
