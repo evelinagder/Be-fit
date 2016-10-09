@@ -32,18 +32,19 @@
         </android.support.v7.widget.RecyclerView>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_exercise_inventory"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="70dp"
             android:clickable="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:elevation="6dp"
             app:borderWidth="0dp"
+            android:backgroundTint="@color/colorPrimary"
             android:visibility="visible"
             android:src="@drawable/ic_done_all_white_24dp"
             app:layout_anchor="@id/recycler_view_exercise_inventory"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right|end"
+            app:backgroundTint="?attr/colorPrimary" />
 
     </android.support.design.widget.CoordinatorLayout>
 

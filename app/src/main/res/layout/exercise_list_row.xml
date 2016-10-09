@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/row_exercise"
-    android:layout_margin="6dp"
+
     card_view:cardElevation="10dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -28,7 +28,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:id="@+id/checkbox_added_exercises"
-                android:layout_height="match_parent" />
+                android:buttonTint="@color/colorPrimary"
+                android:layout_height="match_parent"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox" />
 
         </LinearLayout>
         <TextView

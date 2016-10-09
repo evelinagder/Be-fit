@@ -96,6 +96,9 @@ public class TabbedActivity extends AppCompatActivity{
         }
         if(getIntent().getStringExtra("loggedWith")!=null){
             loginState=getIntent().getStringExtra("loggedWith");
+        }else{
+            String state = getSharedPreferences("Login",Context.MODE_PRIVATE).getString("loggedWith","nothing");
+            loginState=state;
         }
         if(getIntent().getStringExtra("id")!=null){
             id=getIntent().getStringExtra("id");

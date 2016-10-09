@@ -43,7 +43,7 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         challengeName=getIntent().getStringExtra("challengeName");
         user= DbManager.getInstance(this).getUser(username);
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         fab = (FloatingActionButton) findViewById(R.id.fab_exercise_inventory);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

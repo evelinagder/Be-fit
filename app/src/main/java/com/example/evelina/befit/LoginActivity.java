@@ -69,19 +69,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+
+        maintainLogin(this);
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
         username = (EditText) findViewById(R.id.editText_emailL);
         password = (EditText) findViewById(R.id.editText_passwordL);
         loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
         heading = (TextView) findViewById(R.id.heading);
+
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
 
         Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
         heading.setTypeface(typeface);
-
-
+//
+//        maintainLogin(this);
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -114,9 +117,10 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("logged_in", true);
                 editor.putString("currentUser", usernameString);
+                editor.putString("loggedWith","registration");
                 editor.commit();
                 Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_LONG).show();
-
+                maintainLogin(LoginActivity.this);
                 Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                 // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
                 intent.putExtra("username", username.getText().toString());
@@ -184,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
                     editor.putString("currentUser",username);
+                    editor.putString("loggedWith","facebook");
                     editor.commit();
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
                     intent.putExtra("id",profile.getId());
@@ -229,10 +234,30 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
-
         super.onDestroy();
     }
 
+
+    public void maintainLogin(Context activity) {
+        boolean logged_in = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getBoolean("logged_in", false);
+
+        if (logged_in) {
+            Toast.makeText(LoginActivity.this, "Going to Home", Toast.LENGTH_SHORT).show();
+            String username = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "No users");
+            Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            finish();
+        }
+//        } else {
+//            Toast.makeText(LoginActivity.this, "Going to Login", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
+//            finish();
+//        }
+    }
 
 }
 
