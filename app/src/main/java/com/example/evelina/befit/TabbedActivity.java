@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -54,6 +55,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TabbedActivity extends AppCompatActivity{
 
 
@@ -76,7 +79,7 @@ public class TabbedActivity extends AppCompatActivity{
     private ViewPager mViewPager;
     private NetworkStateChangedReceiver receiver;
     static  String username;
-    private static String id;
+    private static String name;
     boolean isBasic;
     private static String loginState;
     @Override
@@ -94,14 +97,12 @@ public class TabbedActivity extends AppCompatActivity{
             username = getIntent().getStringExtra("username");
             DbManager.getInstance(TabbedActivity.this).loadNotifications(username, TabbedActivity.this);
         }
-        if(getIntent().getStringExtra("loggedWith")!=null){
-            loginState=getIntent().getStringExtra("loggedWith");
-        }else{
+
             String state = getSharedPreferences("Login",Context.MODE_PRIVATE).getString("loggedWith","nothing");
             loginState=state;
-        }
-        if(getIntent().getStringExtra("id")!=null){
-            id=getIntent().getStringExtra("id");
+
+        if(getIntent().getStringExtra("name")!=null){
+            name=getIntent().getStringExtra("name");
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -169,7 +170,7 @@ public class TabbedActivity extends AppCompatActivity{
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-        ImageView profilePicture;
+        CircleImageView profilePicture;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -237,7 +238,7 @@ public class TabbedActivity extends AppCompatActivity{
 
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-                profilePicture=(ImageView) rootView.findViewById(R.id.picture_profile);
+                profilePicture=(CircleImageView) rootView.findViewById(R.id.picture_profile);
                 TextView numberPointsTV=(TextView) rootView.findViewById(R.id.number_points_profile_TV);
                 TextView numberTrainingsTV=(TextView) rootView.findViewById(R.id.number_trainings_profile_TV);
                 Button viewTrainingsButton= (Button) rootView.findViewById(R.id.view_trainings_profile_Button);
@@ -245,13 +246,19 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
-                usernameF.setText(username);
+               // usernameF.setText(username);
                 User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
                 numberPointsTV.setText(user.getPoints()+"");
                 //TODO number of trainings as a whole is missing
                 kilogramsTV.setText(user.getWeight()+"");
                 metersTV.setText(user.getHeight()+"");
-                if(loginState.equals("facebook")){
+                Typeface typeface =  Typeface.createFromAsset(getContext().getAssets(),  "RockoUltraFLF.ttf");
+                usernameF.setTypeface(typeface);
+
+                if(loginState.equals("facebook")&&user.getProfilePic()==null){
+                    if(name!=null){
+                        usernameF.setText(name);
+                    }
                     Bundle params = new Bundle();
                     params.putBoolean("redirect", false);
                     new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture",params,HttpMethod.GET,new  GraphRequest.Callback() {
@@ -272,6 +279,7 @@ public class TabbedActivity extends AppCompatActivity{
                 }else{
                     //TODO here we load the user's phooto
                     profilePicture.setImageURI(user.getProfilePic());
+                    usernameF.setText(username);
 
                 }
 

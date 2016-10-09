@@ -1,10 +1,12 @@
 package com.example.evelina.befit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.evelina.befit.adapters.CompletedTrainingExpandableAdapter;
@@ -27,6 +29,17 @@ public class CompletedTrainings extends AppCompatActivity {
         getSupportActionBar().setTitle("Completed challenges");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CompletedTrainings.this,TabbedActivity.class);
+               // intent.putExtra("username",username);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.completed_trainings_expandable_recycler);
 

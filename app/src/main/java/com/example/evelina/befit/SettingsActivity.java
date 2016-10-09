@@ -1,7 +1,12 @@
 package com.example.evelina.befit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +25,13 @@ import com.example.evelina.befit.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SettingsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private SettingsAdapter mSettingsAdapter;
     private Toolbar toolbar;
-    private ImageButton profilePic;
+    private CircleImageView profilePic;
     private  NetworkStateChangedReceiver receiver;
     private static final int REQUEST_CODE_GALLERY=7;
     String username;
@@ -34,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         username=getIntent().getStringExtra("loggedUser");
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.settings_recycler_view);
         toolbar = (Toolbar) findViewById(R.id.app_bar_settings);
@@ -53,18 +61,21 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         List<String> settingsList= new ArrayList<>();
         settingsList.add("email");
         settingsList.add("gender");
         settingsList.add("height");
         settingsList.add("weight");
-        //probably alarm should be here
         settingsList.add("notifications & alarms");
+
         mSettingsAdapter = new SettingsAdapter(this,settingsList);
         mRecyclerView.setAdapter(mSettingsAdapter);
+
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-        profilePic= (ImageButton)findViewById(R.id.picture_profile_change);
+
+        profilePic= (CircleImageView) findViewById(R.id.profile_image);
         User user= DbManager.getInstance(this).getUser(username);
 
         if( user.getProfilePic() != null){
@@ -73,6 +84,11 @@ public class SettingsActivity extends AppCompatActivity {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("loggedWith","registration");
+                editor.commit();
+
                 Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
             }

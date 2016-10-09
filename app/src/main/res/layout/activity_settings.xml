@@ -15,21 +15,23 @@
         android:orientation="vertical"
         android:layout_below="@+id/app_bar_settings">
 
-        <ImageButton
-            android:layout_width="216dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:src="@drawable/circle_shape"
-            android:id="@+id/picture_profile_change"
-            android:layout_height="222dp" />
+            android:src="@drawable/logo"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@android:color/white" />
 
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/settings_recycler_view"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

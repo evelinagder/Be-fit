@@ -191,8 +191,9 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("loggedWith","facebook");
                     editor.commit();
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
-                    intent.putExtra("id",profile.getId());
+                    intent.putExtra("name",profile.getFirstName()+" "+profile.getLastName());
                     intent.putExtra("loggedWith","facebook");
+
                 }
 
                 startActivity(intent);

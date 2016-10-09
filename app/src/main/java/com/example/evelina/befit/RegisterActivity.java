@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_white_18dp,0,0,0);
         usernameR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_person_white_18dp,0,0,0);
         passR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_white_18dp,0,0,0);
-        Typeface typeface = Typeface.createFromAsset(getAssets(),  "RockoFLF.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(),  "RockoUltraFLF.ttf");
         heading.setTypeface(typeface);
 
         ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender, R.layout.spinner_item);
