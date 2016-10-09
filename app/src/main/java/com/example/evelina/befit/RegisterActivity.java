@@ -1,17 +1,10 @@
 package com.example.evelina.befit;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Typeface;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,20 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.evelina.befit.model.DbManager;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView heading;
@@ -67,7 +48,11 @@ public class RegisterActivity extends AppCompatActivity {
         heightTV = (TextView) findViewById(R.id.height_TV);
         weightTV = (TextView) findViewById(R.id.weight_TV);
 
-
+        emailR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_white_18dp,0,0,0);
+        usernameR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_person_white_18dp,0,0,0);
+        passR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_white_18dp,0,0,0);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),  "RockoFLF.ttf");
+        heading.setTypeface(typeface);
 
         ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender, R.layout.spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -77,12 +62,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
+
                     case 0:
-                        Toast.makeText(RegisterActivity.this, "female", Toast.LENGTH_SHORT).show();
+                        ((TextView) adapterView.getChildAt(0)).setTextSize(18);
                         gender="female";
                         break;
                     case 1:
-                        Toast.makeText(RegisterActivity.this, "male", Toast.LENGTH_SHORT).show();
+                        ((TextView) adapterView.getChildAt(0)).setTextSize(18);
                         gender="male";
                         break;
 

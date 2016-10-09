@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Be Fit</string>
     <string-array name="gender">
-        <item>FEMALE</item>
-        <item>MALE</item>
+        <item>Female</item>
+        <item>Male</item>
 
     </string-array>
     <string name="facebook_app_id">332757410392088</string>
