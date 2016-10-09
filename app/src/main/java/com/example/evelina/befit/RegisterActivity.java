@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-        ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender,android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter1= ArrayAdapter.createFromResource(this,R.array.gender, R.layout.spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         genderSpinner.setAdapter(adapter1);
