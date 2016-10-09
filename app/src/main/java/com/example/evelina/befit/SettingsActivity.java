@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -40,6 +41,17 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this,TabbedActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+                finish();
+            }
+        });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<String> settingsList= new ArrayList<>();
         settingsList.add("email");
@@ -67,6 +79,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
+
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

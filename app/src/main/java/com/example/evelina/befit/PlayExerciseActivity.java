@@ -1,6 +1,6 @@
 package com.example.evelina.befit;
 
-import android.content.Intent;
+import android.app.FragmentManager;import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,ConfirmationFragment.IConfirmation {
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     private YouTubePlayerView mYouTubeView;
     private FloatingActionButton mFab;
@@ -44,10 +44,12 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     ArrayList<Exercise> listExercises;
     private static int mCurrentExercise;
     private  YouTubePlayer player ;
+    private String userName;
+    ConfirmationFragment fragment;
+    android.app.FragmentManager fm = getFragmentManager();
 
 
-
-//TODO here we should get the challenge from the intent/by name/ and instance it to mCurrentChallenge ,then load listExercises with the exercises in the current challenge and manipulate over them
+    //TODO here we should get the challenge from the intent/by name/ and instance it to mCurrentChallenge ,then load listExercises with the exercises in the current challenge and manipulate over them
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
 
+<<<<<<< HEAD
         nameChallenge = getIntent().getStringExtra("challenge");
         final String usern = getIntent().getStringExtra("username");
         user=DbManager.getInstance(this).getUser(usern);
@@ -81,6 +84,14 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
         pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
 
+=======
+        String nameChallenge = getIntent().getStringExtra("challenge");
+        userName = getIntent().getStringExtra("username");
+        mCurrentChallenge = DbManager.getInstance(this).getUser(userName).getCustomChallenges(nameChallenge);
+        listExercises = TrainingManager.getInstance().getAllExercises();
+        mCurrentExercise = 0;
+        fm = getFragmentManager();
+>>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a
 
 
 
@@ -158,6 +169,18 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         return (YouTubePlayerView) findViewById(R.id.youtube_view);
     }
 
+<<<<<<< HEAD
+=======
+//    @Override
+//    public void onBackPressed() {
+//        Toast.makeText(this, "Here should be a dialog fragment", Toast.LENGTH_SHORT).show();
+//        fragment = new ConfirmationFragment();
+//      // fragment.show(getFragmentManager(),"confirm");
+//
+//    }
+
+
+>>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a
 
 
     @Override
@@ -165,6 +188,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+<<<<<<< HEAD
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -186,3 +210,16 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         }, 2000);
     }
 }
+=======
+
+    @Override
+    public void finishSelected() {
+        Intent intent = new Intent(PlayExerciseActivity.this,TabbedActivity.class);
+        intent.putExtra("username",userName);
+        startActivity(intent);
+    }
+
+
+    }
+
+>>>>>>> 62fab5802a5632625c538ff94bd502b7031d6a4a

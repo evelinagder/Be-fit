@@ -63,8 +63,6 @@ public class StartTrainingFragment extends Fragment {
         else{
             challenge=user.getCustomChallenges(challengeName);
         }
-        TextView heading= (TextView)root.findViewById(R.id.heading);
-        heading.setText(challengeName);
         FloatingActionButton start=(FloatingActionButton)root.findViewById(R.id.Button_start_training);
         RecyclerView challengeView = (RecyclerView) root.findViewById(R.id.recycler_view_start);
         challengeView.setAdapter(new StartTrainingRecyclerAdapter((StartTrainingActivity) getActivity(),  challenge.getExercisesNames()));

@@ -59,6 +59,7 @@
         <activity android:name=".CompletedTrainings"></activity>
         <activity android:name=".StartTrainingActivity" />
         <activity android:name=".TrainingCompleteActivity"></activity>
+
     </application>
 
 </manifest>
