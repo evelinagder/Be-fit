@@ -59,9 +59,13 @@ public class StartTrainingFragment extends Fragment {
         Challenge challenge;
         if(isBasic){
             challenge= TrainingManager.getInstance().getBasicChallenges(challengeName);
+            Log.e("OOO",challenge.getExercisesNames().toString());
         }
         else{
+            Log.e("OOO",username+"custm");
             challenge=user.getCustomChallenges(challengeName);
+            Log.e("OOO",challenge.getName());
+            Log.e("OOO",challenge.getExercisesNames().toString());
         }
         FloatingActionButton start=(FloatingActionButton)root.findViewById(R.id.Button_start_training);
         RecyclerView challengeView = (RecyclerView) root.findViewById(R.id.recycler_view_start);

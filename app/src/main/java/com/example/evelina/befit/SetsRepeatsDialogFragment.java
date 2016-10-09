@@ -126,9 +126,10 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                 Exercise exercise= TrainingManager.getInstance().getExercise(exerciseName);
                 exercise.setRepeats(repeatsH);
                 exercise.setSeries(setsH);
+                Log.e("SETS",exercise.getName()+username);
                 Challenge challenge=user.getCustomChallenges(challengeName);
-                DbManager.getInstance(getActivity()).addExercisesToCustomChallenge(username,challenge.getName(),TrainingManager.getInstance().getExercise(exerciseName));
                 DbManager.getInstance(getActivity()).addCustomChallenge(username,challenge);
+                DbManager.getInstance(getActivity()).addExercisesToCustomChallenge(username,challenge.getName(),exercise);
                 dismiss();
 
             }
