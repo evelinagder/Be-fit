@@ -70,10 +70,10 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="35dp"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:id="@+id/points_profile_TV"
                 android:layout_weight="1"/>
+
 
             <TextView
                 android:layout_width="0dp"
@@ -86,7 +86,14 @@
                 android:focusable="false"
                 android:clickable="false"
                 android:layout_height="wrap_content"
-                android:hint="points in nums"/>
+                android:hint="0"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
 
 
         </LinearLayout>
@@ -99,7 +106,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Trainings"
-                android:layout_marginLeft="9dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:gravity="center"
@@ -118,13 +124,13 @@
                 android:gravity="center"
                 android:id="@+id/number_trainings_profile_TV"
                 android:layout_height="wrap_content"
-                android:hint="nums"/>
+                android:hint="0"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="view"
-                android:layout_margin="6dp"
+
                 android:background="@drawable/rectangle_green"
                 android:textColor="@android:color/white"
                 android:id="@+id/view_trainings_profile_Button"
@@ -135,24 +141,25 @@
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
             android:layout_height="48dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:textSize="18sp"
                 android:id="@+id/weight_profile_TV"
-                android:layout_marginLeft="35dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
                 android:text="Weight"
                 android:layout_weight="1"/>
+
             <TextView
                 android:layout_width="0dp"
                 android:id="@+id/kg_profile_TV"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryDark"
@@ -167,7 +174,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="30dp"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
@@ -185,7 +192,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:layout_height="match_parent"
                 android:hint="in meters/sm"/>
 

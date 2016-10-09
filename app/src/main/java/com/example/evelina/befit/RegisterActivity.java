@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         emailR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_white_18dp,0,0,0);
         usernameR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_person_white_18dp,0,0,0);
+        usernameR.setImeOptions(EditorInfo.IME_ACTION_DONE);
         passR.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock_white_18dp,0,0,0);
         Typeface typeface = Typeface.createFromAsset(getAssets(),  "RockoUltraFLF.ttf");
         heading.setTypeface(typeface);

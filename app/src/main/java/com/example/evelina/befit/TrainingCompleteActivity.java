@@ -1,6 +1,7 @@
 package com.example.evelina.befit;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     String username;
     String challengeNameString;
     Challenge challenge;
+    TextView heading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,9 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         challengeName= (TextView)findViewById(R.id.congrats_training_name);
         challengeNameString=getIntent().getStringExtra("challengeName");
         challengeName.setText(challengeNameString);
+        heading= (TextView)findViewById(R.id.headingC) ;
+        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
+        heading.setTypeface(typeface);
         username=getIntent().getStringExtra("username");
         boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
         User user=DbManager.getInstance(this).getUser(username);
