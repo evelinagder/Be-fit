@@ -139,7 +139,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completed"
+                android:text="DONE"
                 android:background="@drawable/rectangle_green"
                 android:id="@+id/button_completed"
                 android:layout_centerVertical="true"

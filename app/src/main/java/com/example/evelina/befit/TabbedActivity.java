@@ -249,8 +249,8 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
-                LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.container2);
-                layout.setBackgroundColor(Color.argb(22,6,214,160));
+//                LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.container2);
+//                layout.setBackgroundColor(Color.argb(22,6,214,160));
                 Typeface typeface =  Typeface.createFromAsset(getContext().getAssets(),  "RockoUltraFLF.ttf");
 
                 TextView pointsTV = (TextView) rootView.findViewById(R.id.points_profile_TV);

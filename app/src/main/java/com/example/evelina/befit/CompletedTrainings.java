@@ -7,13 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.util.Log;
+
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.evelina.befit.adapters.CompletedTrainingExpandableAdapter;
 import com.example.evelina.befit.model.Challenge;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.Exercise;
-import com.example.evelina.befit.model.TrainingManager;
 import com.example.evelina.befit.model.User;
 import java.util.ArrayList;
 import java.util.List;
