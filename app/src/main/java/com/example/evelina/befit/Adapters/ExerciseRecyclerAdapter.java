@@ -59,6 +59,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                     bundle.putString("challengeName",holder.challengeName);
                     fragment.setArguments(bundle);
                     fragment.show(activity.getSupportFragmentManager(),"sets");
+                    fragment.setCancelable(false);
                 }else{
                     holder.addedCheckbox.setSelected(false);
                 }

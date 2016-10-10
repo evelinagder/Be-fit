@@ -44,8 +44,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
-                activity.ChallengeSelected(challenges.get(position),isBasic);
+                if(!challenges.get(position).equals("Please add your custom Training")) {
+                    Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    activity.ChallengeSelected(challenges.get(position), isBasic);
+                }
+                else{
+                    Toast.makeText(activity, "You don`t have any custom trainings!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
