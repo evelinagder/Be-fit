@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -31,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -246,9 +249,23 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
+                LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.container2);
+                layout.setBackgroundColor(Color.argb(22,6,214,160));
+                Typeface typeface =  Typeface.createFromAsset(getContext().getAssets(),  "RockoUltraFLF.ttf");
 
-               
-               
+                TextView pointsTV = (TextView) rootView.findViewById(R.id.points_profile_TV);
+                TextView trainingsTV= (TextView) rootView.findViewById(R.id.trainings_profile_TV);
+                TextView weightTV= (TextView) rootView.findViewById(R.id.weight_profile_TV);
+                TextView heightTV= (TextView) rootView.findViewById(R.id.height_profile_TV);
+                pointsTV.setTypeface(typeface);
+                weightTV.setTypeface(typeface);
+                trainingsTV.setTypeface(typeface);
+                heightTV.setTypeface(typeface);
+                numberPointsTV.setTypeface(typeface);
+                viewTrainingsButton.setTypeface(typeface);
+                kilogramsTV.setTypeface(typeface);
+                metersTV.setTypeface(typeface);
+                numberTrainingsTV.setTypeface(typeface);
 
                 usernameF.setText(username);
                final User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
@@ -257,7 +274,7 @@ public class TabbedActivity extends AppCompatActivity{
                 numberPointsTV.setText(user.getPoints()+"");
                 kilogramsTV.setText(user.getWeight()+"");
                 metersTV.setText(user.getHeight()+"");
-                Typeface typeface =  Typeface.createFromAsset(getContext().getAssets(),  "RockoUltraFLF.ttf");
+
                 usernameF.setTypeface(typeface);
 
                 if(loginState.equals("facebook")&&user.getProfilePic()==null){

@@ -1,5 +1,6 @@
 package com.example.evelina.befit.adapters;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
     @Override
     public void onBindViewHolder(BasicVH holder, final int position) {
         holder.name.setText(challenges.get(position).toString());
+        Typeface typeface =  Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
+        holder.name.setTypeface(typeface);
         //holder.name.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
