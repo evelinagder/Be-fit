@@ -48,10 +48,14 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ExerciseInventoryActivity.this, "Adding finished", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
+                if(user.getCustomChallenges(challengeName).getExercises().size() == 0){
+                    Toast.makeText(ExerciseInventoryActivity.this,"You cannot add a challenge without exercises!",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(ExerciseInventoryActivity.this, "Adding finished", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                }
             }
         });
 
