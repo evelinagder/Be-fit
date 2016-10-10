@@ -76,6 +76,10 @@ public class SettingsActivity extends AppCompatActivity {
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
         profilePic= (CircleImageView) findViewById(R.id.profile_image);
+        String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
+        if(sp.equals("registration")){
+            profilePic.setVisibility(View.VISIBLE);
+        }
         User user= DbManager.getInstance(this).getUser(username);
 
         if( user.getProfilePic() != null){
@@ -84,10 +88,10 @@ public class SettingsActivity extends AppCompatActivity {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("loggedWith","registration");
-                editor.commit();
+//                String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putString("loggedWith","registration");
+//                editor.commit();
 
                 Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
