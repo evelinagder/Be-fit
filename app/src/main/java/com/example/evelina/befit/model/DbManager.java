@@ -173,7 +173,7 @@ public class DbManager extends SQLiteOpenHelper{
                         +CHALLENGE_NAME+", "
                         +CHALLENGE_TIMES+", "
                         +CHALLENGE_ACHIEVED+", "
-                        +CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+", "+USERS_TABLE+" WHERE "+CHALLENGE_USER_UID+"= ?",new String[] {String.valueOf(userId)});
+                        +CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+" WHERE "+CHALLENGE_USER_UID+"= ?",new String[] {String.valueOf(userId)});
                 while(cursorChallenge.moveToNext()){
                     int challengeId=cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_UID));
                     String nameC=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_NAME));
@@ -187,7 +187,7 @@ public class DbManager extends SQLiteOpenHelper{
                             +EXERCISE_SERIES+", "
                             +EXERCISE_REPEATS+", "
                             +EXERCISE_INSTRUCTIONS+ ", "
-                            +EXERCISE_VIDEO+" FROM "+EXERCISE_TABLE+", "+CHALLENGES_TABLE+" WHERE "+EXERCISE_CHALLENGE_UID+"= ?" ,new String[] {String.valueOf(challengeId)});
+                            +EXERCISE_VIDEO+" FROM "+EXERCISE_TABLE+" WHERE "+EXERCISE_CHALLENGE_UID+"= ?" ,new String[] {String.valueOf(challengeId)});
                     while(cursorExercise.moveToNext()){
                         String name=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_NAME));
                         int points=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_POINTS));

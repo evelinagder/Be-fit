@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -79,7 +80,7 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
                 return exercise.getName().compareTo(t1.getName());
             }
         });
-        mExercisesAdapter = new ExerciseRecyclerAdapter(this,exercises,mRecyclerView);
+        mExercisesAdapter = new ExerciseRecyclerAdapter(this,exercises,mRecyclerView,challengeName,username);
         mRecyclerView.setAdapter(mExercisesAdapter);
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
@@ -95,8 +96,13 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
     @Override
     public void cancelAdding(int pos) {
         //maha izbranoto uprajnenie ot custon challenge
-        mExercisesAdapter.notifyItemRangeChanged(pos,1);
+        Log.e("haha", "activity gogo");
+
     }
+
+
+
+
     public String getUsername(){
         return username;
     }

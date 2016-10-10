@@ -26,7 +26,7 @@ public class TrainingManager {
     private TrainingManager() {
         basicChallenges=new ArrayList<Challenge>();
         allExercises= new ArrayList<Exercise>();
-        Challenge abdomen= new Challenge("ABDOMEN",0, null);
+        Challenge abdomen= new Challenge("ABS",0, null);
         Challenge upperBody= new Challenge("UPPERBODY",0,null);
         Challenge lowerBody= new Challenge("LOWERBODY",0,null);
         Challenge wholeBody= new Challenge("WHOLEBODY",0,null);
