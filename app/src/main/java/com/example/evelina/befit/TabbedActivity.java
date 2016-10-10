@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
@@ -212,7 +213,7 @@ public class TabbedActivity extends AppCompatActivity{
 
 
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
-                User user=DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
+                User user=DbManager.getInstance(getActivity()).getUser(username);
 
                 Log.e("USER",username+"");
 
@@ -290,7 +291,7 @@ public class TabbedActivity extends AppCompatActivity{
                     }
                     Bundle params = new Bundle();
                     params.putBoolean("redirect", false);
-                    new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture",params,HttpMethod.GET,new  GraphRequest.Callback() {
+                    new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture?width=1000&height=1000",params,HttpMethod.GET,new  GraphRequest.Callback() {
                         public void onCompleted(GraphResponse response) {
                             if(response!=null){
                                 String picUrlString = null;
@@ -306,10 +307,8 @@ public class TabbedActivity extends AppCompatActivity{
                         }
                     }).executeAsync();
                 }else{
-                    //TODO here we load the user's phooto
                     profilePicture.setImageURI(user.getProfilePic());
                     usernameF.setText(username);
-
                 }
 
 
@@ -338,7 +337,6 @@ public class TabbedActivity extends AppCompatActivity{
             }
         }
 
-
         class MyAsyncTask extends AsyncTask<String,Void,Bitmap>{
 
             @Override
@@ -348,56 +346,27 @@ public class TabbedActivity extends AppCompatActivity{
                 URL url = null;
                 try {
                     url = new URL(strings[0]);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                HttpURLConnection connection = null;
-                try {
+                    HttpURLConnection connection = null;
                     connection = (HttpURLConnection) url.openConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
                     is = connection.getInputStream();
+                    img = BitmapFactory.decodeStream(is);
                 } catch (IOException e) {
                     e.printStackTrace();
+                }finally {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                img = BitmapFactory.decodeStream(is);
-                //TODO here we should resize the picture
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inScaled = false;
-//                Rect rectangle = new Rect(2,10,66,0);
-//                img = BitmapFactory.decodeStream(is,rectangle,options);
                 return img;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
-                // BITMAP_RESIZER(bitmap,100,100);
-
-                profilePicture.setImageBitmap(  BITMAP_RESIZER(bitmap,2000,2000));
-            }
-            public Bitmap BITMAP_RESIZER(Bitmap bitmap,int newWidth,int newHeight) {
-                Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
-
-                float ratioX = newWidth / (float) bitmap.getWidth();
-                float ratioY = newHeight / (float) bitmap.getHeight();
-                float middleX = newWidth / 2.0f;
-                float middleY = newHeight / 2.0f;
-
-                Matrix scaleMatrix = new Matrix();
-                scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-                Canvas canvas = new Canvas(scaledBitmap);
-                canvas.setMatrix(scaleMatrix);
-                canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-                return scaledBitmap;
-
+                profilePicture.setImageBitmap( bitmap);
             }
         };
-
-
     }
 
 
