@@ -6,28 +6,32 @@
     android:background="@drawable/homescreen"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.evelina.befit.TabbedActivity$PlaceholderFragment">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/customTraining_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/customTraining_view"
+        android:layout_width="match_parent"
+        android:layout_height="497dp">
 
-        </android.support.v7.widget.RecyclerView>
-
-        <android.support.design.widget.FloatingActionButton
+    </android.support.v7.widget.RecyclerView>
+    <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabTraining"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:clickable="true"
             android:elevation="6dp"
             app:borderWidth="0dp"
             android:visibility="visible"
             android:src="@drawable/ic_add_white_24dp"
-            app:layout_anchor="@id/cont"
+            app:layout_anchor="@id/customTraining_view"
             app:layout_anchorGravity="bottom|right|end"
         />
 
-
+    </android.support.design.widget.CoordinatorLayout>
 
 
 </FrameLayout>
