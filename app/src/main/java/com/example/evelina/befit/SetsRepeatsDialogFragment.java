@@ -2,6 +2,7 @@ package com.example.evelina.befit;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -128,7 +129,7 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
                 exercise.setSeries(setsH);
                 Log.e("SETS",exercise.getName()+username);
                 Challenge challenge=user.getCustomChallenges(challengeName);
-                DbManager.getInstance(getActivity()).addCustomChallenge(username,challenge);
+                //DbManager.getInstance(getActivity()).addCustomChallenge(username,challenge);
                 DbManager.getInstance(getActivity()).addExercisesToCustomChallenge(username,challenge.getName(),exercise);
                 dismiss();
 
@@ -138,4 +139,9 @@ public class SetsRepeatsDialogFragment extends DialogFragment {
     }
 
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        Log.e("haha", "fragment gogo");
+        activity.cancelAdding(getArguments().getInt("position"));
+    }
 }
