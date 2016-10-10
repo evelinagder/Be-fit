@@ -2,8 +2,8 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:id="@+id/settings_row"
-    android:backgroundTint="@color/tint"
-    android:layout_height="100dp">
+    android:backgroundTint="@null"
+    android:layout_height="70dp">
 
   <TextView
       android:layout_width="match_parent"
@@ -13,6 +13,6 @@
       android:layout_margin="20dp"
       android:hint="settings 1"
       android:textAllCaps="true"
-      android:textSize="18sp"
+      android:textSize="16sp"
       android:id="@+id/settings_TV"/>
 </android.support.v7.widget.CardView>
