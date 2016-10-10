@@ -134,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_LONG).show();
                 maintainLogin(LoginActivity.this);
                 Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                // intent.putExtra("loggedUser", user); TODO passing user from activity 1 to act 2!
                 intent.putExtra("username", username.getText().toString());
                 intent.putExtra("loggedWith","registration");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -238,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
                 password.setText(pass);
             }
         }
-        //TODO here if user logged with fb
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
     }

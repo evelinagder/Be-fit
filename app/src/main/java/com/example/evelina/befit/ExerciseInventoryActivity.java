@@ -33,6 +33,7 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
     String username;
     String challengeName;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +64,10 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO here we get null pointer for user ...we need Db or shared preffs to load the user
-//                Intent intent = new Intent(ExerciseInventoryActivity.this,TabbedActivity.class);
-//                intent.putExtra("username","lalalalla");
-//                startActivity(intent);
+                Intent intent = new Intent(ExerciseInventoryActivity.this,TabbedActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+                finish();
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_exercise_inventory);

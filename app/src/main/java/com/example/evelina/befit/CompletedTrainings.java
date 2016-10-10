@@ -1,6 +1,8 @@
 package com.example.evelina.befit;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,11 +24,14 @@ public class CompletedTrainings extends AppCompatActivity {
     RecyclerView mRecyclerView;
     String username;
     User user;
+    NetworkStateChangedReceiver receiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed_trainings);
+
         toolbar = (Toolbar) findViewById(R.id.app_bar_completed_trainings);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Completed challenges");
@@ -43,6 +48,10 @@ public class CompletedTrainings extends AppCompatActivity {
                 finish();
             }
         });
+
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.completed_trainings_expandable_recycler);
         username=getIntent().getStringExtra("username");
@@ -83,8 +92,11 @@ public class CompletedTrainings extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+    }
 
-
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }

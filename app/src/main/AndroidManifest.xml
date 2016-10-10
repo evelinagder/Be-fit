@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -37,7 +36,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ExerciseInventoryActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".PlayExerciseActivity" />
 
         <receiver
@@ -64,7 +65,9 @@
 
 
 
-        <activity android:name=".TrainingCompleteActivity"></activity>
+        <activity android:name=".TrainingCompleteActivity">
+
+        </activity>
 
 
     </application>

@@ -2,6 +2,8 @@ package com.example.evelina.befit;
 
 import android.content.Intent;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,8 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
     private String challengeName;
     private boolean isBasic;
     Toolbar toolbar;
+    NetworkStateChangedReceiver receiver ;
+    //TODO here the receiver
 
 
     @Override
@@ -33,9 +37,13 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         username = getIntent().getStringExtra("username");
         challengeName = getIntent().getStringExtra("challenge");
         isBasic = getIntent().getExtras().getBoolean("isBasic");
+
+        receiver=new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(challengeName);
-        //todo oshte neshta na toolbara
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,5 +87,9 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         startActivity(intent);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }

@@ -57,9 +57,10 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         mYouTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         mYouTubeView.initialize(Config.DEVELOPER_KEY, this);
         mFab = (FloatingActionButton) findViewById(R.id.fab_info);
-        repeatsNum=(EditText)findViewById(R.id.repeat_num) ;
-        setsNum=(EditText)findViewById(R.id.sets_num) ;
-        pointsNum=(EditText)findViewById(R.id.points_num) ;
+        repeatsNum=(EditText)findViewById(R.id.repeat_num);
+        setsNum=(EditText)findViewById(R.id.sets_num);
+        pointsNum=(EditText)findViewById(R.id.points_num);
+
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 

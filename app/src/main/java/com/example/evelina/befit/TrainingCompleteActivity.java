@@ -2,7 +2,9 @@ package com.example.evelina.befit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,14 +40,23 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     TextView heading;
     ShareDialog dialog;
     CallbackManager callbackManager;
+    NetworkStateChangedReceiver receiver;
     Button myShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_training_complete);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
+        challengeName= (TextView)findViewById(R.id.congrats_training_name);
+        ok= (Button)findViewById(R.id.ok_complete);
+        myShare = (Button) findViewById(R.id.my_share);
         dialog =new ShareDialog(this);
+
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
@@ -64,7 +75,7 @@ public class TrainingCompleteActivity extends AppCompatActivity {
             }
         });
 
-        myShare = (Button) findViewById(R.id.my_share);
+
         String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
         if(sp.equals("facebook")){
             myShare.setVisibility(View.VISIBLE);
@@ -85,11 +96,9 @@ public class TrainingCompleteActivity extends AppCompatActivity {
 
             }
         });
-        challengeName= (TextView)findViewById(R.id.congrats_training_name);
         challengeNameString=getIntent().getStringExtra("challengeName");
         challengeName.setText(challengeNameString);
         heading= (TextView)findViewById(R.id.headingC) ;
-        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
         heading.setTypeface(typeface);
         username=getIntent().getStringExtra("username");
         boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
@@ -104,7 +113,6 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         String mid= today+"";
         String date= mid.substring(0,10);
         DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedChallenges(user,challenge,date);
-        ok= (Button)findViewById(R.id.ok_complete);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +128,12 @@ public class TrainingCompleteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     @Override

@@ -95,6 +95,9 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                 exercise.setSeries(setsH);
                 Challenge challenge=user.getCustomChallenges(challengeName);
                 DbManager.getInstance(activity).addExercisesToCustomChallenge(username,challenge.getName(),exercise);
+                holder.dataSetRow.setVisibility(View.GONE);
+                holder.okButton.setVisibility(View.GONE);
+
             }
         });
 
