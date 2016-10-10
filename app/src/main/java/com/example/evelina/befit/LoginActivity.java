@@ -96,8 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
         heading.setTypeface(typeface);
-//
-//        maintainLogin(this);
+
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -173,27 +172,31 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("facebook", profile.getFirstName());
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
-                    Bundle params = new Bundle();
-                    params.putString("fields","email,gender");
-                    final User user = new User(username,password,"none","",0,0,0);
-                    new GraphRequest(AccessToken.getCurrentAccessToken(), "me",params,HttpMethod.GET, new GraphRequest.Callback() {
-                        @Override
-                        public void onCompleted(GraphResponse response) {
-                            if(response!=null){
-                                try {
-                                    String email = response.getJSONObject().getString("email");
-                                    Log.e("TAG",email);
-                                    String gender = response.getJSONObject().getString("gender");
-                                    Log.e("TAG",gender);
-                                    user.setEmail(email);
-                                    user.setGender(gender);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                    if(!DbManager.getInstance(LoginActivity.this).existsUser(username)) {
+
+
+                        Bundle params = new Bundle();
+                        params.putString("fields", "email,gender");
+                        final User user = new User(username, password, "none", "", 0, 0, 0);
+                        new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET, new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                if (response != null) {
+                                    try {
+                                        String email = response.getJSONObject().getString("email");
+                                        Log.e("TAG", email);
+                                        String gender = response.getJSONObject().getString("gender");
+                                        Log.e("TAG", gender);
+                                        user.setEmail(email);
+                                        user.setGender(gender);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
-                        }
-                    }).executeAsync();
-                    DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),0,0,0);
+                        }).executeAsync();
+                        DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getGender(), 0, 0, 0);
+                    }
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
