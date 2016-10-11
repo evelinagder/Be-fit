@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:id="@+id/layout_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="294dp"
@@ -19,7 +20,14 @@
             android:orientation="horizontal">
 
 
-            <android.support.design.widget.FloatingActionButton
+
+
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true">
+                <android.support.design.widget.FloatingActionButton
                 android:src="@drawable/ic_show_chart_white_24dp"
                 app:fabSize="normal"
                 android:layout_gravity="top|right"
@@ -31,6 +39,22 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
+
+                <android.support.design.widget.FloatingActionButton
+                    app:fabSize="normal"
+                    android:src="@drawable/ic_pie_chart_white_24dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_gravity="top|right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_Piechart"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
 
 
             <TextView
@@ -57,33 +81,7 @@
                 app:civ_border_color="@android:color/white"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_marginRight="6dp"
-                android:layout_alignEnd="@+id/show_chart"
-                android:layout_below="@+id/show_chart"
-                android:orientation="vertical"
-                android:visibility="invisible"
-                android:id="@+id/for_animation"
-                android:layout_alignRight="@+id/show_chart"
-                android:layout_height="wrap_content">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    app:fabSize="mini"
-                    android:id="@+id/fabmini"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="16dp" />
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    app:fabSize="mini"
-                    android:visibility="visible"
-                    android:id="@+id/fabmini2"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
-
-            </LinearLayout>
 
 
         </RelativeLayout>
@@ -254,10 +252,10 @@
     </LinearLayout>
 
 </LinearLayout>
-
+    </LinearLayout>
 
     </LinearLayout>
 
 
 
-</LinearLayout>
+

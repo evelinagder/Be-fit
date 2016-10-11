@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class CustomChallengeNameDialogFragment extends DialogFragment {
         Typeface typeface =  Typeface.createFromAsset(getActivity().getAssets(),  "RockoUltraFLF.ttf");
         heading.setTypeface(typeface);
         challengeName=(EditText)view.findViewById(R.id.ET_challenge_name);
+        challengeName.setImeOptions(EditorInfo.IME_ACTION_DONE);
         ok=(Button) view.findViewById(R.id.ok_button_Ch_name);
         cancel=(Button) view.findViewById(R.id.cancel_buttonCh_name);
         username= getArguments().getString("username");

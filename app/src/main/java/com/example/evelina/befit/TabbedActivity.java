@@ -63,6 +63,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.evelina.befit.R.styleable.FloatingActionButton;
+
 public class TabbedActivity extends AppCompatActivity{
 
 
@@ -253,6 +255,8 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView kilogramsTV=(TextView) rootView.findViewById(R.id.kg_profile_TV);
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
+                FloatingActionButton fabPie= (FloatingActionButton) rootView.findViewById(R.id.show_Piechart);
+
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 LinearLayout layout1 = (LinearLayout) rootView.findViewById(R.id.container1);
                 LinearLayout layout2 = (LinearLayout) rootView.findViewById(R.id.container2);
@@ -323,6 +327,19 @@ public class TabbedActivity extends AppCompatActivity{
                             startActivity(intent);
                         }else{
                             Toast.makeText(getActivity(),"You haven`t completed any Trainings yet!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                fabPie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( user.getWeight() != 0 || user.getHeight() != 0){
+                            Intent intent = new Intent(getActivity(),ChartsActivity.class);
+                            intent.putExtra("username",username);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(getActivity(),"Please enter weight and height!",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
