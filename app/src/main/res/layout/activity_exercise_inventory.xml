@@ -39,6 +39,8 @@
             android:layout_alignParentRight="true"
             android:elevation="6dp"
             app:borderWidth="0dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp"
             android:backgroundTint="@color/colorPrimary"
             android:visibility="visible"
             android:src="@drawable/ic_done_all_white_24dp"

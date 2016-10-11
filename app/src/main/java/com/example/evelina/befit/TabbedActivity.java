@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -260,7 +261,6 @@ public class TabbedActivity extends AppCompatActivity{
                 LinearLayout layout1 = (LinearLayout) rootView.findViewById(R.id.container1);
                 LinearLayout layout2 = (LinearLayout) rootView.findViewById(R.id.container2);
                 LinearLayout layout3 = (LinearLayout) rootView.findViewById(R.id.container3);
-
                 LinearLayout layout4 = (LinearLayout) rootView.findViewById(R.id.container4);
                 layout1.setBackgroundColor(Color.argb(22,6,214,160));
                 layout2.setBackgroundColor(Color.argb(22,6,214,160));
@@ -283,7 +283,7 @@ public class TabbedActivity extends AppCompatActivity{
                 numberTrainingsTV.setTypeface(typeface);
 
                 usernameF.setText(username);
-               final User user= DbManager.getInstance((TabbedActivity)getActivity()).getUser(username);
+                final User user= DbManager.getInstance(getActivity()).getUser(username);
                 numberTrainingsTV.setText(user.getCompletedTrainingsNum()+"");
 
                 numberPointsTV.setText(user.getPoints()+"");
@@ -317,7 +317,6 @@ public class TabbedActivity extends AppCompatActivity{
                     profilePicture.setImageURI(user.getProfilePic());
                     usernameF.setText(username);
                 }
-
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
