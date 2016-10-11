@@ -86,7 +86,7 @@ public class ChartsActivity extends AppCompatActivity {
         entries.add(new PieEntry(42f, "Extremely Obese",5));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(new int[] {R.color.com_facebook_blue,R.color.green,R.color.yellow,R.color.orange,R.color.red_orange,R.color.red},ChartsActivity.this);
+        dataSet.setColors(new int[] {R.color.com_facebook_blue,R.color.greenC,R.color.yellowC,R.color.orange,R.color.red_orange,R.color.redC},ChartsActivity.this);
         PieData data = new PieData(dataSet);
         chart.setEntryLabelColor(Color.BLACK);
         chart.setData(data);

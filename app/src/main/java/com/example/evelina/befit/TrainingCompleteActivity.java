@@ -42,6 +42,7 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     NetworkStateChangedReceiver receiver;
     Button myShare;
+    ShareButton share ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,29 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         challengeName= (TextView)findViewById(R.id.congrats_training_name);
         ok= (Button)findViewById(R.id.ok_complete);
         myShare = (Button) findViewById(R.id.my_share);
+        share = (ShareButton) findViewById(R.id.share_fb);
         dialog =new ShareDialog(this);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareOpenGraphObject object =  new ShareOpenGraphObject.Builder()
+                        .putString("og:type", "challenge.challenge")
+                        .putString("og:title", challengeNameString)
+                        .putString("og:updated_time", DbManager.getInstance(TrainingCompleteActivity.this).getUser(username).getCustomChallenges(challengeNameString).getDateOfCompletion())
+                        .build();
+
+                ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+                        .setActionType("progress.progress")
+                        .putObject("challenge", object)
+                        .build();
+                ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+                        .setPreviewPropertyName("challenge")
+                        .setAction(action)
+                        .build();
+                ShareDialog.show(TrainingCompleteActivity.this, content);
+            }
+        });
+
 
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));

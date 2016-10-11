@@ -65,14 +65,18 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="1dp"
             android:text="share"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:textColor="@android:color/white"
             android:background="@drawable/rectangle_green"
             android:id="@+id/my_share"
             android:layout_height="wrap_content" />
-
+<com.facebook.share.widget.ShareButton
+    android:layout_width="match_parent"
+    android:visibility="invisible"
+    android:id="@+id/share_fb"
+    android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

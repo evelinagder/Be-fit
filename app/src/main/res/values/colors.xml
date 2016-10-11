@@ -7,12 +7,15 @@
     <color name="tint">#FFFFF3</color>
     <color name="purple">#4F2F4F</color>
     <color name="light_green">#9BEED9</color>
-    <color name="blue">#1E90FF</color>
-    <color name="green">#32CD32</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="red">#FF0000</color>
+    <color name="blueC">#1E90FF</color>
+    <color name="greenC">#32CD32</color>
+    <color name="yellowC">#FFFF00</color>
+    <color name="redC">#FF0000</color>
     <color name="red_orange">#FF4500</color>
-
-
+    <color name="blue">#4FC3F7</color>
+    <color name="yellow">#FFEE58</color>
+    <color name="red">#FF8A65</color>
+    <color name="green">#009688</color>
+    <color name="purpletwo">#7E57C2</color>
 
 </resources>
