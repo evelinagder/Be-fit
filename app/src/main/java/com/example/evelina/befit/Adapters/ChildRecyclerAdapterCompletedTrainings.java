@@ -1,6 +1,7 @@
 package com.example.evelina.befit.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(NameExerciseVH holder, int position) {
         holder.exercises.setText(namesOfExercises.get(position));
+        holder.exercises.setBackgroundColor(Color.argb(0,6,214,160));
+        holder.exercises.setTextColor(Color.WHITE);
 
     }
 

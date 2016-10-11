@@ -5,19 +5,21 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="horizontal"
+    android:id="@+id/layout_completed_info"
     android:layout_height="wrap_content">
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="center"
         android:textSize="20sp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:text="Last completed on :"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="date"
+        android:textColor="@android:color/white"
         android:textSize="20sp"
         android:id="@+id/date_completion_training"
         android:gravity="center"
@@ -26,12 +28,13 @@
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/layout_completed_info_2"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:gravity="center"
             android:layout_height="wrap_content"
@@ -41,6 +44,7 @@
             android:hint="number"
             android:layout_weight="1"
             android:textSize="20sp"
+            android:textColor="@android:color/white"
             android:gravity="center"
             android:id="@+id/times_completion_training"
             android:layout_height="wrap_content" />

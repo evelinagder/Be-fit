@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -96,6 +97,8 @@ public class TabbedActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Be Fit");
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        params.setScrollFlags(0);  // c
         if(getIntent().getStringExtra("username")!=null){
             Log.e("username",getIntent().getStringExtra("username")+" in tabbed activity ");
             username = getIntent().getStringExtra("username");
@@ -315,7 +318,13 @@ public class TabbedActivity extends AppCompatActivity{
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO go to another activity showing the chart
+                        if(!user.getCompletedTrainings().isEmpty()){
+                            Intent intent = new Intent(getActivity(),AnalysisExercises.class);
+                            intent.putExtra("username",username);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getActivity(),"You haven`t completed any Trainings yet!",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

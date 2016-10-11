@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:id="@+id/layout_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="294dp"
@@ -57,169 +57,174 @@
 
         </RelativeLayout>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/container1"
+        android:layout_height="50dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/container1"
-            android:layout_height="50dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Points"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:id="@+id/points_profile_TV"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Points"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:id="@+id/points_profile_TV"
-                android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center_horizontal"
-                android:id="@+id/number_points_profile_TV"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:clickable="false"
-                android:layout_height="wrap_content"
-                android:hint="0"/>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/container2"
-            android:layout_height="54dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Trainings"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:id="@+id/trainings_profile_TV"
-                android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:id="@+id/number_points_profile_TV"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:clickable="false"
+            android:layout_height="wrap_content"
+            android:hint="0"/>
 
 
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="view"
-                android:background="@drawable/rectangle_green"
-                android:textColor="@android:color/white"
-                android:id="@+id/view_trainings_profile_Button"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:clickable="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center"
-                android:id="@+id/number_trainings_profile_TV"
-                android:layout_height="wrap_content"
-                android:hint="0"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/container3"
-            android:layout_height="50dp">
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:textSize="18sp"
-                android:id="@+id/weight_profile_TV"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="0dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:text="Weight"
-                android:gravity="center"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/container2"
+        android:layout_height="54dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:id="@+id/kg_profile_TV"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:focusable="false"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_height="match_parent"
-                android:hint="in kg"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/container4"
-            android:layout_height="52dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Trainings"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:id="@+id/trainings_profile_TV"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:id="@+id/height_profile_TV"
-                android:layout_height="match_parent"
-                android:text="Height"
-                android:gravity="center"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:clickable="false"
-                android:focusable="false"
-                android:layout_weight="1"
-                android:id="@+id/meters_profile_TV"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:hint="in meters/sm"/>
 
-        </LinearLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="view"
+            android:background="@drawable/rectangle_green"
+            android:textColor="@android:color/white"
+            android:id="@+id/view_trainings_profile_Button"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:clickable="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:id="@+id/number_trainings_profile_TV"
+            android:layout_height="wrap_content"
+            android:hint="0"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/container3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:id="@+id/weight_profile_TV"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:text="Weight"
+            android:gravity="center"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/kg_profile_TV"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_height="match_parent"
+            android:hint="in kg"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/container4"
+        android:layout_height="52dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:id="@+id/height_profile_TV"
+            android:layout_height="match_parent"
+            android:text="Height"
+            android:gravity="center"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_weight="1"
+            android:id="@+id/meters_profile_TV"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:hint="in meters/sm"/>
+
+    </LinearLayout>
+
+</LinearLayout>
 
 
     </LinearLayout>
 
 
 
-</ScrollView>
+</LinearLayout>

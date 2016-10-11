@@ -7,4 +7,9 @@
     <color name="tint">#FFFFF3</color>
     <color name="purple">#4F2F4F</color>
     <color name="light_green">#9BEED9</color>
+    <color name="blue">#4FC3F7</color>
+    <color name="yellow">#FFEE58</color>
+    <color name="red">#FF8A65</color>
+    <color name="green">#009688</color>
+    <color name="purpletwo">#7E57C2</color>
 </resources>

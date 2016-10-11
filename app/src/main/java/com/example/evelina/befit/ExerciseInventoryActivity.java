@@ -44,6 +44,7 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         username=getIntent().getStringExtra("username");
         challengeName=getIntent().getStringExtra("challengeName");
         user= DbManager.getInstance(this).getUser(username);
+        //TODO her
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         fab = (FloatingActionButton) findViewById(R.id.fab_exercise_inventory);
