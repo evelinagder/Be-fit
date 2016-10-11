@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:id="@+id/layout_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="294dp"
@@ -18,18 +19,26 @@
             android:id="@+id/pic_action_layout"
             android:orientation="horizontal">
 
-            <!-- Here a default profile picture-->
-
-            <android.support.design.widget.FloatingActionButton
-                android:src="@drawable/ic_show_chart_white_24dp"
-                app:fabSize="normal"
-                android:layout_gravity="top|right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_chart"
-                android:layout_alignParentTop="true"
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentTop="true">
+                <android.support.design.widget.FloatingActionButton
+                    android:src="@drawable/ic_show_chart_white_24dp"
+                    app:fabSize="normal"
+                    android:layout_gravity="top|right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_chart"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -54,6 +63,8 @@
                 app:civ_border_color="@android:color/white"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
+
+
 
         </RelativeLayout>
 

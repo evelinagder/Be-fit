@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Button_start_training"
                 android:visibility="visible"
+                app:fabSize="normal"
                 android:src="@android:color/transparent"
                 app:layout_anchor="@+id/recycler_view_start"
                 app:layout_anchorGravity="bottom|center|end"

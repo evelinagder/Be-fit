@@ -18,7 +18,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -36,9 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ExerciseInventoryActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PlayExerciseActivity" />
 
         <receiver
@@ -57,19 +56,14 @@
             </intent-filter>
         </receiver>
 
-
-        <activity android:name=".CompletedTrainings">
-
-        </activity>
-        <activity android:name=".StartTrainingActivity"/>
-
-
-
-        <activity android:name=".TrainingCompleteActivity">
-
-        </activity>
-
-
+        <activity android:name=".CompletedTrainings"></activity>
+        <activity android:name=".StartTrainingActivity" />
+        <activity android:name=".TrainingCompleteActivity" />
+        <activity android:name=".ChartsActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

@@ -15,7 +15,6 @@
            android:textStyle="bold"
            android:gravity="center"
            android:id="@+id/heading_name"
-           android:maxLines="1"
            android:textColor="@color/colorPrimaryDark"
            android:textSize="40dp"
            android:layout_weight="0.50" />
@@ -24,6 +23,9 @@
            android:layout_margin="16dp"
            android:layout_height="0dp"
            android:maxLines="1"
+           android:lines="1"
+           android:inputType="textEmailSubject"
+           android:imeOptions="actionDone"
            android:id="@+id/ET_challenge_name"
            android:layout_weight="1"
            android:hint="Training name"

@@ -249,6 +249,7 @@ public class TabbedActivity extends AppCompatActivity{
                 TextView kilogramsTV=(TextView) rootView.findViewById(R.id.kg_profile_TV);
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
                 FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
+
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 LinearLayout layout1 = (LinearLayout) rootView.findViewById(R.id.container1);
                 LinearLayout layout2 = (LinearLayout) rootView.findViewById(R.id.container2);
@@ -315,7 +316,9 @@ public class TabbedActivity extends AppCompatActivity{
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO go to another activity showing the chart
+                        Intent intent= new Intent(getActivity(), ChartsActivity.class);
+                        intent.putExtra("username",username);
+                        startActivity(intent);
                     }
                 });
 
