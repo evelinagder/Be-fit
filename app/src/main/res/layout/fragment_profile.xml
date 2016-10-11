@@ -18,18 +18,21 @@
             android:id="@+id/pic_action_layout"
             android:orientation="horizontal">
 
-            <!-- Here a default profile picture-->
 
             <android.support.design.widget.FloatingActionButton
                 android:src="@drawable/ic_show_chart_white_24dp"
                 app:fabSize="normal"
                 android:layout_gravity="top|right"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/show_chart"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -54,6 +57,34 @@
                 app:civ_border_color="@android:color/white"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_alignEnd="@+id/show_chart"
+                android:layout_below="@+id/show_chart"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                android:id="@+id/for_animation"
+                android:layout_alignRight="@+id/show_chart"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    app:fabSize="mini"
+                    android:id="@+id/fabmini"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="16dp" />
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    app:fabSize="mini"
+                    android:visibility="visible"
+                    android:id="@+id/fabmini2"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 
@@ -126,6 +157,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="view"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:background="@drawable/rectangle_green"
             android:textColor="@android:color/white"
             android:id="@+id/view_trainings_profile_Button"
