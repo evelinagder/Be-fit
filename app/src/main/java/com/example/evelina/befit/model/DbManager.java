@@ -210,6 +210,7 @@ public class DbManager extends SQLiteOpenHelper{
                             Log.e("CURSOR CH","acheiverd add");
                             u.addAchievedChallenge(challenge);
                             u.addCustomChallenge(challenge);
+
                         }
                         if (achieved.equals("no")) {
                             Log.e("Challenge add AFTER DB", challenge.getName());
@@ -330,11 +331,12 @@ public class DbManager extends SQLiteOpenHelper{
     public void changeUserPoints( String username, int newPoints){
         //used when user completes an Exercise, upgrade user`s points in d and in map!
         User user= allUsers.get(username);
+        int points=user.getPoints()+newPoints;
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(USER_POINTS,newPoints);
+        cv.put(USER_POINTS,points);
         db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
-        user.setPoints(user.getPoints()+newPoints);
+        user.setPoints(points);
 
     }
     public void updateUserCompletedChallenges(User user, Challenge completedChallenge, String  date){
