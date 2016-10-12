@@ -68,7 +68,6 @@ public class CustomChallengeNameDialogFragment extends DialogFragment {
                 intent.putExtra("username",username);
                 intent.putExtra("challengeName",name);
                 startActivity(intent);
-
                 dismiss();
             }
         });

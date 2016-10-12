@@ -43,6 +43,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private String userName;
     private Typeface typeface;
     private TextView mPointsTV;
+    private static final int RESULT_START_TRAINING_FINISH=44;
 
 
 
@@ -114,6 +115,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     intent.putExtra("username",usern);
                     intent.putExtra("isBasic",isBasic);
                     startActivity(intent);
+                    setResult(RESULT_START_TRAINING_FINISH);
+                    finish();
 
                 }
 
