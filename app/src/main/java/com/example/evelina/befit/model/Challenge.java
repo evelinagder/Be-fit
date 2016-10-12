@@ -1,5 +1,7 @@
 package com.example.evelina.befit.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,16 +20,18 @@ public class Challenge {
     private int challengeID;
     ArrayList<Exercise> exercises;
 
-    public Challenge(String name, int timesCompleted, String dateOfCompletion) {
+    public Challenge(String name, int timesCompleted, String dateOfCompletion,String achieved) {
         this.name=name;
         this.timesCompleted = timesCompleted;
         this.dateOfCompletion = dateOfCompletion;
         exercises = new ArrayList<Exercise>();
+        this.achieved=achieved;
     }
 
     public void addExercise(Exercise exercise){
         if( exercise != null){
             exercises.add(exercise);
+            Log.e("Challenge add EX",this.name+exercise.getName());
         }
     }
 
@@ -39,6 +43,9 @@ public class Challenge {
         this.achieved = achieved;
     }
 
+    public String getAchieved() {
+        return achieved;
+    }
 
     public void setTimesCompleted(int timesCompleted) {
         this.timesCompleted = timesCompleted;

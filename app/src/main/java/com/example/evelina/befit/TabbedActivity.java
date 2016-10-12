@@ -95,6 +95,7 @@ public class TabbedActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_tabbed);
+        DbManager.getInstance(TabbedActivity.this);
         receiver=new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -207,7 +208,7 @@ public class TabbedActivity extends AppCompatActivity{
                                  Bundle savedInstanceState) {
             //TODO here we change the fragments pass data with bundles remove tabbed fragment
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1){
-
+                Log.e("USER in Tabbed 1 ",username);
                 // Inflate the layout for this fragment
                 View root =  inflater.inflate(R.layout.fragment_basic_training, container, false);
                 RecyclerView categories = (RecyclerView) root.findViewById(R.id.basicTraining_view);
@@ -221,7 +222,7 @@ public class TabbedActivity extends AppCompatActivity{
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 User user=DbManager.getInstance(getActivity()).getUser(username);
 
-                Log.e("USER",username+"");
+                Log.e("USER in Tabbed 2 ",username+""+user.getCustomChallengesName().size()+"..");
 
                 View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
                 RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);

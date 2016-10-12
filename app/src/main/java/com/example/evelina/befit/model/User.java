@@ -1,6 +1,7 @@
 package com.example.evelina.befit.model;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class User implements Serializable{
     }
 
     public void addCustomChallenge(Challenge c){
-
+        Log.e("Challenge add to USER",c.getName());
         customChallenges.put(c.getName(),c);
     }
     public void addAchievedChallenge(Challenge c){

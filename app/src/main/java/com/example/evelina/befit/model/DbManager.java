@@ -27,11 +27,13 @@ import static android.content.Context.ALARM_SERVICE;
  */
 public class DbManager extends SQLiteOpenHelper{
     Context context;
+    String currentUser;
     private static DbManager sInstance;
     public HashMap<String , User> allUsers;
 
+
     private static final String DATABASE_NAME = "beFitDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     //Table names;
     private static final String USERS_TABLE = "Users";
     private static final String CHALLENGES_TABLE = "Challenges";
@@ -62,7 +64,7 @@ public class DbManager extends SQLiteOpenHelper{
     private static final String EXERCISE_SERIES="series";
     private static final String EXERCISE_REPEATS="repeats";
     private static final String EXERCISE_INSTRUCTIONS="instructions";
-    private static final String EXERCISE_VIDEO="video";
+
     //ALARM table column names
 
     private static final String ALARM_UID="alarm_id";
@@ -87,10 +89,12 @@ public class DbManager extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         allUsers= new HashMap<String, User>();
         this.context=context;
+        currentUser= context.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
         loadUsers();
 
 
     }
+
 
     @Override
         public void onCreate(SQLiteDatabase db) {
@@ -116,8 +120,7 @@ public class DbManager extends SQLiteOpenHelper{
                 +EXERCISE_POINTS+" INTEGER, "
                 +EXERCISE_SERIES+" INTEGER, "
                 +EXERCISE_REPEATS+" INTEGER, "
-                +EXERCISE_INSTRUCTIONS+" text "
-                +EXERCISE_VIDEO+" text, FOREIGN KEY("+EXERCISE_CHALLENGE_UID +
+                +EXERCISE_INSTRUCTIONS+" text , FOREIGN KEY("+EXERCISE_CHALLENGE_UID +
        " ) REFERENCES "+ CHALLENGES_TABLE+"("+CHALLENGE_UID+"));");
         db.execSQL("CREATE TABLE "+ALARM_TABLE+" ( "+ALARM_UID  +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +ALARM_USER_USERNAME +" text, "
@@ -140,77 +143,83 @@ public class DbManager extends SQLiteOpenHelper{
 
 
     }
-    public void loadUsers(){
+    public void loadUsers() {
         Log.e("DBUSERS", "load users start");
-        if( allUsers.isEmpty()){
-            Cursor cursor=getWritableDatabase().rawQuery("SELECT "+USER_UID+", "
-                    +USER_USERNAME+", "
-                    +USER_PASSWORD+", "
-                    +USER_EMAIL+", "
-                    +USER_GENDER+", "
-                    +USER_WEIGHT+ ", "
-                    +USER_HEIGHT+", "
-                    +USER_PICTURE+", "
-                    +USER_POINTS+ " FROM " +USERS_TABLE,null);
-            while(cursor.moveToNext()){
-                int userId=cursor.getInt(cursor.getColumnIndex(USER_UID));
-                String username=cursor.getString(cursor.getColumnIndex(USER_USERNAME));
-                String password=cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
-                String email=cursor.getString(cursor.getColumnIndex(USER_EMAIL));
-                String gender=cursor.getString(cursor.getColumnIndex(USER_GENDER));
-                String picture=cursor.getString(cursor.getColumnIndex(USER_PICTURE));
-                int weight=cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
-                int height=cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
-                int pointsU=cursor.getInt(cursor.getColumnIndex(USER_POINTS));
-                User u= new User(username,password,email,gender,weight,height,pointsU);
-                if(picture != null) {
+        if (allUsers.isEmpty()) {
+            Cursor cursor = getWritableDatabase().rawQuery("SELECT " + USER_UID + ", "
+                    + USER_USERNAME + ", "
+                    + USER_PASSWORD + ", "
+                    + USER_EMAIL + ", "
+                    + USER_GENDER + ", "
+                    + USER_WEIGHT + ", "
+                    + USER_HEIGHT + ", "
+                    + USER_PICTURE + ", "
+                    + USER_POINTS + " FROM " + USERS_TABLE + " WHERE " + USER_USERNAME + "= ?", new String[]{currentUser});
+            while (cursor.moveToNext()) {
+                int userId = cursor.getInt(cursor.getColumnIndex(USER_UID));
+                String username = cursor.getString(cursor.getColumnIndex(USER_USERNAME));
+                String password = cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
+                String email = cursor.getString(cursor.getColumnIndex(USER_EMAIL));
+                String gender = cursor.getString(cursor.getColumnIndex(USER_GENDER));
+                String picture = cursor.getString(cursor.getColumnIndex(USER_PICTURE));
+                int weight = cursor.getInt(cursor.getColumnIndex(USER_WEIGHT));
+                int height = cursor.getInt(cursor.getColumnIndex(USER_HEIGHT));
+                int pointsU = cursor.getInt(cursor.getColumnIndex(USER_POINTS));
+                User u = new User(username, password, email, gender, weight, height, pointsU);
+                if (picture != null) {
                     Uri userPicture = Uri.parse(picture);
                     u.setProfilePic(userPicture);
                 }
                 u.setUserDBId(userId);
-                Cursor cursorChallenge=getWritableDatabase().rawQuery("SELECT "+CHALLENGE_UID+", "
-                        +CHALLENGE_USER_UID+", "
-                        +CHALLENGE_NAME+", "
-                        +CHALLENGE_TIMES+", "
-                        +CHALLENGE_ACHIEVED+", "
-                        +CHALLENGE_DATE+" FROM "+CHALLENGES_TABLE+" WHERE "+CHALLENGE_USER_UID+"= ?",new String[] {String.valueOf(userId)});
-                while(cursorChallenge.moveToNext()){
-                    int challengeId=cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_UID));
-                    String nameC=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_NAME));
-                    int times=cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_TIMES));
-                    String date=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_DATE));
-                    String achieved=cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_ACHIEVED));
-                    Challenge challenge= new Challenge(nameC,times,date);
+                Cursor cursorChallenge = getWritableDatabase().rawQuery("SELECT " + CHALLENGE_UID + ", "
+                        + CHALLENGE_USER_UID + ", "
+                        + CHALLENGE_NAME + ", "
+                        + CHALLENGE_TIMES + ", "
+                        + CHALLENGE_ACHIEVED + ", "
+                        + CHALLENGE_DATE + " FROM " + CHALLENGES_TABLE + " WHERE " + CHALLENGE_USER_UID + "= ?", new String[]{String.valueOf(userId)});
+                while (cursorChallenge.moveToNext()) {
+                    int challengeId = cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_UID));
+                    String nameC = cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_NAME));
+                    int times = cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_TIMES));
+                    String date = cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_DATE));
+                    String achieved = cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_ACHIEVED));
+                    Challenge challenge = new Challenge(nameC, times, date, achieved);
                     challenge.setChallengeID(challengeId);
-                    Cursor cursorExercise=getWritableDatabase().rawQuery("SELECT "+EXERCISE_NAME+", "
-                            +EXERCISE_POINTS+", "
-                            +EXERCISE_SERIES+", "
-                            +EXERCISE_REPEATS+", "
-                            +EXERCISE_INSTRUCTIONS+ ", "
-                            +EXERCISE_VIDEO+" FROM "+EXERCISE_TABLE+" WHERE "+EXERCISE_CHALLENGE_UID+"= ?" ,new String[] {String.valueOf(challengeId)});
-                    while(cursorExercise.moveToNext()){
-                        String name=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_NAME));
-                        int points=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_POINTS));
-                        int series=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_SERIES));
-                        int repeats=cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_REPEATS));
-                        String instructions=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_INSTRUCTIONS));
-                        String video=cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_VIDEO));
-                        Exercise exercise= new Exercise(name, points,series,repeats,instructions,video);
+                    Log.e("CURSOR CH","has challenge start");
+                    Cursor cursorExercise = getWritableDatabase().rawQuery("SELECT " + EXERCISE_NAME + ", "
+                            + EXERCISE_POINTS + ", "
+                            + EXERCISE_SERIES + ", "
+                            + EXERCISE_REPEATS + ", "
+                            + EXERCISE_INSTRUCTIONS + " FROM " + EXERCISE_TABLE + " WHERE " + EXERCISE_CHALLENGE_UID + "= ?", new String[]{String.valueOf(challengeId)});
+                    while (cursorExercise.moveToNext()) {
+                        String name = cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_NAME));
+                        int points = cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_POINTS));
+                        int series = cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_SERIES));
+                        int repeats = cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_REPEATS));
+                        String instructions = cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_INSTRUCTIONS));
+                        String video = TrainingManager.getInstance().getExercise(name).getVideo();
+                        Exercise exercise = new Exercise(name, points, series, repeats, instructions, video);
                         challenge.addExercise(exercise);
+                        Log.e("CURSOR CH","add exercose challenge");
                     }
-                    if(achieved.equals("yes")){
-                        u.addAchievedChallenge(challenge);
-                    }
-                    else {
-                        u.addCustomChallenge(challenge);
+                    if (challenge != null && achieved != null) {
+                        Log.e("Challenge-if not null", challenge.getName());
+                        if (achieved.equals("yes")) {
+                            Log.e("CURSOR CH","acheiverd add");
+                            u.addAchievedChallenge(challenge);
+                        }
+                        if (achieved.equals("no")) {
+                            Log.e("Challenge add AFTER DB", challenge.getName());
+                            u.addCustomChallenge(challenge);
+                        }
                     }
                 }
                 allUsers.put(username, u);
                 Log.e("DBUSERS", "user added - " + u);
             }
         }
-        Log.e("DBUSERS", "load users end");
     }
+
     public boolean existsUser( String username) {
         return allUsers.containsKey(username);
     }
@@ -230,15 +239,18 @@ public class DbManager extends SQLiteOpenHelper{
     }
     public void addCustomChallenge( String username, Challenge challenge){
         //adds new challende when user pressed ADD and gave it a name!
+        Log.e("Challenge add to DB",challenge.getName());
             User user=getUser(username);
             SQLiteDatabase db = getReadableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(CHALLENGE_NAME, challenge.getName());
             cv.put(CHALLENGE_USER_UID, user.getUserDBId());
+            cv.put(CHALLENGE_ACHIEVED, "no");
             db.insert(CHALLENGES_TABLE, null, cv);
-        user.addCustomChallenge(new Challenge(challenge.getName(),0,""));
+        user.addCustomChallenge(new Challenge(challenge.getName(),0,"","no"));
     }
     public void addExercisesToCustomChallenge(String username,String challengeName, Exercise exercise){
+        Log.e("Exercise add to DB",challengeName+" -"+exercise.getName());
                 User user=getUser(username);
                 Challenge challenge= user.getCustomChallenges(challengeName);
                 SQLiteDatabase db = getReadableDatabase();
@@ -314,7 +326,7 @@ public class DbManager extends SQLiteOpenHelper{
         cv.put(USER_POINTS,newPoints);
         db.update(USERS_TABLE,cv,USER_USERNAME+" =? ",new String[] {user.getUsername()});
         user.setPoints(user.getPoints()+newPoints);
-        allUsers.put(username, user);
+
     }
     public void updateUserCompletedChallenges(User user, Challenge completedChallenge, String  date){
 

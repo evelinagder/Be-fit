@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExerciseInventoryActivity extends AppCompatActivity implements SetsRepeatsDialogFragment.ICancelAdding{
+public class ExerciseInventoryActivity extends AppCompatActivity {
     Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private NetworkStateChangedReceiver receiver;
@@ -94,14 +94,6 @@ public class ExerciseInventoryActivity extends AppCompatActivity implements Sets
         unregisterReceiver(receiver);
         super.onDestroy();
     }
-
-    @Override
-    public void cancelAdding(int pos) {
-        //maha izbranoto uprajnenie ot custon challenge
-        Log.e("haha", "activity gogo");
-
-    }
-
 
 
 
