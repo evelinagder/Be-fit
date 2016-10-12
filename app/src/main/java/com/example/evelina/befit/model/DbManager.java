@@ -145,7 +145,7 @@ public class DbManager extends SQLiteOpenHelper{
     }
     public void loadUsers() {
         Log.e("DBUSERS", "load users start");
-        if (allUsers.isEmpty()) {
+       // if (allUsers.isEmpty()) {
             Cursor cursor = getWritableDatabase().rawQuery("SELECT " + USER_UID + ", "
                     + USER_USERNAME + ", "
                     + USER_PASSWORD + ", "
@@ -209,6 +209,7 @@ public class DbManager extends SQLiteOpenHelper{
                         if (achieved.equals("yes")) {
                             Log.e("CURSOR CH","acheiverd add");
                             u.addAchievedChallenge(challenge);
+                            u.addCustomChallenge(challenge);
                         }
                         if (achieved.equals("no")) {
                             Log.e("Challenge add AFTER DB", challenge.getName());
@@ -220,7 +221,7 @@ public class DbManager extends SQLiteOpenHelper{
                 Log.e("DBUSERS", "user added - " + u);
             }
         }
-    }
+    //}
 
     public boolean existsUser( String username) {
         return allUsers.containsKey(username);
