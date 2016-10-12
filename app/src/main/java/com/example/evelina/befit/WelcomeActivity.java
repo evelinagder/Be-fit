@@ -28,7 +28,6 @@ public class WelcomeActivity extends AppCompatActivity {
         dbmanager.getWritableDatabase();
         StringBuilder allUsersS = new StringBuilder();
         for (User u : DbManager.getInstance(WelcomeActivity.this).allUsers.values()) {
-            Log.e("DBUSERS", "mama ti");
             Log.e("DBUSERS", u.getUsername());
             Log.e("DBUSERS", u.getPassword());
             allUsersS.append(u.getUsername()).append(" ").append(u.getPassword()).append("\n");
@@ -53,7 +52,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", null) != null) {
-                    Log.e("USER", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users"));
+                    Log.e("USER in wel SHaredPrefs", WelcomeActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users"));
 
                 }
                 maintainLogin(WelcomeActivity.this);

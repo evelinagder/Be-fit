@@ -1,7 +1,6 @@
 package com.example.evelina.befit.adapters;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.evelina.befit.ExerciseInventoryActivity;
 import com.example.evelina.befit.R;
-import com.example.evelina.befit.SetsRepeatsDialogFragment;
 import com.example.evelina.befit.model.Challenge;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.Exercise;

@@ -62,7 +62,7 @@ public class CustomChallengeNameDialogFragment extends DialogFragment {
                     challengeName.requestFocus();
                     return;
                 }
-                Challenge customChallenge= new Challenge(name,0,"");
+                Challenge customChallenge= new Challenge(name,0,"","no");
                 DbManager.getInstance(getActivity()).addCustomChallenge(username,customChallenge);
                 Intent intent= new Intent(getActivity(),ExerciseInventoryActivity.class);
                 intent.putExtra("username",username);
