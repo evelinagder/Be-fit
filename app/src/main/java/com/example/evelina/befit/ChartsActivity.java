@@ -1,8 +1,10 @@
 package com.example.evelina.befit;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class ChartsActivity extends AppCompatActivity {
     private PieChart chart;
     private TextView yourBmi, bmiNum;
     private double userBMI;
+    private NetworkStateChangedReceiver receiver;
 
     private float [] dataY = {12, 18 ,24 ,30, 39, 42};
     private String[] dataX = {"Underweight", "Healthy", "Overweight", "Obese", "Extremely Obese"};
@@ -111,6 +114,8 @@ public class ChartsActivity extends AppCompatActivity {
         chart.setEntryLabelColor(Color.BLACK);
         chart.setData(data);
 
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
     }
@@ -143,7 +148,9 @@ public class ChartsActivity extends AppCompatActivity {
 
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }

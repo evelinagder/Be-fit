@@ -262,10 +262,10 @@ public class TabbedActivity extends AppCompatActivity{
                 LinearLayout layout2 = (LinearLayout) rootView.findViewById(R.id.container2);
                 LinearLayout layout3 = (LinearLayout) rootView.findViewById(R.id.container3);
                 LinearLayout layout4 = (LinearLayout) rootView.findViewById(R.id.container4);
-                layout1.setBackgroundColor(Color.argb(22,6,214,160));
-                layout2.setBackgroundColor(Color.argb(22,6,214,160));
-                layout3.setBackgroundColor(Color.argb(22,6,214,160));
-                layout4.setBackgroundColor(Color.argb(22,6,214,160));
+                layout1.setBackgroundColor(getActivity().getResources().getColor(R.color.lightgreen));
+                layout2.setBackgroundColor(getActivity().getResources().getColor(R.color.lightgreen));
+                layout3.setBackgroundColor(getActivity().getResources().getColor(R.color.lightgreen));
+                layout4.setBackgroundColor(getActivity().getResources().getColor(R.color.lightgreen));
                 Typeface typeface =  Typeface.createFromAsset(getContext().getAssets(),  "RockoUltraFLF.ttf");
 
                 TextView pointsTV = (TextView) rootView.findViewById(R.id.points_profile_TV);

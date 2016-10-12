@@ -31,8 +31,8 @@ import java.util.List;
 
 public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapter<CompletedTrainingExpandableAdapter.TrainingParentViewHolder,CompletedTrainingExpandableAdapter.TrainingChildViewHolder> {
     private CompletedTrainings activity;
-    LayoutInflater mInflater;
-
+    private LayoutInflater mInflater;
+    private Typeface typeface;
 
     /**
      * Primary constructor. Sets up {@link #mParentItemList} and {@link #mItemList}.
@@ -50,6 +50,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         super(parentItemList);
         this.activity =activity;
         mInflater = LayoutInflater.from(activity);
+        typeface = Typeface.createFromAsset(activity.getAssets(),  "RockoFLF.ttf");
     }
 
     @Override
@@ -71,9 +72,10 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         //here we set the name of the challenge
         TrainingTypes nameTraining = (TrainingTypes) parentListItem;
         parentViewHolder.trainingName.setText(nameTraining.getName());
-       // parentViewHolder.trainingName.setTextColor(Color.WHITE);
+        parentViewHolder.trainingName.setTextColor(activity.getResources().getColor(R.color.green));
         parentViewHolder.trainingName.setTextSize(18);
-       // parentViewHolder.trainingName.setBackgroundColor(Color.argb(20,6,214,160));
+        parentViewHolder.trainingName.setTypeface(typeface);
+        parentViewHolder.trainingName.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
     }
 
     @Override
@@ -82,15 +84,17 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         TrainingSpecifications trainingSpecifications = (TrainingSpecifications) childListItem;
         childViewHolder.timesCompletionTrainingTV.setText(trainingSpecifications.getmTimesCompleted()+"");
         childViewHolder.dateCompletionTrainingTV.setText(trainingSpecifications.getmDateLastCompletion());
+        childViewHolder.timesCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
+        childViewHolder.dateCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
         //TODO here we create adapter for the child recycler and set it to the recycler depending on the name of the challenge
         //the newxt lines are test they should be changed
         List<String> exercisesNames = trainingSpecifications.getExercisesName();
        // StartTrainingRecyclerAdapter adapter= new StartTrainingRecyclerAdapter(activity,exercisesNames);
         ChildRecyclerAdapterCompletedTrainings childRecyclerAdapterCompletedTrainings = new ChildRecyclerAdapterCompletedTrainings(exercisesNames,activity);
-       childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);
+        childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);
         childViewHolder.exercisesPerTrainingRV.setLayoutManager(new LinearLayoutManager(activity));
-        childViewHolder.completedTimeLayout.setBackgroundColor(Color.argb(0,6,214,160));
-        childViewHolder.completedTrainingsLayout.setBackgroundColor(Color.argb(0,6,214,160));
+        childViewHolder.completedTimeLayout.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
+        childViewHolder.completedTrainingsLayout.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
     }
 
     public class TrainingChildViewHolder extends ChildViewHolder{

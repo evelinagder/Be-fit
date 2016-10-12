@@ -2,14 +2,18 @@ package com.example.evelina.befit;
 
 import android.app.FragmentManager;import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.evelina.befit.model.Challenge;
@@ -26,23 +30,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,ConfirmationFragment.IConfirmation {
+public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     private YouTubePlayerView mYouTubeView;
     private FloatingActionButton mFab;
     private Button mCompletedButton;
     private NetworkStateChangedReceiver receiver;
     private Challenge mCurrentChallenge;
-    private EditText setsNum,repeatsNum,pointsNum;
-    User user;
-    String nameChallenge;
-
-    ArrayList<Exercise> listExercises;
+    private TextView setsNum,repeatsNum,pointsNum;
+    private User user;
+    private String nameChallenge;
+    private TextView mDescriptionTV;
+    private ArrayList<Exercise> listExercises;
     private static int mCurrentExercise;
     private  YouTubePlayer player ;
     private String userName;
-    ConfirmationFragment fragment;
-    android.app.FragmentManager fm = getFragmentManager();
+    private Typeface typeface;
+    private TextView mPointsTV;
+
 
 
     //TODO here we should get the challenge from the intent/by name/ and instance it to mCurrentChallenge ,then load listExercises with the exercises in the current challenge and manipulate over them
@@ -53,17 +58,22 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_exercise);
+        typeface  = Typeface.createFromAsset(getAssets(),  "RockoFLF.ttf");
         mCompletedButton = (Button) findViewById(R.id.button_completed);
         mYouTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         mYouTubeView.initialize(Config.DEVELOPER_KEY, this);
-        mFab = (FloatingActionButton) findViewById(R.id.fab_info);
-        repeatsNum=(EditText)findViewById(R.id.repeat_num);
-        setsNum=(EditText)findViewById(R.id.sets_num);
-        pointsNum=(EditText)findViewById(R.id.points_num);
+        repeatsNum=(TextView)findViewById(R.id.repeat_num);
+        setsNum=(TextView)findViewById(R.id.sets_num);
+        mDescriptionTV = (TextView) findViewById(R.id.description_TV);
+        mPointsTV = (TextView) findViewById(R.id.points_TV);
 
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
+        mCompletedButton.setTypeface(typeface);
+        repeatsNum.setTypeface(typeface);
+        setsNum.setTypeface(typeface);
+        mDescriptionTV.setTypeface(typeface);
 
         nameChallenge = getIntent().getStringExtra("challenge");
         final String usern = getIntent().getStringExtra("username");
@@ -78,18 +88,13 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         mCurrentExercise = 0;
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
-        pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
+        mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
 
 
 
 
 
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(PlayExerciseActivity.this, "Open dialog fragment with info here", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         mCompletedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +103,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     player.cueVideo(listExercises.get(mCurrentExercise).getVideo());
                     setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
                     repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
-                    pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
+                    //pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
+                    mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
                     int updatePoints=user.getPoints()+listExercises.get(mCurrentExercise).getPoints();
                     DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,updatePoints);
                     mCurrentExercise++;
@@ -127,6 +133,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
             youTubePlayer.cueVideo(listExercises.get(mCurrentExercise).getVideo());
             youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
+            mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
             this.player = youTubePlayer;
             mCurrentExercise++;
         }
@@ -185,15 +192,6 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
-    }
-
-
-
-    @Override
-    public void finishSelected() {
-        Intent intent = new Intent(PlayExerciseActivity.this,TabbedActivity.class);
-        intent.putExtra("username",userName);
-        startActivity(intent);
     }
 
 

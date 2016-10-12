@@ -1,6 +1,8 @@
 package com.example.evelina.befit;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,7 @@ public class AnalysisExercises extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private AllExerciseProgressAdapter adapter;
     private String userName;
+    private NetworkStateChangedReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,5 +87,14 @@ public class AnalysisExercises extends AppCompatActivity {
             }
         adapter = new AllExerciseProgressAdapter(this,exercises,doneTimes,DbManager.getInstance(this).getUser(userName));
         mRecyclerView.setAdapter(adapter);
+        receiver = new NetworkStateChangedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 }
