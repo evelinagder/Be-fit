@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,10 +35,12 @@ import java.util.Date;
 public class TrainingCompleteActivity extends AppCompatActivity {
     TextView challengeName;
     Button ok;
+    boolean isBasic;
     String username;
     String challengeNameString;
     Challenge challenge;
     TextView heading;
+    User user;
 //    ShareDialog dialog;
 //    CallbackManager callbackManager;
     NetworkStateChangedReceiver receiver;
@@ -124,8 +127,8 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         heading= (TextView)findViewById(R.id.headingC) ;
         heading.setTypeface(typeface);
         username=getIntent().getStringExtra("username");
-        boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
-        User user=DbManager.getInstance(this).getUser(username);
+        isBasic=getIntent().getExtras().getBoolean("isBasic");
+        user=DbManager.getInstance(this).getUser(username);
         if(isBasic){
             challenge= TrainingManager.getInstance().getBasicChallenges(challengeNameString);
         }
@@ -135,10 +138,18 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         Date today= new Date();
         String mid= today+"";
         String date= mid.substring(0,10);
-        DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedChallenges(user,challenge,date);
+        if(isBasic){
+            Log.e("BASIC","basic in db TCA");
+            DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedBasicChallenges(user,challenge,date);
+        }
+        else {
+            DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedChallenges(user, challenge, date);
+        }
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(TrainingCompleteActivity.this, TabbedActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);

@@ -209,7 +209,12 @@ public class DbManager extends SQLiteOpenHelper{
                         if (achieved.equals("yes")) {
                             Log.e("CURSOR CH","acheiverd add");
                             u.addAchievedChallenge(challenge);
-                            u.addCustomChallenge(challenge);
+                            if(challenge.getName().equals("ABS")||challenge.getName().equals("UPPERBODY")||challenge.getName().equals("LOWERBODY")||challenge.getName().equals("WHOLEBODY")){
+                                Log.e("BASIC DB load",challenge.getName());
+                            }
+                            else {
+                                u.addCustomChallenge(challenge);
+                            }
 
                         }
                         if (achieved.equals("no")) {
@@ -356,6 +361,26 @@ public class DbManager extends SQLiteOpenHelper{
 
 
     }
+    public void updateUserCompletedBasicChallenges(User user, Challenge completedChallenge, String  date){
+
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        int userId= user.getUserDBId();
+        int times=completedChallenge.getTimesCompleted()+1;
+        completedChallenge.setAchieved("yes");
+        completedChallenge.setDateOfCompletion(date);
+        completedChallenge.setTimesCompleted(completedChallenge.getTimesCompleted()+1);
+        cv.put(CHALLENGE_NAME, completedChallenge.getName());
+        cv.put(CHALLENGE_USER_UID, userId);
+        cv.put(CHALLENGE_ACHIEVED,"yes");
+        cv.put(CHALLENGE_DATE,date);
+        cv.put(CHALLENGE_TIMES,times);
+        long id = db.insert(CHALLENGES_TABLE, null, cv);
+        completedChallenge.setChallengeID(id);
+        user.addAchievedChallenge(completedChallenge);
+
+
+    }
     public User getUser(String username){
        User user= allUsers.get(username);
         return user;
@@ -397,6 +422,7 @@ public class DbManager extends SQLiteOpenHelper{
     public void loadNotifications(String username, Context activity) {
         // set the radio buttons in Notifications framgment.
         //check if there is a running alarm , if not start one with the larm object alarmTime!
+        Log.e("LOAND NOTIF",allUsers.get(username).getUsername());
         if (allUsers.get(username).userAlarms.size() != 0) {
             Cursor cursor = getWritableDatabase().rawQuery("SELECT " + ALARM_UID + ", "
                     + ALARM_TIME + ", "

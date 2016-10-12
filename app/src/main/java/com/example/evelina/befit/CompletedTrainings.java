@@ -34,6 +34,7 @@ public class CompletedTrainings extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_completed_trainings);
         setSupportActionBar(toolbar);
+        username=getIntent().getStringExtra("username");
         getSupportActionBar().setTitle("Completed challenges");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,7 +44,7 @@ public class CompletedTrainings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CompletedTrainings.this,TabbedActivity.class);
-               // intent.putExtra("username",username);
+                intent.putExtra("username",username);
                 startActivity(intent);
                 finish();
             }
@@ -54,7 +55,7 @@ public class CompletedTrainings extends AppCompatActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.completed_trainings_expandable_recycler);
-        username=getIntent().getStringExtra("username");
+
         user= DbManager.getInstance(CompletedTrainings.this).getUser(username);
 
         //TrainingSpecifications is a class which we will use in supplying the times of completion of challenge and it's last day of completion
