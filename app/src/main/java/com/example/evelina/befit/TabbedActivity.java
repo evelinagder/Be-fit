@@ -304,9 +304,10 @@ public class TabbedActivity extends AppCompatActivity{
 
 
                     if (loginState.equals("facebook") && user.getProfilePic() == null) {
-                        if (name != null) {
-                            usernameF.setText(name);
-                        }
+                        //if (name != null) {
+                          String userName=username.substring(0,username.length()-17);
+                            usernameF.setText(userName);
+                       // }
                         Bundle params = new Bundle();
                         params.putBoolean("redirect", false);
                         new GraphRequest(AccessToken.getCurrentAccessToken(), "me/picture?width=1000&height=1000", params, HttpMethod.GET, new GraphRequest.Callback() {
