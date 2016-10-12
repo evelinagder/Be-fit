@@ -463,6 +463,8 @@ public class TabbedActivity extends AppCompatActivity{
         intent.putExtra("isBasic",isBasic);
         startActivity(intent);
     }
+
+
     public void showFragment(Bundle bundle) {
         if (bundle != null) {
             CustomChallengeNameDialogFragment fragment = new CustomChallengeNameDialogFragment();

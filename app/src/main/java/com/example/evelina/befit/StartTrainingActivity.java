@@ -27,7 +27,7 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
     private boolean isBasic;
     Toolbar toolbar;
     NetworkStateChangedReceiver receiver ;
-    //TODO here the receiver
+    private static final int REQUEST_WORKOUT_COMPLETE = 44;
 
 
     @Override
@@ -84,12 +84,21 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         intent.putExtra("challenge", challengeName);
         intent.putExtra("username", username);
         intent.putExtra("isBasic", isBasic);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_WORKOUT_COMPLETE);
     }
 
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==REQUEST_WORKOUT_COMPLETE){
+            if(resultCode==REQUEST_WORKOUT_COMPLETE){
+                finish();
+            }
+        }
     }
 }

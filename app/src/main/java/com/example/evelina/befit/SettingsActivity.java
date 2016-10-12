@@ -42,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         username=getIntent().getStringExtra("loggedUser");
 
-
         mRecyclerView = (RecyclerView) findViewById(R.id.settings_recycler_view);
         toolbar = (Toolbar) findViewById(R.id.app_bar_settings);
         setSupportActionBar(toolbar);

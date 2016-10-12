@@ -55,9 +55,11 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
                     Toast.makeText(ExerciseInventoryActivity.this,"You cannot add a challenge without exercises!",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(ExerciseInventoryActivity.this, "Adding finished", Toast.LENGTH_SHORT).show();
+                    setResult(55);
                     Intent intent = new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
                     intent.putExtra("username", username);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
