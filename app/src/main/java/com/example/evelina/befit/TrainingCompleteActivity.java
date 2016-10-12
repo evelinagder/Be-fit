@@ -38,87 +38,87 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     String challengeNameString;
     Challenge challenge;
     TextView heading;
-    ShareDialog dialog;
-    CallbackManager callbackManager;
+//    ShareDialog dialog;
+//    CallbackManager callbackManager;
     NetworkStateChangedReceiver receiver;
-    Button myShare;
-    ShareButton share ;
+//    Button myShare;
+//    ShareButton share ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
+       // FacebookSdk.sdkInitialize(getApplicationContext());
+       // callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_training_complete);
         Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
         challengeName= (TextView)findViewById(R.id.congrats_training_name);
         ok= (Button)findViewById(R.id.ok_complete);
-        myShare = (Button) findViewById(R.id.my_share);
-        share = (ShareButton) findViewById(R.id.share_fb);
-        dialog =new ShareDialog(this);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShareOpenGraphObject object =  new ShareOpenGraphObject.Builder()
-                        .putString("og:type", "challenge.challenge")
-                        .putString("og:title", challengeNameString)
-                        .putString("og:updated_time", DbManager.getInstance(TrainingCompleteActivity.this).getUser(username).getCustomChallenges(challengeNameString).getDateOfCompletion())
-                        .build();
-
-                ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
-                        .setActionType("progress.progress")
-                        .putObject("challenge", object)
-                        .build();
-                ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
-                        .setPreviewPropertyName("challenge")
-                        .setAction(action)
-                        .build();
-                ShareDialog.show(TrainingCompleteActivity.this, content);
-            }
-        });
-
-
+      //  myShare = (Button) findViewById(R.id.my_share);
+     //   share = (ShareButton) findViewById(R.id.share_fb);
+//        dialog =new ShareDialog(this);
+//        share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ShareOpenGraphObject object =  new ShareOpenGraphObject.Builder()
+//                        .putString("og:type", "challenge.challenge")
+//                        .putString("og:title", challengeNameString)
+//                        .putString("og:updated_time", DbManager.getInstance(TrainingCompleteActivity.this).getUser(username).getCustomChallenges(challengeNameString).getDateOfCompletion())
+//                        .build();
+//
+//                ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+//                        .setActionType("progress.progress")
+//                        .putObject("challenge", object)
+//                        .build();
+//                ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+//                        .setPreviewPropertyName("challenge")
+//                        .setAction(action)
+//                        .build();
+//                ShareDialog.show(TrainingCompleteActivity.this, content);
+//            }
+//        });
+//
+//
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-        dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
-
-        String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
-        if(sp.equals("facebook")){
-            myShare.setVisibility(View.VISIBLE);
-        }
-
-        myShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ShareDialog.canShow(ShareLinkContent.class)) {
-                    ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setContentTitle("Be Fit")
-                            .setContentDescription("Managed " + challengeNameString+"!" + "here should be the level of the user")
-                            .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
-                            .build();
-
-                    dialog.show(linkContent);
-            }
-
-            }
-        });
+//
+//        dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+//            @Override
+//            public void onSuccess(Sharer.Result result) {
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//
+//            }
+//        });
+//
+//
+//        String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
+//        if(sp.equals("facebook")){
+//            myShare.setVisibility(View.INVISIBLE);
+//        }
+//
+//        myShare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (ShareDialog.canShow(ShareLinkContent.class)) {
+//                    ShareLinkContent linkContent = new ShareLinkContent.Builder()
+//                            .setContentTitle("Be Fit")
+//                            .setContentDescription("Managed " + challengeNameString+"!" + "here should be the level of the user")
+//                            .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+//                            .build();
+//
+//                    dialog.show(linkContent);
+//            }
+//
+//            }
+//        });
         challengeNameString=getIntent().getStringExtra("challengeName");
         challengeName.setText(challengeNameString);
         heading= (TextView)findViewById(R.id.headingC) ;
@@ -162,6 +162,6 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+       // callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

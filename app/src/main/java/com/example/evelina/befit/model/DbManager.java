@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -90,7 +91,6 @@ public class DbManager extends SQLiteOpenHelper{
         allUsers= new HashMap<String, User>();
         this.context=context;
         currentUser= context.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
-        loadUsers();
 
 
     }
@@ -264,6 +264,7 @@ public class DbManager extends SQLiteOpenHelper{
                 ContentValues cv = new ContentValues();
                 cv.put(EXERCISE_NAME, exercise.getName());
                 cv.put(EXERCISE_CHALLENGE_UID, challenge.getChallengeID());
+                cv.put(EXERCISE_POINTS,exercise.getPoints());
                 cv.put(EXERCISE_SERIES, exercise.getSeries());
                 cv.put(EXERCISE_REPEATS, exercise.getRepeats());
                 db.insert(EXERCISE_TABLE, null, cv);
@@ -434,6 +435,8 @@ public class DbManager extends SQLiteOpenHelper{
         am.cancel(pendingIntent);
 
     }
+
+
 
 }
 

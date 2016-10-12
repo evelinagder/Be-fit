@@ -1,19 +1,17 @@
 package com.example.evelina.befit;
 
-import android.app.FragmentManager;import android.content.Intent;
+
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +26,10 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     private YouTubePlayerView mYouTubeView;
-    private FloatingActionButton mFab;
     private Button mCompletedButton;
     private NetworkStateChangedReceiver receiver;
     private Challenge mCurrentChallenge;
@@ -89,7 +84,14 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         mCurrentExercise = 0;
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
+
         mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
+
+        int points=listExercises.get(mCurrentExercise).getPoints();
+        Log.e("POINTS PLAY",points+""+listExercises.get(mCurrentExercise).getName());
+        DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,listExercises.get(mCurrentExercise).getPoints());
+
+
 
 
         mCompletedButton.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +103,11 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
                     mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
                     mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
-                    int updatePoints=user.getPoints()+listExercises.get(mCurrentExercise).getPoints();
+                    int updatePoints=listExercises.get(mCurrentExercise).getPoints();
                     DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,updatePoints);
-
                     Log.e("TAG"," v momenta v usera ima "+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints()+" tochki");
                     mCurrentExercise++;
                 }else{
-                   // DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,user.getPoints()+listExercises.get(mCurrentExercise-1).getPoints());
                     Intent intent= new Intent(PlayExerciseActivity.this, TrainingCompleteActivity.class);
                     Log.e("TAG"," trenirovkata svurshi , usera ima"+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints());
                     intent.putExtra("challengeName",nameChallenge);
@@ -121,6 +121,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         });
 
     }
+
+
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {

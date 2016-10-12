@@ -75,15 +75,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) { }
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) { }
         maintainLogin(this);
+        dbManager = DbManager.getInstance(LoginActivity.this);
+        dbManager.loadUsers();
         login = (Button) findViewById(R.id.button_LoginL);
         register = (Button) findViewById(R.id.buttonRegisterL);
         username = (EditText) findViewById(R.id.editText_emailL);
@@ -172,8 +174,6 @@ public class LoginActivity extends AppCompatActivity {
                     String password = profile.getId();
                     String username = profile.getFirstName() + " " + profile.getLastName() + password;
                     if(!DbManager.getInstance(LoginActivity.this).existsUser(username)) {
-
-
                         Bundle params = new Bundle();
                         params.putString("fields", "email,gender");
                         final User user = new User(username, password, "none", "", 0, 0, 0);
@@ -222,10 +222,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

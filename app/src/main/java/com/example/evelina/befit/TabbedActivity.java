@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -95,7 +96,7 @@ public class TabbedActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_tabbed);
-        DbManager.getInstance(TabbedActivity.this);
+       // DbManager.getInstance(TabbedActivity.this).loadUsers();
         receiver=new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -131,6 +132,12 @@ public class TabbedActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DbManager.getInstance(this).loadUsers();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -248,6 +255,8 @@ public class TabbedActivity extends AppCompatActivity{
 
             }else{
                 View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+
                 profilePicture=(CircleImageView) rootView.findViewById(R.id.picture_profile);
                 TextView numberPointsTV=(TextView) rootView.findViewById(R.id.number_points_profile_TV);
                 TextView numberTrainingsTV=(TextView) rootView.findViewById(R.id.number_trainings_profile_TV);
@@ -291,33 +300,35 @@ public class TabbedActivity extends AppCompatActivity{
                 metersTV.setText(user.getHeight()+"");
 
                 usernameF.setTypeface(typeface);
+                if(isNetworkAvailable(getActivity())) {
 
-                if(loginState.equals("facebook")&&user.getProfilePic()==null){
-                    if(name!=null){
-                        usernameF.setText(name);
-                    }
-                    Bundle params = new Bundle();
-                    params.putBoolean("redirect", false);
-                    new GraphRequest(AccessToken.getCurrentAccessToken(),"me/picture?width=1000&height=1000",params,HttpMethod.GET,new  GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            if(response!=null){
-                                String picUrlString = null;
-                                try {
-                                    picUrlString = (String) response.getJSONObject().getJSONObject("data").get("url");
-                                    MyAsyncTask showPic = new MyAsyncTask();
-                                    showPic.execute(picUrlString);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
 
-                            }
+                    if (loginState.equals("facebook") && user.getProfilePic() == null) {
+                        if (name != null) {
+                            usernameF.setText(name);
                         }
-                    }).executeAsync();
-                }else{
-                    profilePicture.setImageURI(user.getProfilePic());
-                    usernameF.setText(username);
-                }
+                        Bundle params = new Bundle();
+                        params.putBoolean("redirect", false);
+                        new GraphRequest(AccessToken.getCurrentAccessToken(), "me/picture?width=1000&height=1000", params, HttpMethod.GET, new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                                if (response != null) {
+                                    String picUrlString = null;
+                                    try {
+                                        picUrlString = (String) response.getJSONObject().getJSONObject("data").get("url");
+                                        MyAsyncTask showPic = new MyAsyncTask();
+                                        showPic.execute(picUrlString);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
+                                }
+                            }
+                        }).executeAsync();
+                    } else {
+                        profilePicture.setImageURI(user.getProfilePic());
+                        usernameF.setText(username);
+                    }
+                }
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -360,6 +371,13 @@ public class TabbedActivity extends AppCompatActivity{
 
                 return rootView;
             }
+        }
+        public static boolean isNetworkAvailable(Context context) {
+            ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if(conMan.getActiveNetworkInfo() != null && conMan.getActiveNetworkInfo().isConnected())
+                return true;
+            else
+                return false;
         }
 
         class MyAsyncTask extends AsyncTask<String,Void,Bitmap>{
