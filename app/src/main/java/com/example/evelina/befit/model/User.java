@@ -162,6 +162,7 @@ public class User implements Serializable{
     public boolean noCompletedChallenges(){
         return achievedChallenges.isEmpty();
     }
+
    public ArrayList<Challenge> getCompletedTrainings(){
        ArrayList<Challenge>list=new ArrayList<>();
                list.addAll(achievedChallenges.values());
