@@ -17,7 +17,7 @@ public class Challenge {
     private int timesCompleted;
     private String dateOfCompletion;
     private String achieved;
-    private int challengeID;
+    private long challengeID;
     ArrayList<Exercise> exercises;
 
     public Challenge(String name, int timesCompleted, String dateOfCompletion,String achieved) {
@@ -70,11 +70,11 @@ public class Challenge {
 
     }
 
-    public void setChallengeID(int challengeID) {
+    public void setChallengeID(long challengeID) {
         this.challengeID = challengeID;
     }
 
-    public int getChallengeID() {
+    public long getChallengeID() {
         return challengeID;
     }
     public String getDateOfCompletion(){

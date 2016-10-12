@@ -154,7 +154,7 @@ public class DbManager extends SQLiteOpenHelper{
                     + USER_WEIGHT + ", "
                     + USER_HEIGHT + ", "
                     + USER_PICTURE + ", "
-                    + USER_POINTS + " FROM " + USERS_TABLE + " WHERE " + USER_USERNAME + "= ?", new String[]{currentUser});
+                    + USER_POINTS + " FROM " + USERS_TABLE ,null);
             while (cursor.moveToNext()) {
                 int userId = cursor.getInt(cursor.getColumnIndex(USER_UID));
                 String username = cursor.getString(cursor.getColumnIndex(USER_USERNAME));
@@ -178,7 +178,8 @@ public class DbManager extends SQLiteOpenHelper{
                         + CHALLENGE_ACHIEVED + ", "
                         + CHALLENGE_DATE + " FROM " + CHALLENGES_TABLE + " WHERE " + CHALLENGE_USER_UID + "= ?", new String[]{String.valueOf(userId)});
                 while (cursorChallenge.moveToNext()) {
-                    int challengeId = cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_UID));
+                    long challengeId = cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_UID));
+                    Log.e("Ch ID Ch after DB:",challengeId+"");
                     String nameC = cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_NAME));
                     int times = cursorChallenge.getInt(cursorChallenge.getColumnIndex(CHALLENGE_TIMES));
                     String date = cursorChallenge.getString(cursorChallenge.getColumnIndex(CHALLENGE_DATE));
@@ -192,6 +193,7 @@ public class DbManager extends SQLiteOpenHelper{
                             + EXERCISE_REPEATS + ", "
                             + EXERCISE_INSTRUCTIONS + " FROM " + EXERCISE_TABLE + " WHERE " + EXERCISE_CHALLENGE_UID + "= ?", new String[]{String.valueOf(challengeId)});
                     while (cursorExercise.moveToNext()) {
+                        Log.e("EXRCISE AFT DB",challenge.getName());
                         String name = cursorExercise.getString(cursorExercise.getColumnIndex(EXERCISE_NAME));
                         int points = cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_POINTS));
                         int series = cursorExercise.getInt(cursorExercise.getColumnIndex(EXERCISE_SERIES));
@@ -200,7 +202,7 @@ public class DbManager extends SQLiteOpenHelper{
                         String video = TrainingManager.getInstance().getExercise(name).getVideo();
                         Exercise exercise = new Exercise(name, points, series, repeats, instructions, video);
                         challenge.addExercise(exercise);
-                        Log.e("CURSOR CH","add exercose challenge");
+                        Log.e("EXRCISE AFT DB ",exercise.getName());
                     }
                     if (challenge != null && achieved != null) {
                         Log.e("Challenge-if not null", challenge.getName());
@@ -246,13 +248,18 @@ public class DbManager extends SQLiteOpenHelper{
             cv.put(CHALLENGE_NAME, challenge.getName());
             cv.put(CHALLENGE_USER_UID, user.getUserDBId());
             cv.put(CHALLENGE_ACHIEVED, "no");
-            db.insert(CHALLENGES_TABLE, null, cv);
-        user.addCustomChallenge(new Challenge(challenge.getName(),0,"","no"));
+        long id =db.insert(CHALLENGES_TABLE, null, cv);
+        challenge.setChallengeID(id);
+        Log.e("Ch ID addCh:",challenge.getChallengeID()+"");
+        user.addCustomChallenge(challenge);
+
     }
     public void addExercisesToCustomChallenge(String username,String challengeName, Exercise exercise){
         Log.e("Exercise add to DB",challengeName+" -"+exercise.getName());
+
                 User user=getUser(username);
                 Challenge challenge= user.getCustomChallenges(challengeName);
+                 Log.e("Ch ID addEx:",challenge.getName()+" "+challenge.getChallengeID()+"");
                 SQLiteDatabase db = getReadableDatabase();
                 ContentValues cv = new ContentValues();
                 cv.put(EXERCISE_NAME, exercise.getName());
