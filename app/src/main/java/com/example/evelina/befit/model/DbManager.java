@@ -277,6 +277,21 @@ public class DbManager extends SQLiteOpenHelper{
                 db.insert(EXERCISE_TABLE, null, cv);
                  challenge.addExercise(exercise);
     }
+    public void addExercisesToBasicChallenge(String username,String challengeName, Exercise exercise){
+        Log.e("Exercise add to DB",challengeName+" -"+exercise.getName());
+        User user=getUser(username);
+        Challenge challenge= user.getAcheivedChallenge(challengeName);
+        Log.e("Ch ID addEx B:",challenge.getName()+" "+challenge.getChallengeID()+"");
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(EXERCISE_NAME, exercise.getName());
+        cv.put(EXERCISE_CHALLENGE_UID, challenge.getChallengeID());
+        cv.put(EXERCISE_POINTS,exercise.getPoints());
+        cv.put(EXERCISE_SERIES, exercise.getSeries());
+        cv.put(EXERCISE_REPEATS, exercise.getRepeats());
+        db.insert(EXERCISE_TABLE, null, cv);
+
+    }
     public void updateProfilePicture(String username,Uri picture){
         //adds picture to user and to db
         User user= allUsers.get(username);

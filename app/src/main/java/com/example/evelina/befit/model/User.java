@@ -143,6 +143,10 @@ public class User implements Serializable{
         Challenge c = customChallenges.get(name);
         return c;
     }
+    public Challenge getAcheivedChallenge(String name) {
+        Challenge c = achievedChallenges.get(name);
+        return c;
+    }
 
     public void setUserDBId(int userDBId) {
         this.userDBId = userDBId;

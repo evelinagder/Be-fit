@@ -141,6 +141,9 @@ public class TrainingCompleteActivity extends AppCompatActivity {
         if(isBasic){
             Log.e("BASIC","basic in db TCA");
             DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedBasicChallenges(user,challenge,date);
+            for(int i =0; i<challenge.getExercises().size();i++){
+                DbManager.getInstance(TrainingCompleteActivity.this).addExercisesToBasicChallenge(username,challenge.getName(),challenge.getExercises().get(i));
+            }
         }
         else {
             DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedChallenges(user, challenge, date);
