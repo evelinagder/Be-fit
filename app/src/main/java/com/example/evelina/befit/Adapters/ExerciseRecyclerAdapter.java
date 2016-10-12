@@ -91,6 +91,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                 Exercise exercise= TrainingManager.getInstance().getExercise( exercises.get(position).getName());
                 exercise.setRepeats(repeatsH);
                 exercise.setSeries(setsH);
+                Log.e("PPOINTS ERA",exercise.getPoints()+"");
                 Challenge challenge=user.getCustomChallenges(challengeName);
                 DbManager.getInstance(activity).addExercisesToCustomChallenge(username,challenge.getName(),exercise);
                 holder.dataSetRow.setVisibility(View.GONE);

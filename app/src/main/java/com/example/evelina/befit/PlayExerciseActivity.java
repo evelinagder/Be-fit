@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -79,6 +80,9 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
         pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
+        int points=listExercises.get(mCurrentExercise).getPoints();
+        Log.e("POINTS PLAY",points+""+listExercises.get(mCurrentExercise).getName());
+        DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,points);
 
 
 
@@ -94,13 +98,14 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         mCompletedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mCurrentExercise <listExercises.size()-1){
+                if(mCurrentExercise <listExercises.size()){
                     player.cueVideo(listExercises.get(mCurrentExercise).getVideo());
                     setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
                     repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
-                    pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
-                    int updatePoints=user.getPoints()+listExercises.get(mCurrentExercise).getPoints();
-                    DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,updatePoints);
+                    int points=listExercises.get(mCurrentExercise).getPoints();
+                    pointsNum.setText(points+"");
+                    Log.e("POINTS PLAY",points+""+listExercises.get(mCurrentExercise).getName());
+                    DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,points);
                     mCurrentExercise++;
                 }else{
 
