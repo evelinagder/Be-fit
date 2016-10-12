@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -84,34 +85,31 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         }else {
             mCurrentChallenge = DbManager.getInstance(this).getUser(usern).getCustomChallenges(nameChallenge);
         }
-        listExercises = (ArrayList<Exercise>) mCurrentChallenge.getExercises();
+        listExercises = mCurrentChallenge.getExercises();
         mCurrentExercise = 0;
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
         mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
 
 
-
-
-
-
-
         mCompletedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mCurrentExercise <listExercises.size()-1){
+                if(mCurrentExercise <listExercises.size()){
                     player.cueVideo(listExercises.get(mCurrentExercise).getVideo());
                     setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
                     repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
-                    //pointsNum.setText(listExercises.get(mCurrentExercise).getPoints()+"");
+                    mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
                     mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
                     int updatePoints=user.getPoints()+listExercises.get(mCurrentExercise).getPoints();
                     DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,updatePoints);
+
+                    Log.e("TAG"," v momenta v usera ima "+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints()+" tochki");
                     mCurrentExercise++;
                 }else{
-
-
+                   // DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,user.getPoints()+listExercises.get(mCurrentExercise-1).getPoints());
                     Intent intent= new Intent(PlayExerciseActivity.this, TrainingCompleteActivity.class);
+                    Log.e("TAG"," trenirovkata svurshi , usera ima"+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints());
                     intent.putExtra("challengeName",nameChallenge);
                     intent.putExtra("username",usern);
                     intent.putExtra("isBasic",isBasic);

@@ -45,6 +45,7 @@ public void onClick(View v) {
     if(customChallenges.get(position).toString() != null) {
         Toast.makeText(activity, "Training selected: " + customChallenges.get(position).toString(), Toast.LENGTH_SHORT).show();
         activity.ChallengeSelected(customChallenges.get(position),false);
+
     }
     else{
         Toast.makeText(activity, "You don`t have any custom trainings!", Toast.LENGTH_SHORT).show();

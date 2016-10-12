@@ -222,7 +222,7 @@ public class TabbedActivity extends AppCompatActivity{
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 User user=DbManager.getInstance(getActivity()).getUser(username);
 
-                Log.e("USER in Tabbed 2 ",username+""+user.getCustomChallengesName().size()+"..");
+                Log.e("USER in Tabbed 2 ",username+" and has  ===== "+user.getCustomChallengesName().size()+" custom trainings");
 
                 View root = inflater.inflate(R.layout.fragment_custom_training, container, false);
                 RecyclerView custom = (RecyclerView) root.findViewById(R.id.customTraining_view);
@@ -231,7 +231,7 @@ public class TabbedActivity extends AppCompatActivity{
                     List<String> noNames = Arrays.asList("Please add your custom Training");
                     custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), noNames,false));
                 } else {
-                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance((TabbedActivity) getActivity()).getUser(username).getCustomChallengesName(),false));
+                    custom.setAdapter(new TrainingRecyclerAdapter((TabbedActivity) getActivity(), DbManager.getInstance(getActivity()).getUser(username).getCustomChallengesName(),false));
                 }
                 custom.setLayoutManager(new LinearLayoutManager(getActivity()));
                 add.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +240,6 @@ public class TabbedActivity extends AppCompatActivity{
                         Bundle b=new Bundle();
                         b.putString("username",username);
                         ((TabbedActivity) getActivity()).showFragment(b);
-
 
                     }
                 });

@@ -56,5 +56,9 @@ public class Exercise {
     public int getPoints() {
         return points;
     }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }
 
