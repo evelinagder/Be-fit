@@ -274,6 +274,7 @@ public class DbManager extends SQLiteOpenHelper{
                 cv.put(EXERCISE_POINTS,exercise.getPoints());
                 cv.put(EXERCISE_SERIES, exercise.getSeries());
                 cv.put(EXERCISE_REPEATS, exercise.getRepeats());
+                cv.put(EXERCISE_INSTRUCTIONS,exercise.getInstructions());
                 db.insert(EXERCISE_TABLE, null, cv);
                  challenge.addExercise(exercise);
     }

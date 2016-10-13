@@ -75,14 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo("com.example.evelina.befit", PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) { }
         maintainLogin(this);
         dbManager = DbManager.getInstance(LoginActivity.this);
         dbManager.loadUsers();
@@ -133,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("currentUser", usernameString);
                 editor.putString("loggedWith","registration");
                 editor.commit();
-                Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_LONG).show();
                 maintainLogin(LoginActivity.this);
                 Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                 intent.putExtra("username", username.getText().toString());
@@ -250,7 +241,6 @@ public class LoginActivity extends AppCompatActivity {
         boolean logged_in = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getBoolean("logged_in", false);
 
         if (logged_in) {
-            Toast.makeText(LoginActivity.this, "Going to Home", Toast.LENGTH_SHORT).show();
             String username = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "No users");
             Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

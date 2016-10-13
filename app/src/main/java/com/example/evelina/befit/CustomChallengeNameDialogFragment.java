@@ -44,7 +44,7 @@ public class CustomChallengeNameDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_custom_challenge_name_dialog, container, false);
         TextView heading= (TextView)view.findViewById(R.id.heading_name);
         Typeface typeface =  Typeface.createFromAsset(getActivity().getAssets(),  "RockoUltraFLF.ttf");
-        heading.setTypeface(typeface);
+       // heading.setTypeface(typeface);
         challengeName=(EditText)view.findViewById(R.id.ET_challenge_name);
         challengeName.setImeOptions(EditorInfo.IME_ACTION_DONE);
         ok=(Button) view.findViewById(R.id.ok_button_Ch_name);

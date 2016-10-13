@@ -6,7 +6,7 @@
 
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="280dp"
+       android:layout_height="wrap_content"
        android:orientation="vertical">
        <TextView
            android:layout_width="match_parent"
@@ -14,10 +14,12 @@
            android:text="Add name to your Training:"
            android:textStyle="bold"
            android:gravity="center"
+           android:layout_marginLeft="16dp"
+           android:layout_marginRight="16dp"
            android:id="@+id/heading_name"
            android:textColor="@color/colorPrimaryDark"
-           android:textSize="40dp"
-           android:layout_weight="0.50" />
+           android:textSize="20dp"
+           android:layout_weight="1" />
        <EditText
            android:layout_width="match_parent"
            android:layout_margin="16dp"
@@ -38,7 +40,7 @@
            <Button
                android:layout_width="0dp"
                android:layout_weight="1"
-               android:textColor="@color/colorAccent"
+               android:textColor="@color/colorPrimary"
                android:layout_height="58dp"
                android:text="ok"
                android:id="@+id/ok_button_Ch_name"
@@ -50,7 +52,7 @@
                android:layout_weight="1"
                android:layout_height="match_parent"
                android:text="Cancel"
-               android:textColor="@color/colorAccent"
+               android:textColor="@color/colorPrimary"
                android:background="@null"
                android:id="@+id/cancel_buttonCh_name"
                android:textAllCaps="true"

@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -28,6 +29,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,6 +139,26 @@ public class TabbedActivity extends AppCompatActivity{
         super.onStart();
         DbManager.getInstance(this).loadUsers();
 
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     @Override
@@ -304,10 +326,13 @@ public class TabbedActivity extends AppCompatActivity{
 
 
                     if (loginState.equals("facebook") && user.getProfilePic() == null) {
-                        //if (name != null) {
-                          String userName=username.substring(0,username.length()-17);
-                            usernameF.setText(userName);
-                       // }
+                        StringBuilder sb = new StringBuilder();
+                        for(int  i = 0 ;i<username.length();i++){
+                            if(!(username.charAt(i)>=48&&username.charAt(i)<=57)){
+                                sb.append(username.charAt(i));
+                            }
+                        }
+                            usernameF.setText(sb.toString());
                         Bundle params = new Bundle();
                         params.putBoolean("redirect", false);
                         new GraphRequest(AccessToken.getCurrentAccessToken(), "me/picture?width=1000&height=1000", params, HttpMethod.GET, new GraphRequest.Callback() {
@@ -430,7 +455,6 @@ public class TabbedActivity extends AppCompatActivity{
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
         }
-
         @Override
         public int getCount() {
             // Show 3 total pages.

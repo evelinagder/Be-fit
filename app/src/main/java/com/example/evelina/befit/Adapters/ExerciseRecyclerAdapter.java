@@ -92,7 +92,6 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                 exercise.setRepeats(repeatsH);
                 exercise.setSeries(setsH);
 
-
                 Log.e("PPOINTS ERA",exercise.getPoints()+"");
 
                 Challenge challenge=user.getCustomChallenges(challengeName);

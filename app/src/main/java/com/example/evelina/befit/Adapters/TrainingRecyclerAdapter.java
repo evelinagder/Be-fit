@@ -54,7 +54,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
             @Override
             public void onClick(View v) {
                 if(!challenges.get(position).equals("Please add your custom Training")) {
-                    Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
                     activity.ChallengeSelected(challenges.get(position), isBasic);
                 }
                 else{

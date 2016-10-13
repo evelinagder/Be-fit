@@ -25,6 +25,10 @@ public class Exercise {
 
     }
 
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
     public String getName() {
         return name;
     }

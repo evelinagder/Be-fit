@@ -85,7 +85,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         mCurrentExercise = 0;
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
-
+        mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
         mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
 
         int points=listExercises.get(mCurrentExercise).getPoints();

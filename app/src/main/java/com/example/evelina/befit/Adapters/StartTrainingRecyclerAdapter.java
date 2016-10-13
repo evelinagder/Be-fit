@@ -1,5 +1,6 @@
 package com.example.evelina.befit.adapters;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ public class StartTrainingRecyclerAdapter extends RecyclerView.Adapter<StartTrai
 
     private StartTrainingActivity activity;
     private List<String> exercises;
+    private Typeface typeface;
 
 
     public StartTrainingRecyclerAdapter(StartTrainingActivity activity, List<String> exercisesList) {
         exercises = exercisesList;
         this.activity = activity;
+        this.typeface =  Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
     }
 
     @Override
@@ -38,7 +41,7 @@ public class StartTrainingRecyclerAdapter extends RecyclerView.Adapter<StartTrai
     @Override
     public void onBindViewHolder(StartVH holder, final int position) {
         holder.exercises.setText(exercises.get(position).toString());
-
+        holder.exercises.setTypeface(typeface);
     }
 
     @Override
