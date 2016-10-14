@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AnalysisExercises extends AppCompatActivity {
     private Toolbar toolbar;
@@ -82,11 +83,12 @@ public class AnalysisExercises extends AppCompatActivity {
         for (int i = 0 ;i<challenges.size();i++){
             helper = challenges.get(i).getExercises();
             exercisesInChallenge.put(challenges.get(i),helper);
-            Log.e("TAG"," ZA trenirovka  = "+challenges.get(i).getName()+" ima "+ helper.size() + " broq uprajneniq");
-            for(Exercise exercise :helper){
-                doneTimes.put(exercise,(doneTimes.get(exercise)+(exercise.getRepeats()*exercise.getSeries())));
-                Log.e("TAG","za uprajnenie "+exercise.getName()+ " ima "+exercise.getSeries()*exercise.getRepeats()+ "puti napraveno ");
-            }
+                for(Exercise exercise :helper){
+                    doneTimes.put(exercise,(doneTimes.get(exercise)+(exercise.getRepeats()*exercise.getSeries())));
+                }
+
+
+
         }
         adapter = new AllExerciseProgressAdapter(this,exercises,doneTimes,DbManager.getInstance(this).getUser(userName));
         mRecyclerView.setAdapter(adapter);

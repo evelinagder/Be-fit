@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -31,22 +32,18 @@ import static android.content.Context.ALARM_SERVICE;
 public class NotificationsFragment extends DialogFragment {
 
     private CheckBox mRepeatCheckbox;
-    private CheckBox mTurnOffCheckbox;
-    private RadioButton mMonday;
-    private RadioButton mTuesday;
-    private RadioButton mWednesday;
-    private RadioButton mThursday;
-    private RadioButton mFriday;
-    private RadioButton mSaturday;
-    private RadioButton mSunday;
+    private Button mTurnOff;
+    private CheckBox mMonday;
+    private CheckBox mTuesday;
+    private CheckBox mWednesday;
+    private CheckBox mThursday;
+    private CheckBox mFriday;
+    private CheckBox mSaturday;
+    private CheckBox mSunday;
     private Button mOk;
     private SettingsActivity activity;
 
     Bundle data;
-    int weekDay;
-
-    private boolean isWeeklyChecked;
-
 
 
     public NotificationsFragment() {
@@ -64,12 +61,13 @@ public class NotificationsFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.fragment_notifications, container, false);
-        getDialog().setTitle("Set app notifications");
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        //getDialog().setTitle("Set app notifications"); REMOVED IT BECAUSE IT COULD`T FIT>>>>>>
         data = new Bundle();
 
         mRepeatCheckbox = (CheckBox) view.findViewById(R.id.repeat_checkbox);
-        mTurnOffCheckbox = (CheckBox) view.findViewById(R.id.turn_off_checkbox);
-        mMonday = (RadioButton) view.findViewById(R.id.monday);
+        mTurnOff = (Button) view.findViewById(R.id.turn_off_button);
+        mMonday = (CheckBox) view.findViewById(R.id.monday);
         mMonday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -79,16 +77,17 @@ public class NotificationsFragment extends DialogFragment {
                 }
             }
         });
-        mTuesday = (RadioButton) view.findViewById(R.id.tuesday);
+        mTuesday = (CheckBox) view.findViewById(R.id.tuesday);
         mTuesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     data.putInt("tuesday",Calendar.TUESDAY);
                 }
+
             }
         });
-        mWednesday = (RadioButton) view.findViewById(R.id.wednesday);
+        mWednesday = (CheckBox) view.findViewById(R.id.wednesday);
         mWednesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -97,7 +96,7 @@ public class NotificationsFragment extends DialogFragment {
                 }
             }
         });
-        mThursday = (RadioButton) view.findViewById(R.id.thursday);
+        mThursday = (CheckBox) view.findViewById(R.id.thursday);
         mThursday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -106,7 +105,7 @@ public class NotificationsFragment extends DialogFragment {
                 }
             }
         });
-        mFriday = (RadioButton) view.findViewById(R.id.friday);
+        mFriday = (CheckBox) view.findViewById(R.id.friday);
         mFriday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -115,7 +114,7 @@ public class NotificationsFragment extends DialogFragment {
                 }
             }
         });
-        mSaturday = (RadioButton) view.findViewById(R.id.saturday);
+        mSaturday = (CheckBox) view.findViewById(R.id.saturday);
         mSaturday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -124,7 +123,7 @@ public class NotificationsFragment extends DialogFragment {
                 }
             }
         });
-        mSunday = (RadioButton) view.findViewById(R.id.sunday);
+        mSunday = (CheckBox) view.findViewById(R.id.sunday);
         mSunday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -141,53 +140,39 @@ public class NotificationsFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //here we pass data to the activity and show another dialog fragment for time
-                if(!mTurnOffCheckbox.isChecked()){
-                  //  TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
-                    //activity.getFragmentManager().popBackStackImmediate();
-
-                    if(mRepeatCheckbox.isChecked()){
-                        data.putBoolean("isRepeating",true);
-                    }else {
-                        data.putBoolean("isRepeating",false);
-                    }
-                    dismiss();
-
-                 activity.showFragment(data);
-                  //  activity.showTime();
-                }else{
-                    dismiss();
+                if(mRepeatCheckbox.isChecked()){
+                    data.putBoolean("isRepeating",true);
+                }else {
+                    data.putBoolean("isRepeating",false);
                 }
+                dismiss();
+                if(!mMonday.isChecked() && !mTuesday.isChecked() && !mWednesday.isChecked() && !mThursday.isChecked()&& !mFriday.isChecked() && !mSaturday.isChecked() && !mSunday.isChecked()){
+                    Toast.makeText(getActivity(),"Please choose a weekday!",Toast.LENGTH_SHORT).show();
+                }else {
+                    activity.showFragment(data);
+                }
+
             }
         });
 
-//        mRepeatCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if(b){
-//
-//                    data.putBoolean("isRepeating",true);
-//                }else{
-//
-//
-//                    //set repeating for every week until the user turns it off
-//
-//                }
-//            }
-//        });
-        mTurnOffCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mTurnOff.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    //turrn off the alarm
-                   DbManager.getInstance(getContext()).cancelAlarms(getContext());
-
-                }else{
-                    //triger the alarm
-                    Toast.makeText(getContext(),"Please set new notifications!",Toast.LENGTH_SHORT).show();
-
-                }
+            public void onClick(View view) {
+                mMonday.setChecked(false);
+                mTuesday.setChecked(false);
+                mWednesday.setChecked(false);
+                mThursday.setChecked(false);
+                mFriday.setChecked(false);
+                mSaturday.setChecked(false);
+                mSunday.setChecked(false);
+                mRepeatCheckbox.setChecked(false);
+                DbManager.getInstance(getContext()).cancelAlarms(getContext());
+                Toast.makeText(getContext(),"All notifications are deleted!",Toast.LENGTH_SHORT).show();
+                dismiss();
             }
-        });
+        } );
+
 
         return view;
     }

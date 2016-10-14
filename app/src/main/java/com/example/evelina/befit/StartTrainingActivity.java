@@ -43,7 +43,7 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(challengeName);
+        toolbar.setTitle(challengeName+" exercises");
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

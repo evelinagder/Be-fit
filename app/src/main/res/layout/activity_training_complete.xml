@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="55sp"
+            android:textSize="45sp"
             android:id="@+id/headingC"
             android:gravity="center"
             android:textColor="@android:color/white"
@@ -49,12 +49,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:layout_marginTop="16dp"
             android:textSize="20sp"
            android:id="@+id/congrats_training_name"
             android:textColor="@android:color/white"
             android:gravity="center"
             android:text=" "/>
         <Button
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OK"
@@ -63,20 +65,7 @@
             android:background="@drawable/rectangle_green"/>
 
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_marginTop="1dp"
-            android:text="share"
-            android:visibility="invisible"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rectangle_green"
-            android:id="@+id/my_share"
-            android:layout_height="wrap_content" />
-<com.facebook.share.widget.ShareButton
-    android:layout_width="match_parent"
-    android:visibility="invisible"
-    android:id="@+id/share_fb"
-    android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </LinearLayout>

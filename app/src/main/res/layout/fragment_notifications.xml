@@ -10,43 +10,43 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Monday"
             android:layout_margin="12dp"
             android:id="@+id/monday"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Tuesday"
             android:layout_margin="12dp"
             android:id="@+id/tuesday"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Wednesday"
             android:layout_margin="12dp"
             android:id="@+id/wednesday"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Thursday"
             android:id="@+id/thursday"
             android:layout_margin="12dp"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Friday"
             android:layout_margin="12dp"
             android:id="@+id/friday"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:layout_margin="12dp"
             android:text="Saturday"
             android:id="@+id/saturday"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:text="Sunday"
             android:layout_margin="12dp"
@@ -65,11 +65,13 @@
                 android:id="@+id/repeat_checkbox"
                 android:layout_height="wrap_content"
                 android:text="Repeat weekly"/>
-            <CheckBox
+            <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_margin="16dp"
-                android:id="@+id/turn_off_checkbox"
+                android:id="@+id/turn_off_button"
+                android:textColor="@color/colorPrimary"
+                android:background="@null"
                 android:layout_height="wrap_content"
                 android:text="Turn off"/>
         </LinearLayout>

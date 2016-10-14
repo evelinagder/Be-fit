@@ -64,5 +64,21 @@ public class Exercise {
     public void setPoints(int points) {
         this.points = points;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Exercise exercise = (Exercise) o;
+
+        return name.equals(exercise.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
 

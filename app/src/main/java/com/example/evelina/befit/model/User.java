@@ -1,5 +1,6 @@
 package com.example.evelina.befit.model;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -132,7 +133,7 @@ public class User implements Serializable{
         if(customChallenges.isEmpty()){
             return false;
         }
-            return true;
+        return true;
     }
     public void addAlarmn(Alarm alarm){
         if(alarm != null){
@@ -158,18 +159,29 @@ public class User implements Serializable{
     public int getCompletedTrainingsNum(){
         return achievedChallenges.size();
     }
-   public List getCompletedTrainingsNames(){
-       List<String> list=  new ArrayList<>() ;
-       list.addAll( achievedChallenges.keySet());
-       return list;
-    }
-    public boolean noCompletedChallenges(){
-        return achievedChallenges.isEmpty();
+    public List getCompletedTrainingsNames(){
+        List<String> list=  new ArrayList<>() ;
+        list.addAll( achievedChallenges.keySet());
+        return list;
     }
 
-   public ArrayList<Challenge> getCompletedTrainings(){
-       ArrayList<Challenge>list=new ArrayList<>();
-               list.addAll(achievedChallenges.values());
-       return list;
+    public ArrayList<Challenge> getCompletedTrainings(){
+        ArrayList<Challenge>list=new ArrayList<>();
+        list.addAll(achievedChallenges.values());
+        return list;
+    }
+    public void cleanEmptyChallenge(Context context){
+        String  removeName= null;
+        ArrayList<Challenge> list=  new ArrayList<>() ;
+        list.addAll( customChallenges.values());
+        for(int i =0;i<list.size();i++) {
+            if (list.get(i).getExercises().size() == 0) {
+                removeName=list.get(i).getName();
+                customChallenges.remove(removeName);
+                Log.e("remove",removeName);
+                DbManager.getInstance(context).deleteChallengeFromDB(removeName);
+            }
+        }
+
     }
 }
