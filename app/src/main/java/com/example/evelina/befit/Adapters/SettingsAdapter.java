@@ -1,6 +1,7 @@
 package com.example.evelina.befit.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -59,6 +60,8 @@ public class SettingsAdapter  extends RecyclerView.Adapter<SettingsAdapter.Setti
         holder.settingsTV.setText(setting);
         Typeface typeface =  Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
         holder.settingsTV.setTypeface(typeface);
+        holder.row.setCardBackgroundColor(Color.argb(10,6,214,160));
+        holder.row.setCardElevation(0);
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
