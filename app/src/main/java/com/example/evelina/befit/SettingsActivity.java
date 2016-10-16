@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,6 +22,14 @@ import android.widget.ImageButton;
 import com.example.evelina.befit.adapters.SettingsAdapter;
 import com.example.evelina.befit.model.DbManager;
 import com.example.evelina.befit.model.User;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +44,15 @@ public class SettingsActivity extends AppCompatActivity {
     private  NetworkStateChangedReceiver receiver;
     private static final int REQUEST_CODE_GALLERY=7;
     String username;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_settings);
         username=getIntent().getStringExtra("loggedUser");
-
+        callbackManager = CallbackManager.Factory.create();
         mRecyclerView = (RecyclerView) findViewById(R.id.settings_recycler_view);
         toolbar = (Toolbar) findViewById(R.id.app_bar_settings);
         setSupportActionBar(toolbar);
@@ -79,7 +90,30 @@ public class SettingsActivity extends AppCompatActivity {
         if(sp.equals("registration")){
             profilePic.setVisibility(View.VISIBLE);
         }
-        User user= DbManager.getInstance(this).getUser(username);
+       final User user= DbManager.getInstance(this).getUser(username);
+        if(sp.equals("facebook")){
+            Bundle params = new Bundle();
+            params.putString("fields", "email,gender");
+            new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET, new GraphRequest.Callback() {
+                @Override
+                public void onCompleted(GraphResponse response) {
+                    if (response != null) {
+                        try {
+                            String email = response.getJSONObject().getString("email");
+                            Log.e("TAG", email);
+                            String gender = response.getJSONObject().getString("gender");
+                            Log.e("TAG", gender);
+                            user.setEmail(email);
+                            user.setGender(gender);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).executeAsync();
+        }
+
+
 
         if( user.getProfilePic() != null){
             profilePic.setImageURI(user.getProfilePic());
@@ -87,10 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
-//                SharedPreferences.Editor editor = sp.edit();
-//                editor.putString("loggedWith","registration");
-//                editor.commit();
+
 
                 Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
@@ -103,12 +134,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_CODE_GALLERY && data != null){
             Uri image= data.getData();
             profilePic.setImageURI(image);
             DbManager.getInstance(SettingsActivity.this).updateProfilePicture(username,image);
         }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 

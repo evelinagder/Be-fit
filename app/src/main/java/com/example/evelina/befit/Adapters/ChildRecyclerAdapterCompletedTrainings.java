@@ -36,8 +36,9 @@ public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(NameExerciseVH holder, int position) {
         holder.exercises.setText(namesOfExercises.get(position));
-        holder.exercises.setBackgroundColor(context.getResources().getColor(R.color.lightgreen));
-        holder.exercises.setTextColor(context.getResources().getColor(R.color.green));
+        holder.exercises.setBackgroundColor(Color.argb(10,6,214,160));
+        holder.exercises.setTextColor(Color.WHITE);
+
 
     }
 

@@ -59,7 +59,7 @@ public class TimePickerNotificationFragment extends DialogFragment  {
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), " hour" + c.get(Calendar.HOUR_OF_DAY) +" minutes "+ c.get(Calendar.MINUTE), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), " hour" + c.get(Calendar.HOUR_OF_DAY) +" minutes "+ c.get(Calendar.MINUTE), Toast.LENGTH_SHORT).show();
                 String username= getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no Users");
                 long time;
                 boolean isRepeating= (boolean) getArguments().get("isRepeating");

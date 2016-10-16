@@ -3,6 +3,7 @@ package com.example.evelina.befit.adapters;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -50,7 +51,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         super(parentItemList);
         this.activity =activity;
         mInflater = LayoutInflater.from(activity);
-        typeface = Typeface.createFromAsset(activity.getAssets(),  "RockoFLF.ttf");
+        typeface = Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
     }
 
     @Override
@@ -72,10 +73,11 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         //here we set the name of the challenge
         TrainingTypes nameTraining = (TrainingTypes) parentListItem;
         parentViewHolder.trainingName.setText(nameTraining.getName());
-        parentViewHolder.trainingName.setTextColor(activity.getResources().getColor(R.color.green));
-        parentViewHolder.trainingName.setTextSize(18);
+        parentViewHolder.trainingName.setTextColor(Color.WHITE);
+        parentViewHolder.trainingName.setTextSize(20);
         parentViewHolder.trainingName.setTypeface(typeface);
-        parentViewHolder.trainingName.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
+        parentViewHolder.cardRow.setBackgroundColor(Color.argb(10,6,214,160));
+       // parentViewHolder.cardRow.setBackground(R.drawable.rectangular_shape);
     }
 
     @Override
@@ -84,8 +86,8 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         TrainingSpecifications trainingSpecifications = (TrainingSpecifications) childListItem;
         childViewHolder.timesCompletionTrainingTV.setText(trainingSpecifications.getmTimesCompleted()+"");
         childViewHolder.dateCompletionTrainingTV.setText(trainingSpecifications.getmDateLastCompletion());
-        childViewHolder.timesCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
-        childViewHolder.dateCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
+//        childViewHolder.timesCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
+//        childViewHolder.dateCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
         //TODO here we create adapter for the child recycler and set it to the recycler depending on the name of the challenge
         //the newxt lines are test they should be changed
         List<String> exercisesNames = trainingSpecifications.getExercisesName();
@@ -93,8 +95,8 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         ChildRecyclerAdapterCompletedTrainings childRecyclerAdapterCompletedTrainings = new ChildRecyclerAdapterCompletedTrainings(exercisesNames,activity);
         childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);
         childViewHolder.exercisesPerTrainingRV.setLayoutManager(new LinearLayoutManager(activity));
-        childViewHolder.completedTimeLayout.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
-        childViewHolder.completedTrainingsLayout.setBackgroundColor(activity.getResources().getColor(R.color.lightgreen));
+        childViewHolder.completedTimeLayout.setBackgroundColor(Color.argb(10,6,214,160));
+        childViewHolder.completedTrainingsLayout.setBackgroundColor(Color.argb(10,6,214,160));
     }
 
     public class TrainingChildViewHolder extends ChildViewHolder{
@@ -117,11 +119,14 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
             exercisesPerTrainingRV = (RecyclerView) itemView.findViewById(R.id.recycler_view_completed_exercises_challenge);
             completedTimeLayout = (LinearLayout) itemView.findViewById(R.id.layout_completed_info);
             completedTrainingsLayout = (LinearLayout) itemView.findViewById(R.id.layout_completed_info_2);
+
         }
 
     }
     public class TrainingParentViewHolder extends ParentViewHolder{
         public TextView trainingName;
+        public CardView cardRow;
+
         /**
          * Default constructor.
          *
@@ -129,6 +134,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
          */
         public TrainingParentViewHolder(View itemView) {
             super(itemView);
+            cardRow = (CardView) itemView.findViewById(R.id.card_row);
             trainingName = (TextView) itemView.findViewById(R.id.training_name);
         }
 

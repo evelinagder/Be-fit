@@ -39,8 +39,8 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private TextView mDescriptionTV;
     private ArrayList<Exercise> listExercises;
     private static int mCurrentExercise;
+    private TextView exerciseNameTV;
     private  YouTubePlayer player ;
-    private String userName;
     private Typeface typeface;
     private TextView mPointsTV;
     private static final int RESULT_START_TRAINING_FINISH=44;
@@ -56,6 +56,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_exercise);
         typeface  = Typeface.createFromAsset(getAssets(),  "RockoFLF.ttf");
+        exerciseNameTV = (TextView) findViewById(R.id.exercise_name_TV);
         mCompletedButton = (Button) findViewById(R.id.button_completed);
         mYouTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         mYouTubeView.initialize(Config.DEVELOPER_KEY, this);
@@ -83,6 +84,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         }
         listExercises = mCurrentChallenge.getExercises();
         mCurrentExercise = 0;
+        exerciseNameTV.setText(listExercises.get(mCurrentExercise).getName());
         setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
         repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
         mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
@@ -102,6 +104,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     player.cueVideo(listExercises.get(mCurrentExercise).getVideo());
                     setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
                     repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
+                    exerciseNameTV.setText(listExercises.get(mCurrentExercise).getName());
                     mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
                     mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
                     int updatePoints=listExercises.get(mCurrentExercise).getPoints();
@@ -136,7 +139,7 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
             youTubePlayer.cueVideo(listExercises.get(mCurrentExercise).getVideo());
             youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-            mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
+          //  mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
             this.player = youTubePlayer;
             mCurrentExercise++;
         }

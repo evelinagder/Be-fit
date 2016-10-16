@@ -61,8 +61,8 @@ public class NotificationsFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.fragment_notifications, container, false);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        //getDialog().setTitle("Set app notifications"); REMOVED IT BECAUSE IT COULD`T FIT>>>>>>
+       // getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);//for emoulator
+        getDialog().setTitle("Set app notifications");
         data = new Bundle();
 
         mRepeatCheckbox = (CheckBox) view.findViewById(R.id.repeat_checkbox);

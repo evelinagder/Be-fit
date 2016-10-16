@@ -1,5 +1,6 @@
 package com.example.evelina.befit;
 
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -53,6 +54,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
+import com.github.clans.fab.FloatingActionMenu;
 
 import org.json.JSONException;
 
@@ -285,9 +287,10 @@ public class TabbedActivity extends AppCompatActivity{
                 Button viewTrainingsButton= (Button) rootView.findViewById(R.id.view_trainings_profile_Button);
                 TextView kilogramsTV=(TextView) rootView.findViewById(R.id.kg_profile_TV);
                 TextView metersTV= (TextView) rootView.findViewById(R.id.meters_profile_TV);
-                FloatingActionButton fab= (FloatingActionButton) rootView.findViewById(R.id.show_chart);
-                FloatingActionButton fabPie= (FloatingActionButton) rootView.findViewById(R.id.show_Piechart);
 
+                final FloatingActionMenu menu = (FloatingActionMenu) rootView.findViewById(R.id.menu);
+                com.github.clans.fab.FloatingActionButton fab= (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.show_chart);
+                com.github.clans.fab.FloatingActionButton fabPie= (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.show_Piechart);
                 TextView usernameF = (TextView) rootView.findViewById(R.id.username_profile_TV);
                 LinearLayout layout1 = (LinearLayout) rootView.findViewById(R.id.container1);
                 LinearLayout layout2 = (LinearLayout) rootView.findViewById(R.id.container2);
@@ -381,6 +384,8 @@ public class TabbedActivity extends AppCompatActivity{
                     }
                 });
 
+
+
                 viewTrainingsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -394,6 +399,7 @@ public class TabbedActivity extends AppCompatActivity{
                         }
                     }
                 });
+
 
                 return rootView;
             }
@@ -497,4 +503,6 @@ public class TabbedActivity extends AppCompatActivity{
             fragment.show(getSupportFragmentManager(), "ChallengeName");
         }
     }
+
+
 }

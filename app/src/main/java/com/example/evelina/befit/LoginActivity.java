@@ -162,29 +162,10 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     Profile profile = Profile.getCurrentProfile();
                     Log.e("facebook", profile.getFirstName());
-                    String password = profile.getId();
-                    String username = profile.getFirstName() + " " + profile.getLastName() + password;
+                    final String password = profile.getId();
+                    final String username = profile.getFirstName() + " " + profile.getLastName() + password;
                     if(!DbManager.getInstance(LoginActivity.this).existsUser(username)) {
-                        Bundle params = new Bundle();
-                        params.putString("fields", "email,gender");
                         final User user = new User(username, password, "none", "", 0, 0, 0);
-                        new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET, new GraphRequest.Callback() {
-                            @Override
-                            public void onCompleted(GraphResponse response) {
-                                if (response != null) {
-                                    try {
-                                        String email = response.getJSONObject().getString("email");
-                                        Log.e("TAG", email);
-                                        String gender = response.getJSONObject().getString("gender");
-                                        Log.e("TAG", gender);
-                                        user.setEmail(email);
-                                        user.setGender(gender);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }).executeAsync();
                         DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getGender(), 0, 0, 0);
                     }
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -196,11 +177,13 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
                     intent.putExtra("name",profile.getFirstName()+" "+profile.getLastName());
                     intent.putExtra("loggedWith","facebook");
-
                 }
                 startActivity(intent);
                 finish();
             }
+
+
+
             @Override
             public void onCancel() {
                 Log.e("TAG", "user pressed cancel");
@@ -248,13 +231,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-//        } else {
-//            Toast.makeText(LoginActivity.this, "Going to Login", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
-//            finish();
-//        }
+
     }
 
 }

@@ -22,12 +22,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="16dp"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -50,8 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -73,24 +72,32 @@
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/green"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:textStyle="bold"
+            android:id="@+id/exercise_name_TV"/>
+        <TextView
+            android:layout_width="match_parent"
             android:textColor="@color/green"
             android:text="description"
             android:id="@+id/description_TV"
             android:layout_weight="2"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="16dp"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_height="0dp" />
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:textColor="@color/green"
             android:gravity="center"
             android:textSize="18sp"
             android:id="@+id/points_TV"
-            android:layout_height="0dp" />
+            android:layout_height="wrap_content" />
         <Button
             android:layout_width="150dp"
             android:layout_gravity="center"
@@ -99,10 +106,10 @@
             android:background="@drawable/rectangle_green"
             android:textColor="@android:color/white"
             android:id="@+id/button_completed"
-            android:layout_weight="0.7"
+
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:layout_height="0dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

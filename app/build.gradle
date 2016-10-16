@@ -41,5 +41,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'com.github.clans:fab:1.6.4'
 
 }
