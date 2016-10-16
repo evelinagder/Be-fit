@@ -24,14 +24,14 @@ import java.util.List;
  * Created by User on 11-Oct-16.
  */
 
-public class AllExerciseProgressAdapter extends RecyclerView.Adapter<AllExerciseProgressAdapter.AllExerciseViewHolder>{
+public class AllExerciseProgressAdapter extends RecyclerView.Adapter<AllExerciseProgressAdapter.AllExerciseViewHolder> {
     private Context context;
     private List<Exercise> exercises;
-    private HashMap<Exercise,Integer> doneTimes;
+    private HashMap<Exercise, Integer> doneTimes;
     private User user;
 
 
-    public AllExerciseProgressAdapter(Context context,List<Exercise> exercises,HashMap<Exercise,Integer> doneTimes,User user){
+    public AllExerciseProgressAdapter(Context context, List<Exercise> exercises, HashMap<Exercise, Integer> doneTimes, User user) {
         this.context = context;
         this.exercises = exercises;
         this.doneTimes = doneTimes;
@@ -40,20 +40,18 @@ public class AllExerciseProgressAdapter extends RecyclerView.Adapter<AllExercise
 
     @Override
     public AllExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.analysis_list_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.analysis_list_row, parent, false);
         return new AllExerciseViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AllExerciseViewHolder holder, int position) {
-        holder.exerciseName.setText( exercises.get(position).getName());
-        //TODO deside the max
+        holder.exerciseName.setText(exercises.get(position).getName());
         holder.progressBar.setMax(Collections.max(doneTimes.values()));
-        Log.e("TAG","max is "+Collections.max(doneTimes.values()));
-        int doneTimesH =doneTimes.get(exercises.get(position));
-        holder.timesDone.setText(doneTimesH+" repeats");
+        Log.e("TAG", "max is " + Collections.max(doneTimes.values()));
+        int doneTimesH = doneTimes.get(exercises.get(position));
+        holder.timesDone.setText(doneTimesH + " repeats");
         holder.progressBar.setProgress(doneTimesH);
-
     }
 
     @Override
@@ -62,10 +60,11 @@ public class AllExerciseProgressAdapter extends RecyclerView.Adapter<AllExercise
     }
 
 
-    class AllExerciseViewHolder extends RecyclerView.ViewHolder{
+    class AllExerciseViewHolder extends RecyclerView.ViewHolder {
         private TextView exerciseName;
         private TextView timesDone;
         private RoundCornerProgressBar progressBar;
+
         public AllExerciseViewHolder(View itemView) {
             super(itemView);
             exerciseName = (TextView) itemView.findViewById(R.id.name_exercise_progress);

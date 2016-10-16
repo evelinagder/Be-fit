@@ -27,7 +27,7 @@ public class StartTrainingRecyclerAdapter extends RecyclerView.Adapter<StartTrai
     public StartTrainingRecyclerAdapter(StartTrainingActivity activity, List<String> exercisesList) {
         exercises = exercisesList;
         this.activity = activity;
-        this.typeface =  Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
+        this.typeface = Typeface.createFromAsset(activity.getAssets(), "RockoUltraFLF.ttf");
     }
 
     @Override
@@ -50,17 +50,18 @@ public class StartTrainingRecyclerAdapter extends RecyclerView.Adapter<StartTrai
     }
 
 
-class StartVH extends RecyclerView.ViewHolder{
+    class StartVH extends RecyclerView.ViewHolder {
 
 
-    TextView exercises;
-    public StartVH(View itemView) {
-        super(itemView);
-        exercises = (TextView)itemView.findViewById(R.id.exercise_name);
+        TextView exercises;
+
+        public StartVH(View itemView) {
+            super(itemView);
+            exercises = (TextView) itemView.findViewById(R.id.exercise_name);
+
+        }
 
     }
-
-}
 
 }
 

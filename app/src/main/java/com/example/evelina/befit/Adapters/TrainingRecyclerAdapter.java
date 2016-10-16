@@ -21,16 +21,15 @@ import java.util.List;
  */
 
 public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecyclerAdapter.BasicVH> {
-    private static int alphaColor=20;
     private TabbedActivity activity;
     private List<String> challenges;
     boolean isBasic;
 
 
-    public TrainingRecyclerAdapter(TabbedActivity activity, List<String> categoryList,boolean isBasic) {
+    public TrainingRecyclerAdapter(TabbedActivity activity, List<String> categoryList, boolean isBasic) {
         challenges = categoryList;
         this.activity = activity;
-        this.isBasic=isBasic;
+        this.isBasic = isBasic;
     }
 
     @Override
@@ -45,22 +44,17 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
     @Override
     public void onBindViewHolder(BasicVH holder, final int position) {
         holder.name.setText(challenges.get(position).toString());
-        Typeface typeface =  Typeface.createFromAsset(activity.getAssets(),  "RockoUltraFLF.ttf");
+        Typeface typeface = Typeface.createFromAsset(activity.getAssets(), "RockoUltraFLF.ttf");
         holder.name.setTypeface(typeface);
-        holder.layoutCard.setBackgroundColor(Color.argb(10,6,214,160));
-        alphaColor+=20;
-        //holder.name.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        holder.layoutCard.setBackgroundColor(Color.argb(10, 6, 214, 160));
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!challenges.get(position).equals("Please add your custom Training")) {
-                  //  Toast.makeText(activity, "Training selected: " + challenges.get(position).toString(), Toast.LENGTH_SHORT).show();
+                if (!challenges.get(position).equals("Please add your custom Training")) {
                     activity.ChallengeSelected(challenges.get(position), isBasic);
-                }
-                else{
+                } else {
                     Toast.makeText(activity, "You don`t have any custom trainings!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -70,15 +64,14 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
         return challenges.size();
     }
 
-    class BasicVH extends RecyclerView.ViewHolder{
+    class BasicVH extends RecyclerView.ViewHolder {
         CardView layoutCard;
         TextView name;
+
         public BasicVH(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.training_name);
             layoutCard = (CardView) itemView.findViewById(R.id.card_view);
         }
-
     }
-
 }

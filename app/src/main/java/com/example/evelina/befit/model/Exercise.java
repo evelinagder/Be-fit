@@ -7,21 +7,20 @@ package com.example.evelina.befit.model;
 public class Exercise {
     private String name;
     private int points;
-    private  int series;
+    private int series;
     private int repeats;
     private String instructions;
     private String video;
 
-    // video
 
 
-    public Exercise(String name,int points, int series, int repeats, String instructions,String video) {
+    public Exercise(String name, int points, int series, int repeats, String instructions, String video) {
         this.name = name;
         this.series = series;
         this.repeats = repeats;
-        this.points=points;
+        this.points = points;
         this.instructions = instructions;
-        this.video= video;
+        this.video = video;
 
     }
 

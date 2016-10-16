@@ -20,7 +20,7 @@ import com.example.evelina.befit.model.DbManager;
  * A simple {@link Fragment} subclass.
  */
 public class SettingsHeightFragment extends DialogFragment {
-    private NumberPicker mMetersPicker ;
+    private NumberPicker mMetersPicker;
     private NumberPicker mSantimetersPicker;
     private Button mOkButton;
 
@@ -41,10 +41,11 @@ public class SettingsHeightFragment extends DialogFragment {
         mMetersPicker.setMinValue(1);
         mMetersPicker.setMaxValue(2);
         mSantimetersPicker.setMinValue(0);
+        mSantimetersPicker.setValue(60);
         mSantimetersPicker.setMaxValue(99);
         String[] values = new String[100];
-        for(int  i = 0 ;i<=99;i++){
-            values[i]=Integer.toString(i);
+        for (int i = 0; i <= 99; i++) {
+            values[i] = Integer.toString(i);
         }
         mSantimetersPicker.setDisplayedValues(values);
         mSantimetersPicker.setWrapSelectorWheel(false);
@@ -54,13 +55,11 @@ public class SettingsHeightFragment extends DialogFragment {
                 int meters = mMetersPicker.getValue();
                 int santimeters = mSantimetersPicker.getValue();
                 //here we will use meters and santimeters to update the DB
-                String  username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser","no user");
-                DbManager.getInstance(getContext()).updateUserHeight(username,((meters*100)+santimeters));
+                String username = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "no user");
+                DbManager.getInstance(getContext()).updateUserHeight(username, ((meters * 100) + santimeters));
                 dismiss();
             }
         });
-
         return view;
     }
-
 }

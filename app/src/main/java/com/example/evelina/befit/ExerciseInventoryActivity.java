@@ -28,32 +28,32 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private NetworkStateChangedReceiver receiver;
     private ExerciseRecyclerAdapter mExercisesAdapter;
-    private FloatingActionButton fab ;
-    User user;
-    String username;
-    String challengeName;
+    private FloatingActionButton fab;
+    private User user;
+    private String username;
+    private String challengeName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_inventory);
-        toolbar= (Toolbar) findViewById(R.id.toolbar_exercise_inventory);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_exercise_inventory);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Exercise inventory");
-        username=getIntent().getStringExtra("username");
-        challengeName=getIntent().getStringExtra("challengeName");
-        user= DbManager.getInstance(this).getUser(username);
-        //TODO her
+        username = getIntent().getStringExtra("username");
+        challengeName = getIntent().getStringExtra("challengeName");
+        user = DbManager.getInstance(this).getUser(username);
+
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         fab = (FloatingActionButton) findViewById(R.id.fab_exercise_inventory);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(user.getCustomChallenges(challengeName).getExercises().size() == 0){
-                    Toast.makeText(ExerciseInventoryActivity.this,"You cannot add a challenge without exercises!",Toast.LENGTH_SHORT).show();
-                }else {
+                if (user.getCustomChallenges(challengeName).getExercises().size() == 0) {
+                    Toast.makeText(ExerciseInventoryActivity.this, "You cannot add a challenge without exercises!", Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(ExerciseInventoryActivity.this, "Adding finished", Toast.LENGTH_SHORT).show();
                     setResult(55);
                     Intent intent = new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
@@ -67,8 +67,8 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ExerciseInventoryActivity.this,TabbedActivity.class);
-                intent.putExtra("username",username);
+                Intent intent = new Intent(ExerciseInventoryActivity.this, TabbedActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }
@@ -84,10 +84,10 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
                 return exercise.getName().compareTo(t1.getName());
             }
         });
-        mExercisesAdapter = new ExerciseRecyclerAdapter(this,exercises,mRecyclerView,challengeName,username);
+        mExercisesAdapter = new ExerciseRecyclerAdapter(this, exercises, mRecyclerView, challengeName, username);
         mRecyclerView.setAdapter(mExercisesAdapter);
         receiver = new NetworkStateChangedReceiver();
-        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
 
@@ -98,11 +98,11 @@ public class ExerciseInventoryActivity extends AppCompatActivity {
     }
 
 
-
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
-    public String getChallengeName(){
-        return  challengeName;
+
+    public String getChallengeName() {
+        return challengeName;
     }
 }

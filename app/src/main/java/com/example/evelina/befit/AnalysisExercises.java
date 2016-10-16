@@ -42,7 +42,7 @@ public class AnalysisExercises extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AnalysisExercises.this,TabbedActivity.class);
+                Intent intent = new Intent(AnalysisExercises.this, TabbedActivity.class);
                 intent.putExtra("username", userName);
                 startActivity(intent);
                 finish();
@@ -64,39 +64,39 @@ public class AnalysisExercises extends AppCompatActivity {
         List<Challenge> challenges = DbManager.getInstance(AnalysisExercises.this).getUser(userName).getCompletedTrainings();
         //here we make the number of challenges  to be equal to times of completions since we are saving only the unique trainings
         List<Challenge> gg = new ArrayList<>();
-        for(int  i = 0 ;i<challenges.size();i++){
-            Log.e("TAG","CHALLENGES FOR THE USER "+challenges.get(i).getName());
+        for (int i = 0; i < challenges.size(); i++) {
+            Log.e("TAG", "CHALLENGES FOR THE USER " + challenges.get(i).getName());
             gg.add(challenges.get(i));
-            if(challenges.get(i).getTimesCompleted()>1){
+            if (challenges.get(i).getTimesCompleted() > 1) {
                 int comp = challenges.get(i).getTimesCompleted();
-                while (comp>1){
+                while (comp > 1) {
                     //if times of completion is >1 we add it as many times as times of completion
                     gg.add(challenges.get(i));
                     comp--;
                 }
             }
         }
-        Log.e("i gg size",gg.size()+"");
+        Log.e("i gg size", gg.size() + "");
         //hashmap from all the existing exercises in TrainingManager with initial value 0
-        HashMap<Exercise,Integer> doneTimes = new HashMap<>(exercises.size());
-        for(int i = 0;i<exercises.size();i++){
-            doneTimes.put(exercises.get(i),0);
-            Log.e("TAG","ALL EXERCISES IN THE MANAGER "+exercises.get(i).getName());
+        HashMap<Exercise, Integer> doneTimes = new HashMap<>(exercises.size());
+        for (int i = 0; i < exercises.size(); i++) {
+            doneTimes.put(exercises.get(i), 0);
+            Log.e("TAG", "ALL EXERCISES IN THE MANAGER " + exercises.get(i).getName());
         }
 //helper for holding every seperate list of exercises for the challenge
         ArrayList<Exercise> helper;
-        for (int i = 0 ;i<gg.size();i++){
+        for (int i = 0; i < gg.size(); i++) {
             helper = gg.get(i).getExercises();
-                for(int k = 0 ;k<helper.size();k++){
-                    //here we take the old value of the exercise  and add it to the new to form the sum of all repeats
-                    doneTimes.put(helper.get(k),(doneTimes.get(helper.get(k))+(helper.get(k).getRepeats()*helper.get(k).getSeries())));
-                }
+            for (int k = 0; k < helper.size(); k++) {
+                //here we take the old value of the exercise  and add it to the new to form the sum of all repeats
+                doneTimes.put(helper.get(k), (doneTimes.get(helper.get(k)) + (helper.get(k).getRepeats() * helper.get(k).getSeries())));
+            }
         }
-        adapter = new AllExerciseProgressAdapter(this,exercises,doneTimes,DbManager.getInstance(this).getUser(userName));
+        adapter = new AllExerciseProgressAdapter(this, exercises, doneTimes, DbManager.getInstance(this).getUser(userName));
         mRecyclerView.setAdapter(adapter);
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
+    }
 
     @Override
     protected void onDestroy() {

@@ -13,11 +13,10 @@ public class NetworkStateChangedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager cm =(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if(!(activeNetwork!=null&&activeNetwork.isConnectedOrConnecting())){
+        if (!(activeNetwork != null && activeNetwork.isConnectedOrConnecting())) {
             Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
         }
-
     }
 }

@@ -41,17 +41,17 @@ public class SettingsActivity extends AppCompatActivity {
     private SettingsAdapter mSettingsAdapter;
     private Toolbar toolbar;
     private CircleImageView profilePic;
-    private  NetworkStateChangedReceiver receiver;
-    private static final int REQUEST_CODE_GALLERY=7;
-    String username;
-    CallbackManager callbackManager;
+    private NetworkStateChangedReceiver receiver;
+    private static final int REQUEST_CODE_GALLERY = 7;
+    private String username;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_settings);
-        username=getIntent().getStringExtra("loggedUser");
+        username = getIntent().getStringExtra("loggedUser");
         callbackManager = CallbackManager.Factory.create();
         mRecyclerView = (RecyclerView) findViewById(R.id.settings_recycler_view);
         toolbar = (Toolbar) findViewById(R.id.app_bar_settings);
@@ -64,34 +64,34 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingsActivity.this,TabbedActivity.class);
-                intent.putExtra("username",username);
+                Intent intent = new Intent(SettingsActivity.this, TabbedActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<String> settingsList= new ArrayList<>();
+        List<String> settingsList = new ArrayList<>();
         settingsList.add("email");
         settingsList.add("gender");
         settingsList.add("height");
         settingsList.add("weight");
         settingsList.add("notifications & alarms");
 
-        mSettingsAdapter = new SettingsAdapter(this,settingsList);
+        mSettingsAdapter = new SettingsAdapter(this, settingsList);
         mRecyclerView.setAdapter(mSettingsAdapter);
 
         receiver = new NetworkStateChangedReceiver();
-        registerReceiver(receiver,new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(receiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
-        profilePic= (CircleImageView) findViewById(R.id.profile_image);
-        String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith","none");
-        if(sp.equals("registration")){
+        profilePic = (CircleImageView) findViewById(R.id.profile_image);
+        String sp = getSharedPreferences("Login", Context.MODE_PRIVATE).getString("loggedWith", "none");
+        if (sp.equals("registration")) {
             profilePic.setVisibility(View.VISIBLE);
         }
-       final User user= DbManager.getInstance(this).getUser(username);
-        if(sp.equals("facebook")){
+        final User user = DbManager.getInstance(this).getUser(username);
+        if (sp.equals("facebook")) {
             Bundle params = new Bundle();
             params.putString("fields", "email,gender");
             new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET, new GraphRequest.Callback() {
@@ -113,32 +113,25 @@ public class SettingsActivity extends AppCompatActivity {
             }).executeAsync();
         }
 
-
-
-        if( user.getProfilePic() != null){
+        if (user.getProfilePic() != null) {
             profilePic.setImageURI(user.getProfilePic());
         }
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                Intent galleryIntent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent,REQUEST_CODE_GALLERY);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, REQUEST_CODE_GALLERY);
             }
         });
-
     }
-
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_CODE_GALLERY && data != null){
-            Uri image= data.getData();
+        if (requestCode == REQUEST_CODE_GALLERY && data != null) {
+            Uri image = data.getData();
             profilePic.setImageURI(image);
-            DbManager.getInstance(SettingsActivity.this).updateProfilePicture(username,image);
+            DbManager.getInstance(SettingsActivity.this).updateProfilePicture(username, image);
         }
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -151,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void showFragment(Bundle bundle) {
-        if(bundle!=null) {
+        if (bundle != null) {
             TimePickerNotificationFragment fragment = new TimePickerNotificationFragment();
             fragment.setArguments(bundle);
             fragment.show(getSupportFragmentManager(), "time");

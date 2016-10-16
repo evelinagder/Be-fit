@@ -33,21 +33,20 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private Button mCompletedButton;
     private NetworkStateChangedReceiver receiver;
     private Challenge mCurrentChallenge;
-    private TextView setsNum,repeatsNum,pointsNum;
+    private TextView setsNum, repeatsNum, pointsNum;
     private User user;
     private String nameChallenge;
     private TextView mDescriptionTV;
     private ArrayList<Exercise> listExercises;
     private static int mCurrentExercise;
     private TextView exerciseNameTV;
-    private  YouTubePlayer player ;
+    private YouTubePlayer player;
     private Typeface typeface;
     private TextView mPointsTV;
-    private static final int RESULT_START_TRAINING_FINISH=44;
+    private static final int RESULT_START_TRAINING_FINISH = 44;
 
 
 
-    //TODO here we should get the challenge from the intent/by name/ and instance it to mCurrentChallenge ,then load listExercises with the exercises in the current challenge and manipulate over them
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +54,13 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play_exercise);
-        typeface  = Typeface.createFromAsset(getAssets(),  "RockoFLF.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "RockoFLF.ttf");
         exerciseNameTV = (TextView) findViewById(R.id.exercise_name_TV);
         mCompletedButton = (Button) findViewById(R.id.button_completed);
         mYouTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         mYouTubeView.initialize(Config.DEVELOPER_KEY, this);
-        repeatsNum=(TextView)findViewById(R.id.repeat_num);
-        setsNum=(TextView)findViewById(R.id.sets_num);
+        repeatsNum = (TextView) findViewById(R.id.repeat_num);
+        setsNum = (TextView) findViewById(R.id.sets_num);
         mDescriptionTV = (TextView) findViewById(R.id.description_TV);
         mPointsTV = (TextView) findViewById(R.id.points_TV);
 
@@ -75,75 +74,63 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
         nameChallenge = getIntent().getStringExtra("challenge");
         final String usern = getIntent().getStringExtra("username");
-        user=DbManager.getInstance(this).getUser(usern);
-        final boolean isBasic=getIntent().getExtras().getBoolean("isBasic");
-        if(isBasic){
-            mCurrentChallenge= TrainingManager.getInstance().getBasicChallenges(nameChallenge);
-        }else {
+        user = DbManager.getInstance(this).getUser(usern);
+        final boolean isBasic = getIntent().getExtras().getBoolean("isBasic");
+        if (isBasic) {
+            mCurrentChallenge = TrainingManager.getInstance().getBasicChallenges(nameChallenge);
+        } else {
             mCurrentChallenge = DbManager.getInstance(this).getUser(usern).getCustomChallenges(nameChallenge);
         }
         listExercises = mCurrentChallenge.getExercises();
         mCurrentExercise = 0;
         exerciseNameTV.setText(listExercises.get(mCurrentExercise).getName());
-        setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
-        repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
+        setsNum.setText(listExercises.get(mCurrentExercise).getSeries() + "");
+        repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats() + "");
         mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
-        mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
+        mPointsTV.setText("*This exercise gives you " + listExercises.get(mCurrentExercise).getPoints() + " points");
 
-        int points=listExercises.get(mCurrentExercise).getPoints();
-        Log.e("POINTS PLAY",points+""+listExercises.get(mCurrentExercise).getName());
-        DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,listExercises.get(mCurrentExercise).getPoints());
-
-
+        int points = listExercises.get(mCurrentExercise).getPoints();
+        Log.e("POINTS PLAY", points + "" + listExercises.get(mCurrentExercise).getName());
+        DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern, listExercises.get(mCurrentExercise).getPoints());
 
 
         mCompletedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mCurrentExercise <listExercises.size()){
+                if (mCurrentExercise < listExercises.size()) {
                     player.cueVideo(listExercises.get(mCurrentExercise).getVideo());
-                    setsNum.setText(listExercises.get(mCurrentExercise).getSeries()+"");
-                    repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats()+"");
+                    setsNum.setText(listExercises.get(mCurrentExercise).getSeries() + "");
+                    repeatsNum.setText(listExercises.get(mCurrentExercise).getRepeats() + "");
                     exerciseNameTV.setText(listExercises.get(mCurrentExercise).getName());
-                    mPointsTV.setText("*This exercise gives you "+listExercises.get(mCurrentExercise).getPoints()+" points");
+                    mPointsTV.setText("*This exercise gives you " + listExercises.get(mCurrentExercise).getPoints() + " points");
                     mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
-                    int updatePoints=listExercises.get(mCurrentExercise).getPoints();
-                    DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern,updatePoints);
-                    Log.e("TAG"," v momenta v usera ima "+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints()+" tochki");
+                    int updatePoints = listExercises.get(mCurrentExercise).getPoints();
+                    DbManager.getInstance(PlayExerciseActivity.this).changeUserPoints(usern, updatePoints);
+                    Log.e("TAG", " v momenta v usera ima " + DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints() + " tochki");
                     mCurrentExercise++;
-                }else{
-                    Intent intent= new Intent(PlayExerciseActivity.this, TrainingCompleteActivity.class);
-                    Log.e("TAG"," trenirovkata svurshi , usera ima"+  DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints());
-                    intent.putExtra("challengeName",nameChallenge);
-                    intent.putExtra("username",usern);
-                    intent.putExtra("isBasic",isBasic);
+                } else {
+                    Intent intent = new Intent(PlayExerciseActivity.this, TrainingCompleteActivity.class);
+                    Log.e("TAG", " trenirovkata svurshi , usera ima" + DbManager.getInstance(PlayExerciseActivity.this).getUser(usern).getPoints());
+                    intent.putExtra("challengeName", nameChallenge);
+                    intent.putExtra("username", usern);
+                    intent.putExtra("isBasic", isBasic);
                     startActivity(intent);
                     setResult(RESULT_START_TRAINING_FINISH);
                     finish();
-
                 }
-
             }
         });
-
     }
-
 
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
         if (!wasRestored) {
-            // loadVideo() will auto play video
-            // Use cueVideo() method, if you don't want to play it automatically
-            //youTubePlayer.loadVideo(Config.YOUTUBE_VIDEO_CODE);
-
             youTubePlayer.cueVideo(listExercises.get(mCurrentExercise).getVideo());
             youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-          //  mDescriptionTV.setText(listExercises.get(mCurrentExercise).getInstructions());
             this.player = youTubePlayer;
             mCurrentExercise++;
         }
-
     }
 
     @Override
@@ -155,7 +142,6 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
                     getString(R.string.error_player), youTubeInitializationResult.toString());
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
@@ -169,8 +155,6 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
     private YouTubePlayer.Provider getYouTubePlayerProvider() {
         return (YouTubePlayerView) findViewById(R.id.youtube_view);
     }
-
-
 
 
     @Override
@@ -195,12 +179,10 @@ public class PlayExerciseActivity extends YouTubeBaseActivity implements YouTube
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
-
-
-    }
+}
 
 

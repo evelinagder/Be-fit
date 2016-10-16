@@ -1,31 +1,19 @@
 package com.example.evelina.befit;
 
-
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.evelina.befit.model.DbManager;
 
 import java.util.Calendar;
-
-
-import static android.content.Context.ALARM_SERVICE;
 
 
 
@@ -60,8 +48,7 @@ public class NotificationsFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  =  inflater.inflate(R.layout.fragment_notifications, container, false);
-       // getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);//for emoulator
+        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
         getDialog().setTitle("Set app notifications");
         data = new Bundle();
 
@@ -71,7 +58,7 @@ public class NotificationsFragment extends DialogFragment {
         mMonday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     data.putInt("monday", Calendar.MONDAY);
 
                 }
@@ -81,8 +68,8 @@ public class NotificationsFragment extends DialogFragment {
         mTuesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("tuesday",Calendar.TUESDAY);
+                if (b) {
+                    data.putInt("tuesday", Calendar.TUESDAY);
                 }
 
             }
@@ -91,8 +78,8 @@ public class NotificationsFragment extends DialogFragment {
         mWednesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("wednesday",Calendar.WEDNESDAY);
+                if (b) {
+                    data.putInt("wednesday", Calendar.WEDNESDAY);
                 }
             }
         });
@@ -100,8 +87,8 @@ public class NotificationsFragment extends DialogFragment {
         mThursday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("thursday",Calendar.THURSDAY);
+                if (b) {
+                    data.putInt("thursday", Calendar.THURSDAY);
                 }
             }
         });
@@ -109,8 +96,8 @@ public class NotificationsFragment extends DialogFragment {
         mFriday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("friday",Calendar.FRIDAY);
+                if (b) {
+                    data.putInt("friday", Calendar.FRIDAY);
                 }
             }
         });
@@ -118,8 +105,8 @@ public class NotificationsFragment extends DialogFragment {
         mSaturday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("saturday",Calendar.SATURDAY);
+                if (b) {
+                    data.putInt("saturday", Calendar.SATURDAY);
                 }
             }
         });
@@ -127,34 +114,29 @@ public class NotificationsFragment extends DialogFragment {
         mSunday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    data.putInt("sunday",Calendar.SUNDAY);
+                if (b) {
+                    data.putInt("sunday", Calendar.SUNDAY);
                 }
             }
         });
         mOk = (Button) view.findViewById(R.id.ok_notifications);
 
-
-
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //here we pass data to the activity and show another dialog fragment for time
-                if(mRepeatCheckbox.isChecked()){
-                    data.putBoolean("isRepeating",true);
-                }else {
-                    data.putBoolean("isRepeating",false);
+                if (mRepeatCheckbox.isChecked()) {
+                    data.putBoolean("isRepeating", true);
+                } else {
+                    data.putBoolean("isRepeating", false);
                 }
                 dismiss();
-                if(!mMonday.isChecked() && !mTuesday.isChecked() && !mWednesday.isChecked() && !mThursday.isChecked()&& !mFriday.isChecked() && !mSaturday.isChecked() && !mSunday.isChecked()){
-                    Toast.makeText(getActivity(),"Please choose a weekday!",Toast.LENGTH_SHORT).show();
-                }else {
+                if (!mMonday.isChecked() && !mTuesday.isChecked() && !mWednesday.isChecked() && !mThursday.isChecked() && !mFriday.isChecked() && !mSaturday.isChecked() && !mSunday.isChecked()) {
+                    Toast.makeText(getActivity(), "Please choose a weekday!", Toast.LENGTH_SHORT).show();
+                } else {
                     activity.showFragment(data);
                 }
-
             }
         });
-
 
         mTurnOff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,15 +150,10 @@ public class NotificationsFragment extends DialogFragment {
                 mSunday.setChecked(false);
                 mRepeatCheckbox.setChecked(false);
                 DbManager.getInstance(getContext()).cancelAlarms(getContext());
-                Toast.makeText(getContext(),"All notifications are deleted!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "All notifications are deleted!", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
-        } );
-
-
+        });
         return view;
     }
-
-
-
 }

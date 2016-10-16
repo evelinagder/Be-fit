@@ -77,7 +77,6 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         parentViewHolder.trainingName.setTextSize(20);
         parentViewHolder.trainingName.setTypeface(typeface);
         parentViewHolder.cardRow.setBackgroundColor(Color.argb(10,6,214,160));
-       // parentViewHolder.cardRow.setBackground(R.drawable.rectangular_shape);
     }
 
     @Override
@@ -86,12 +85,7 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
         TrainingSpecifications trainingSpecifications = (TrainingSpecifications) childListItem;
         childViewHolder.timesCompletionTrainingTV.setText(trainingSpecifications.getmTimesCompleted()+"");
         childViewHolder.dateCompletionTrainingTV.setText(trainingSpecifications.getmDateLastCompletion());
-//        childViewHolder.timesCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
-//        childViewHolder.dateCompletionTrainingTV.setTextColor(activity.getResources().getColor(R.color.green));
-        //TODO here we create adapter for the child recycler and set it to the recycler depending on the name of the challenge
-        //the newxt lines are test they should be changed
         List<String> exercisesNames = trainingSpecifications.getExercisesName();
-       // StartTrainingRecyclerAdapter adapter= new StartTrainingRecyclerAdapter(activity,exercisesNames);
         ChildRecyclerAdapterCompletedTrainings childRecyclerAdapterCompletedTrainings = new ChildRecyclerAdapterCompletedTrainings(exercisesNames,activity);
         childViewHolder.exercisesPerTrainingRV.setAdapter(childRecyclerAdapterCompletedTrainings);
         childViewHolder.exercisesPerTrainingRV.setLayoutManager(new LinearLayoutManager(activity));
@@ -137,9 +131,5 @@ public class CompletedTrainingExpandableAdapter extends ExpandableRecyclerAdapte
             cardRow = (CardView) itemView.findViewById(R.id.card_row);
             trainingName = (TextView) itemView.findViewById(R.id.training_name);
         }
-
-
     }
-
-
 }

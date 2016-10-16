@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompletedTrainings extends AppCompatActivity {
-    Toolbar toolbar;
-    RecyclerView mRecyclerView;
-    String username;
-    User user;
-    NetworkStateChangedReceiver receiver;
+    private Toolbar toolbar;
+    private RecyclerView mRecyclerView;
+    private String username;
+    private User user;
+    private NetworkStateChangedReceiver receiver;
 
 
     @Override
@@ -34,7 +34,7 @@ public class CompletedTrainings extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_completed_trainings);
         setSupportActionBar(toolbar);
-        username=getIntent().getStringExtra("username");
+        username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle("Completed challenges");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,8 +43,8 @@ public class CompletedTrainings extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CompletedTrainings.this,TabbedActivity.class);
-                intent.putExtra("username",username);
+                Intent intent = new Intent(CompletedTrainings.this, TabbedActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }
@@ -56,25 +56,25 @@ public class CompletedTrainings extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.completed_trainings_expandable_recycler);
 
-        user= DbManager.getInstance(CompletedTrainings.this).getUser(username);
+        user = DbManager.getInstance(CompletedTrainings.this).getUser(username);
 
         //TrainingSpecifications is a class which we will use in supplying the times of completion of challenge and it's last day of completion
         //i have filled the specifications with two objects for test view
         //we should get from DbManager/for the current User/ his completed challenges
         ArrayList<Challenge> completed = user.getCompletedTrainings();
-        List<TrainingTypes> namesTrainings= new ArrayList<>();
-        for(int i=0; i<completed.size();i++){
-            Challenge current=completed.get(i);
-           List<Exercise>exercises= current.getExercises();
+        List<TrainingTypes> namesTrainings = new ArrayList<>();
+        for (int i = 0; i < completed.size(); i++) {
+            Challenge current = completed.get(i);
+            List<Exercise> exercises = current.getExercises();
             List<TrainingSpecifications> specifications = new ArrayList<>();
-            TrainingSpecifications trainingOne = new TrainingSpecifications(current.getTimesCompleted(),current.getDateOfCompletion(),exercises);
+            TrainingSpecifications trainingOne = new TrainingSpecifications(current.getTimesCompleted(), current.getDateOfCompletion(), exercises);
             specifications.add(trainingOne);
-            TrainingTypes one = new TrainingTypes(specifications,current.getName());
+            TrainingTypes one = new TrainingTypes(specifications, current.getName());
             namesTrainings.add(one);
         }
 
 
-        final CompletedTrainingExpandableAdapter adapter = new CompletedTrainingExpandableAdapter(namesTrainings,CompletedTrainings.this);
+        final CompletedTrainingExpandableAdapter adapter = new CompletedTrainingExpandableAdapter(namesTrainings, CompletedTrainings.this);
 
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @Override

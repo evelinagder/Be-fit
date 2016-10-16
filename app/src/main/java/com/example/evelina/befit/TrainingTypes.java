@@ -15,7 +15,7 @@ public class TrainingTypes implements ParentListItem {
     private List trainingSpecifications;
     private String name;
 
-    public TrainingTypes(List trainingSpecifications,String name) {
+    public TrainingTypes(List trainingSpecifications, String name) {
         this.trainingSpecifications = trainingSpecifications;
         this.name = name;
     }

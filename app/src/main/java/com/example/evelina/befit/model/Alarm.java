@@ -8,15 +8,12 @@ public class Alarm {
     private long alarmTime;
     private boolean isRepeating;
 
-    Alarm (long alarmTime,boolean isRepeating){
-        this.alarmTime=alarmTime;
-        this.isRepeating=isRepeating;
+    Alarm(long alarmTime, boolean isRepeating) {
+        this.alarmTime = alarmTime;
+        this.isRepeating = isRepeating;
     }
 
-    public long getAlarmTime() {
-        return alarmTime;
-    }
-    public boolean getIsRepeating(){
+    public boolean getIsRepeating() {
         return isRepeating;
     }
 }

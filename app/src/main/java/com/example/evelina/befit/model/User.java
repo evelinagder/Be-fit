@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Evelina on 9/24/2016.
  */
 
-public class User implements Serializable{
+public class User implements Serializable {
     private String username;
     private String password;
     private String email;
@@ -27,19 +27,19 @@ public class User implements Serializable{
     HashMap<String, Challenge> customChallenges;
     ArrayList<Alarm> userAlarms;
 
-    public User( String username,String password, String email, String gender,int weight, int height, int points) {
+    public User(String username, String password, String email, String gender, int weight, int height, int points) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.gender=gender;
+        this.gender = gender;
         this.weight = weight;
-        this.height= height;
-        this.points=points;
+        this.height = height;
+        this.points = points;
 
 
-        customChallenges= new HashMap<String, Challenge>();
-        achievedChallenges= new HashMap<String, Challenge>();
-        userAlarms= new ArrayList<Alarm>();
+        customChallenges = new HashMap<String, Challenge>();
+        achievedChallenges = new HashMap<String, Challenge>();
+        userAlarms = new ArrayList<Alarm>();
 
     }
 
@@ -59,12 +59,13 @@ public class User implements Serializable{
         return username.hashCode();
     }
 
-    public void addCustomChallenge(Challenge c){
-        Log.e("Challenge add to USER",c.getName());
-        customChallenges.put(c.getName(),c);
+    public void addCustomChallenge(Challenge c) {
+        Log.e("Challenge add to USER", c.getName());
+        customChallenges.put(c.getName(), c);
     }
-    public void addAchievedChallenge(Challenge c){
-        achievedChallenges.put(c.getName(),c);
+
+    public void addAchievedChallenge(Challenge c) {
+        achievedChallenges.put(c.getName(), c);
     }
 
     public String getPassword() {
@@ -123,27 +124,31 @@ public class User implements Serializable{
         this.gender = gender;
     }
 
-    public List<String> getCustomChallengesName(){
-        List<String> list=  new ArrayList<>() ;
-        list.addAll( customChallenges.keySet());
+    public List<String> getCustomChallengesName() {
+        List<String> list = new ArrayList<>();
+        list.addAll(customChallenges.keySet());
         return list;
 
     }
-    public boolean hasCustomChallenges(){
-        if(customChallenges.isEmpty()){
+
+    public boolean hasCustomChallenges() {
+        if (customChallenges.isEmpty()) {
             return false;
         }
         return true;
     }
-    public void addAlarmn(Alarm alarm){
-        if(alarm != null){
+
+    public void addAlarmn(Alarm alarm) {
+        if (alarm != null) {
             userAlarms.add(alarm);
         }
     }
+
     public Challenge getCustomChallenges(String name) {
         Challenge c = customChallenges.get(name);
         return c;
     }
+
     public Challenge getAcheivedChallenge(String name) {
         Challenge c = achievedChallenges.get(name);
         return c;
@@ -156,29 +161,32 @@ public class User implements Serializable{
     public int getUserDBId() {
         return userDBId;
     }
-    public int getCompletedTrainingsNum(){
+
+    public int getCompletedTrainingsNum() {
         return achievedChallenges.size();
     }
-    public List getCompletedTrainingsNames(){
-        List<String> list=  new ArrayList<>() ;
-        list.addAll( achievedChallenges.keySet());
+
+    public List getCompletedTrainingsNames() {
+        List<String> list = new ArrayList<>();
+        list.addAll(achievedChallenges.keySet());
         return list;
     }
 
-    public ArrayList<Challenge> getCompletedTrainings(){
-        ArrayList<Challenge>list=new ArrayList<>();
+    public ArrayList<Challenge> getCompletedTrainings() {
+        ArrayList<Challenge> list = new ArrayList<>();
         list.addAll(achievedChallenges.values());
         return list;
     }
-    public void cleanEmptyChallenge(Context context){
-        String  removeName= null;
-        ArrayList<Challenge> list=  new ArrayList<>() ;
-        list.addAll( customChallenges.values());
-        for(int i =0;i<list.size();i++) {
+
+    public void cleanEmptyChallenge(Context context) {
+        String removeName = null;
+        ArrayList<Challenge> list = new ArrayList<>();
+        list.addAll(customChallenges.values());
+        for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getExercises().size() == 0) {
-                removeName=list.get(i).getName();
+                removeName = list.get(i).getName();
                 customChallenges.remove(removeName);
-                Log.e("remove",removeName);
+                Log.e("remove", removeName);
                 DbManager.getInstance(context).deleteChallengeFromDB(removeName);
             }
         }

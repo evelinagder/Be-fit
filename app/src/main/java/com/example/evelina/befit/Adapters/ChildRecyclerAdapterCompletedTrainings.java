@@ -16,9 +16,9 @@ import java.util.List;
  * Created by User on 04-Oct-16.
  */
 
-public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter<ChildRecyclerAdapterCompletedTrainings.NameExerciseVH>{
-    List<String> namesOfExercises ;
-    Context context ;
+public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter<ChildRecyclerAdapterCompletedTrainings.NameExerciseVH> {
+    List<String> namesOfExercises;
+    Context context;
 
     public ChildRecyclerAdapterCompletedTrainings(List<String> namesOfExercises, Context context) {
         this.namesOfExercises = namesOfExercises;
@@ -30,16 +30,13 @@ public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.plain_exercise_name_row, parent, false);
         return new NameExerciseVH(itemView);
-
     }
 
     @Override
     public void onBindViewHolder(NameExerciseVH holder, int position) {
         holder.exercises.setText(namesOfExercises.get(position));
-        holder.exercises.setBackgroundColor(Color.argb(10,6,214,160));
+        holder.exercises.setBackgroundColor(Color.argb(10, 6, 214, 160));
         holder.exercises.setTextColor(Color.WHITE);
-
-
     }
 
     @Override
@@ -47,8 +44,9 @@ public class ChildRecyclerAdapterCompletedTrainings extends RecyclerView.Adapter
         return namesOfExercises.size();
     }
 
-    public  class NameExerciseVH extends RecyclerView.ViewHolder{
+    public class NameExerciseVH extends RecyclerView.ViewHolder {
         TextView exercises;
+
         public NameExerciseVH(View itemView) {
             super(itemView);
             exercises = (TextView) itemView.findViewById(R.id.plain_exercise_name);

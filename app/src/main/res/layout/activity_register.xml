@@ -131,7 +131,7 @@
                 android:backgroundTint="@android:color/white"
                 android:maxLength="3"
                 android:maxLines="1"
-                android:hint="sm"
+                android:hint="cm"
                 android:textSize="18sp"
                 android:id="@+id/height_santimeters"
                 android:layout_weight="1" />

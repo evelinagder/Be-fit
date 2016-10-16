@@ -25,11 +25,11 @@ import com.example.evelina.befit.model.User;
  * A simple {@link Fragment} subclass.
  */
 public class StartTrainingFragment extends Fragment {
-    IStartTraining activity;
+    private IStartTraining activity;
 
 
-    public interface IStartTraining{
-    void beginWorkout();
+    public interface IStartTraining {
+        void beginWorkout();
     }
 
     public StartTrainingFragment() {
@@ -45,33 +45,26 @@ public class StartTrainingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-       // if(getIntent().) get if basic, get name  get from Training manager
-       // Challenge challenge =
-        //if custom get username, get from user`s list
-        //put challenge exercises name
-        View root =  inflater.inflate(R.layout.fragment_start_training, container, false);
-        String challengeName=getArguments().getString("challenge");
-        String username=getArguments().getString("username");
-        boolean isBasic=getArguments().getBoolean("isBasic");
-        User user= DbManager.getInstance(getActivity()).getUser(username);
-        Log.e("MMM",username);
+        View root = inflater.inflate(R.layout.fragment_start_training, container, false);
+        String challengeName = getArguments().getString("challenge");
+        String username = getArguments().getString("username");
+        boolean isBasic = getArguments().getBoolean("isBasic");
+        User user = DbManager.getInstance(getActivity()).getUser(username);
+        Log.e("MMM", username);
         Challenge challenge;
-        if(isBasic){
-            challenge= TrainingManager.getInstance().getBasicChallenges(challengeName);
-            Log.e("OOO",challenge.getExercisesNames().toString());
+        if (isBasic) {
+            challenge = TrainingManager.getInstance().getBasicChallenges(challengeName);
+            Log.e("OOO", challenge.getExercisesNames().toString());
+        } else {
+            Log.e("OOO", username + "custm");
+            challenge = user.getCustomChallenges(challengeName);
+            Log.e("OOO", challenge.getName());
+            Log.e("OOO", challenge.getExercisesNames().toString());
         }
-        else{
-            Log.e("OOO",username+"custm");
-            challenge=user.getCustomChallenges(challengeName);
-            Log.e("OOO",challenge.getName());
-            Log.e("OOO",challenge.getExercisesNames().toString());
-        }
-        FloatingActionButton start=(FloatingActionButton)root.findViewById(R.id.Button_start_training);
+        FloatingActionButton start = (FloatingActionButton) root.findViewById(R.id.Button_start_training);
         RecyclerView challengeView = (RecyclerView) root.findViewById(R.id.recycler_view_start);
-        challengeView.setAdapter(new StartTrainingRecyclerAdapter((StartTrainingActivity) getActivity(),  challenge.getExercisesNames()));
+        challengeView.setAdapter(new StartTrainingRecyclerAdapter((StartTrainingActivity) getActivity(), challenge.getExercisesNames()));
         challengeView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    //TODO startONclicklistner??
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,5 +74,4 @@ public class StartTrainingFragment extends Fragment {
         });
         return root;
     }
-
 }

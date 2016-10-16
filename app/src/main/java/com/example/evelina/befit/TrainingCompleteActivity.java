@@ -41,57 +41,50 @@ public class TrainingCompleteActivity extends AppCompatActivity {
     private Challenge challenge;
     private TextView heading;
     private User user;
-    private TextView mUserStatus ;
-    NetworkStateChangedReceiver receiver;
+    private NetworkStateChangedReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_complete);
-        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
-        challengeName= (TextView)findViewById(R.id.congrats_training_name);
-
-        ok= (Button)findViewById(R.id.ok_complete);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "GreatVibes.ttf");
+        challengeName = (TextView) findViewById(R.id.congrats_training_name);
+        ok = (Button) findViewById(R.id.ok_complete);
         receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        challengeNameString=getIntent().getStringExtra("challengeName");
+        challengeNameString = getIntent().getStringExtra("challengeName");
         challengeName.setText(challengeNameString);
-        heading= (TextView)findViewById(R.id.headingC) ;
+        heading = (TextView) findViewById(R.id.headingC);
         heading.setTypeface(typeface);
-        username=getIntent().getStringExtra("username");
-        isBasic=getIntent().getExtras().getBoolean("isBasic");
-        user=DbManager.getInstance(this).getUser(username);
-        if(isBasic){
-            challenge= TrainingManager.getInstance().getBasicChallenges(challengeNameString);
+        username = getIntent().getStringExtra("username");
+        isBasic = getIntent().getExtras().getBoolean("isBasic");
+        user = DbManager.getInstance(this).getUser(username);
+        if (isBasic) {
+            challenge = TrainingManager.getInstance().getBasicChallenges(challengeNameString);
+        } else {
+            challenge = user.getCustomChallenges(challengeNameString);
         }
-        else{
-            challenge=user.getCustomChallenges(challengeNameString);
-        }
-        Date today= new Date();
-        String mid= today+"";
-        String date= mid.substring(0,10);
-        if(isBasic){
-            Log.e("BASIC","basic in db TCA");
-            DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedBasicChallenges(user,challenge,date);
-            for(int i =0; i<challenge.getExercises().size();i++){
-                DbManager.getInstance(TrainingCompleteActivity.this).addExercisesToBasicChallenge(username,challenge.getName(),challenge.getExercises().get(i));
+        Date today = new Date();
+        String mid = today + "";
+        String date = mid.substring(0, 10);
+        if (isBasic) {
+            Log.e("BASIC", "basic in db TCA");
+            DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedBasicChallenges(user, challenge, date);
+            for (int i = 0; i < challenge.getExercises().size(); i++) {
+                DbManager.getInstance(TrainingCompleteActivity.this).addExercisesToBasicChallenge(username, challenge.getName(), challenge.getExercises().get(i));
             }
-        }
-        else {
+        } else {
             DbManager.getInstance(TrainingCompleteActivity.this).updateUserCompletedChallenges(user, challenge, date);
         }
-
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TrainingCompleteActivity.this, TabbedActivity.class);
-                intent.putExtra("username",username);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }
         });
-
-
     }
 
     @Override

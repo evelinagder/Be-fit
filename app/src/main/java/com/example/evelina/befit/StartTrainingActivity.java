@@ -20,13 +20,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 
 
-
 public class StartTrainingActivity extends AppCompatActivity implements StartTrainingFragment.IStartTraining {
     private String username;
     private String challengeName;
     private boolean isBasic;
-    Toolbar toolbar;
-    NetworkStateChangedReceiver receiver ;
+    private Toolbar toolbar;
+    private NetworkStateChangedReceiver receiver;
     private static final int REQUEST_WORKOUT_COMPLETE = 44;
 
 
@@ -38,12 +37,12 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         challengeName = getIntent().getStringExtra("challenge");
         isBasic = getIntent().getExtras().getBoolean("isBasic");
 
-        receiver=new NetworkStateChangedReceiver();
+        receiver = new NetworkStateChangedReceiver();
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(challengeName+" exercises");
+        toolbar.setTitle(challengeName + " exercises");
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,8 +51,8 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StartTrainingActivity.this,TabbedActivity.class);
-                intent.putExtra("username",username);
+                Intent intent = new Intent(StartTrainingActivity.this, TabbedActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }
@@ -67,15 +66,12 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         if (fm.getFragments() == null || fm.getFragments().size() == 0) {
             FragmentTransaction transaction = fm.beginTransaction();
             Fragment challengeFragment = new StartTrainingFragment();
-           // transaction.add(R.id.activity_start_training, challengeFragment, "FRAGMENT");
-            transaction.replace(R.id.container,challengeFragment);
+            transaction.replace(R.id.container, challengeFragment);
             challengeFragment.setArguments(bundle);
             Log.e("HHHH", "adding fragment");
             transaction.commit();
             Log.e("HHHH", "transaction fragment");
-
         }
-
     }
 
     @Override
@@ -84,7 +80,7 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
         intent.putExtra("challenge", challengeName);
         intent.putExtra("username", username);
         intent.putExtra("isBasic", isBasic);
-        startActivityForResult(intent,REQUEST_WORKOUT_COMPLETE);
+        startActivityForResult(intent, REQUEST_WORKOUT_COMPLETE);
     }
 
     @Override
@@ -95,8 +91,8 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==REQUEST_WORKOUT_COMPLETE){
-            if(resultCode==REQUEST_WORKOUT_COMPLETE){
+        if (resultCode == REQUEST_WORKOUT_COMPLETE) {
+            if (resultCode == REQUEST_WORKOUT_COMPLETE) {
                 finish();
             }
         }

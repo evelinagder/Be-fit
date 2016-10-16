@@ -57,17 +57,15 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_REG_USER = 10;
     private DbManager dbManager;
-    Button login;
-    Button register;
-    EditText username;
-    TextView heading;
-    EditText password;
-    LoginButton loginButton;
-    CallbackManager callbackManager;
-    ProfileTracker mProfileTracker;
-    NetworkStateChangedReceiver receiver;
-
-
+    private Button login;
+    private Button register;
+    private EditText username;
+    private TextView heading;
+    private EditText password;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    private ProfileTracker mProfileTracker;
+    private NetworkStateChangedReceiver receiver;
 
 
     @Override
@@ -84,23 +82,18 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editText_passwordL);
         loginButton = (LoginButton) findViewById(R.id.login_button_has_account);
         heading = (TextView) findViewById(R.id.heading);
-
         callbackManager = CallbackManager.Factory.create();
         receiver = new NetworkStateChangedReceiver();
-
-        Typeface typeface = Typeface.createFromAsset(getAssets(),  "GreatVibes.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "GreatVibes.ttf");
         heading.setTypeface(typeface);
-
-        loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
-
                 if (usernameString.isEmpty()) {
                     username.setError("Email is compulsory");
                     username.requestFocus();
@@ -123,17 +116,15 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("logged_in", true);
                 editor.putString("currentUser", usernameString);
-                editor.putString("loggedWith","registration");
+                editor.putString("loggedWith", "registration");
                 editor.commit();
                 maintainLogin(LoginActivity.this);
                 Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                 intent.putExtra("username", username.getText().toString());
-                intent.putExtra("loggedWith","registration");
+                intent.putExtra("loggedWith", "registration");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
-
-
             }
         });
 
@@ -149,8 +140,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(LoginActivity.this,TabbedActivity.class);
-                if(Profile.getCurrentProfile() == null) {
+                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                if (Profile.getCurrentProfile() == null) {
                     mProfileTracker = new ProfileTracker() {
                         @Override
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
@@ -158,30 +149,28 @@ public class LoginActivity extends AppCompatActivity {
                             mProfileTracker.stopTracking();
                         }
                     };
-                }
-                else {
+                } else {
                     Profile profile = Profile.getCurrentProfile();
                     Log.e("facebook", profile.getFirstName());
                     final String password = profile.getId();
                     final String username = profile.getFirstName() + " " + profile.getLastName() + password;
-                    if(!DbManager.getInstance(LoginActivity.this).existsUser(username)) {
+                    if (!DbManager.getInstance(LoginActivity.this).existsUser(username)) {
                         final User user = new User(username, password, "none", "", 0, 0, 0);
                         DbManager.getInstance(LoginActivity.this).addUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getGender(), 0, 0, 0);
                     }
                     SharedPreferences prefs = LoginActivity.this.getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged_in", true);
-                    editor.putString("currentUser",username);
-                    editor.putString("loggedWith","facebook");
+                    editor.putString("currentUser", username);
+                    editor.putString("loggedWith", "facebook");
                     editor.commit();
-                    intent.putExtra("username",profile.getFirstName() + " " + profile.getLastName()+password);
-                    intent.putExtra("name",profile.getFirstName()+" "+profile.getLastName());
-                    intent.putExtra("loggedWith","facebook");
+                    intent.putExtra("username", profile.getFirstName() + " " + profile.getLastName() + password);
+                    intent.putExtra("name", profile.getFirstName() + " " + profile.getLastName());
+                    intent.putExtra("loggedWith", "facebook");
                 }
                 startActivity(intent);
                 finish();
             }
-
 
 
             @Override
@@ -193,7 +182,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(FacebookException error) {
                 Log.e("TAG", error.getMessage());
                 Toast.makeText(LoginActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -210,7 +198,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
@@ -222,7 +209,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void maintainLogin(Context activity) {
         boolean logged_in = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getBoolean("logged_in", false);
-
         if (logged_in) {
             String username = activity.getSharedPreferences("Login", Context.MODE_PRIVATE).getString("currentUser", "No users");
             Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
@@ -231,9 +217,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
     }
-
 }
 
 

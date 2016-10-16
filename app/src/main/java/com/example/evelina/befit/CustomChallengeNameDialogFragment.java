@@ -25,11 +25,11 @@ import com.example.evelina.befit.model.User;
  * A simple {@link Fragment} subclass.
  */
 public class CustomChallengeNameDialogFragment extends DialogFragment {
-    EditText challengeName;
-    Button ok, cancel;
-    User user;
-    String username;
-    String name;
+    private EditText challengeName;
+    private Button ok, cancel;
+    private User user;
+    private String username;
+    private  String name;
 
 
     public CustomChallengeNameDialogFragment() {
@@ -42,31 +42,28 @@ public class CustomChallengeNameDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_challenge_name_dialog, container, false);
-        TextView heading= (TextView)view.findViewById(R.id.heading_name);
-        Typeface typeface =  Typeface.createFromAsset(getActivity().getAssets(),  "RockoUltraFLF.ttf");
-       // heading.setTypeface(typeface);
-        challengeName=(EditText)view.findViewById(R.id.ET_challenge_name);
+        challengeName = (EditText) view.findViewById(R.id.ET_challenge_name);
         challengeName.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        ok=(Button) view.findViewById(R.id.ok_button_Ch_name);
-        cancel=(Button) view.findViewById(R.id.cancel_buttonCh_name);
-        username= getArguments().getString("username");
-        Log.e("USER",username);
-        user= DbManager.getInstance(getActivity()).getUser(username);
+        ok = (Button) view.findViewById(R.id.ok_button_Ch_name);
+        cancel = (Button) view.findViewById(R.id.cancel_buttonCh_name);
+        username = getArguments().getString("username");
+        Log.e("USER", username);
+        user = DbManager.getInstance(getActivity()).getUser(username);
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name= challengeName.getText().toString();
-                if(name.isEmpty()) {
+                name = challengeName.getText().toString();
+                if (name.isEmpty()) {
                     challengeName.setError("Please fill in!");
                     challengeName.requestFocus();
                     return;
                 }
-                Challenge customChallenge= new Challenge(name,0,"","no");
-                DbManager.getInstance(getActivity()).addCustomChallenge(username,customChallenge);
-                Intent intent= new Intent(getActivity(),ExerciseInventoryActivity.class);
-                intent.putExtra("username",username);
-                intent.putExtra("challengeName",name);
+                Challenge customChallenge = new Challenge(name, 0, "", "no");
+                DbManager.getInstance(getActivity()).addCustomChallenge(username, customChallenge);
+                Intent intent = new Intent(getActivity(), ExerciseInventoryActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("challengeName", name);
                 startActivity(intent);
                 dismiss();
             }
