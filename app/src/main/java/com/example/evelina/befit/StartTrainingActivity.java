@@ -97,4 +97,12 @@ public class StartTrainingActivity extends AppCompatActivity implements StartTra
             }
         }
     }
+//TODO
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(StartTrainingActivity.this, TabbedActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -103,4 +103,12 @@ public class AnalysisExercises extends AppCompatActivity {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+    //TODO
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AnalysisExercises.this,TabbedActivity.class);
+        intent.putExtra("username", userName);
+        startActivity(intent);
+        finish();
+    }
 }

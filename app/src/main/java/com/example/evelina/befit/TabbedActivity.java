@@ -167,6 +167,7 @@ public class TabbedActivity extends AppCompatActivity {
             Intent intent = new Intent(TabbedActivity.this, SettingsActivity.class);
             intent.putExtra("loggedUser", username);
             startActivity(intent);
+            finish();
             return true;
         }
         if (id == R.id.action_logout) {
@@ -343,6 +344,8 @@ public class TabbedActivity extends AppCompatActivity {
                             Intent intent = new Intent(getActivity(), ChartsActivity.class);
                             intent.putExtra("username", username);
                             startActivity(intent);
+                            //TODO
+                            getActivity().finish();
                         } else {
                             Toast.makeText(getActivity(), "Please enter weight and height!", Toast.LENGTH_SHORT).show();
                         }
@@ -356,6 +359,8 @@ public class TabbedActivity extends AppCompatActivity {
                             Intent intent = new Intent(getActivity(), CompletedTrainings.class);
                             intent.putExtra("username", username);
                             startActivity(intent);
+                            //TODO
+                            getActivity().finish();
                         } else {
                             Toast.makeText(getActivity(), "You haven`t completed any Trainings yet!", Toast.LENGTH_SHORT).show();
                         }
@@ -455,6 +460,8 @@ public class TabbedActivity extends AppCompatActivity {
         intent.putExtra("challenge", challenge);
         intent.putExtra("isBasic", isBasic);
         startActivity(intent);
+        //TODO
+        finish();
     }
 
 

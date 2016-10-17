@@ -100,4 +100,13 @@ public class CompletedTrainings extends AppCompatActivity {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+
+    //TODO
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CompletedTrainings.this,TabbedActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

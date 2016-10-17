@@ -144,9 +144,14 @@ public class User implements Serializable {
         }
     }
 
+
     public Challenge getCustomChallenges(String name) {
         Challenge c = customChallenges.get(name);
         return c;
+    }
+
+    public HashMap<String, Challenge> getAchievedChallenges(){
+        return achievedChallenges;
     }
 
     public Challenge getAcheivedChallenge(String name) {

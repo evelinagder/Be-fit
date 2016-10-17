@@ -384,16 +384,22 @@ public class DbManager extends SQLiteOpenHelper {
 
 
     }
-
     public void updateUserCompletedBasicChallenges(User user, Challenge completedChallenge, String date) {
 
         SQLiteDatabase db = getReadableDatabase();
         ContentValues cv = new ContentValues();
         int userId = user.getUserDBId();
-        int times = completedChallenge.getTimesCompleted() + 1;
+        int times;
+        if(user.getAchievedChallenges().containsKey(completedChallenge.getName())){
+            Challenge c= user.getAcheivedChallenge(completedChallenge.getName()) ;
+            times=c.getTimesCompleted()+1;
+        }
+        else {
+            times = 1;
+        }
         completedChallenge.setAchieved("yes");
         completedChallenge.setDateOfCompletion(date);
-        completedChallenge.setTimesCompleted(completedChallenge.getTimesCompleted() + 1);
+        completedChallenge.setTimesCompleted(times);
         cv.put(CHALLENGE_NAME, completedChallenge.getName());
         cv.put(CHALLENGE_USER_UID, userId);
         cv.put(CHALLENGE_ACHIEVED, "yes");
@@ -403,6 +409,25 @@ public class DbManager extends SQLiteOpenHelper {
         completedChallenge.setChallengeID(id);
         user.addAchievedChallenge(completedChallenge);
     }
+
+//    public void updateUserCompletedBasicChallenges(User user, Challenge completedChallenge, String date) {
+//
+//        SQLiteDatabase db = getReadableDatabase();
+//        ContentValues cv = new ContentValues();
+//        int userId = user.getUserDBId();
+//        int times = completedChallenge.getTimesCompleted() + 1;
+//        completedChallenge.setAchieved("yes");
+//        completedChallenge.setDateOfCompletion(date);
+//        completedChallenge.setTimesCompleted(completedChallenge.getTimesCompleted() + 1);
+//        cv.put(CHALLENGE_NAME, completedChallenge.getName());
+//        cv.put(CHALLENGE_USER_UID, userId);
+//        cv.put(CHALLENGE_ACHIEVED, "yes");
+//        cv.put(CHALLENGE_DATE, date);
+//        cv.put(CHALLENGE_TIMES, times);
+//        long id = db.insert(CHALLENGES_TABLE, null, cv);
+//        completedChallenge.setChallengeID(id);
+//        user.addAchievedChallenge(completedChallenge);
+//    }
 
     public void deleteChallengeFromDB(String challengeName) {
         SQLiteDatabase db = getReadableDatabase();

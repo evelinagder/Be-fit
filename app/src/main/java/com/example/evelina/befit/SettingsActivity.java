@@ -150,4 +150,13 @@ public class SettingsActivity extends AppCompatActivity {
             fragment.show(getSupportFragmentManager(), "time");
         }
     }
+
+    //TODO here
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SettingsActivity.this,TabbedActivity.class);
+        intent.putExtra("username",username);
+        startActivity(intent);
+        finish();
+    }
 }

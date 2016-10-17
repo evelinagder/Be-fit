@@ -148,4 +148,14 @@ public class ChartsActivity extends AppCompatActivity {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+
+    //TODO
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ChartsActivity.this,TabbedActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+        finish();
+    }
 }
